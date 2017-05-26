@@ -189,7 +189,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ClubController.cs" />
+    <Compile Include="Controllers\ClubsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -213,6 +213,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\southernarchery - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -258,11 +259,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Club\Create.cshtml" />
-    <Content Include="Views\Club\Delete.cshtml" />
-    <Content Include="Views\Club\Details.cshtml" />
-    <Content Include="Views\Club\Edit.cshtml" />
-    <Content Include="Views\Club\Index.cshtml" />
+    <Content Include="Views\Clubs\Create.cshtml" />
+    <Content Include="Views\Clubs\Delete.cshtml" />
+    <Content Include="Views\Clubs\Details.cshtml" />
+    <Content Include="Views\Clubs\Edit.cshtml" />
+    <Content Include="Views\Clubs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
