@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Domain.Models;
 
 namespace Domain
 {
