@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
-using Domain.Models;
+using SAC.Domain.Models;
 
-namespace Domain
+namespace SAC.Domain
 {
     public class SacContext : DbContext
     {

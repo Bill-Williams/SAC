@@ -5,10 +5,10 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain;
-using Domain.Models;
+using SAC.Domain;
+using SAC.Domain.Models;
 
-namespace Migrations
+namespace SAC.Migrations
 {
     internal sealed class Configuration : DbMigrationsConfiguration<SacContext>
     {

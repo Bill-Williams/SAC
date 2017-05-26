@@ -1,4 +1,4 @@
-namespace Migrations
+namespace SAC.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

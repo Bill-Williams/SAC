@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models
+namespace SAC.Domain.Models
 {
     public class Archer : BaseEntity
     {
