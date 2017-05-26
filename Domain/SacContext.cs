@@ -21,11 +21,24 @@ namespace Domain
         public DbSet<Archer> Archers { get; set; }
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Competitor> Competitors { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Tournament> Tournaments { get; set; }
-        public DbSet<User> Users { get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder) { }
+        public DbSet<AspNetRole> Roles { get; set; }
+        public DbSet<AspNetUser> Users { get; set; }
+        public DbSet<AspNetUserClaim> UserClaims { get; set; }
+        public DbSet<AspNetUserLogin> UserLogins { get; set; }
+        
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<AspNetUser>()
+                .HasMany(x => x.AspNetRoles)
+                .WithMany(x => x.AspNetUsers)
+            .Map(x =>
+            {
+                x.ToTable("AspNetUserRoles"); // third table is named Cookbooks
+                x.MapLeftKey("UserId");
+                x.MapRightKey("RoleId");
+    });
+        }
     }
 }
