@@ -17,6 +17,11 @@ namespace SAC.Domain
         public SacContext(string connectionStringName)
             : base(connectionStringName) { }
 
+        public static SacContext Create()
+        {
+            return new SacContext();
+        }
+
         public DbSet<Color> Colors { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Archer> Archers { get; set; }
