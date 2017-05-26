@@ -44,21 +44,21 @@ namespace Migrations
         {
 
             context.Roles.AddOrUpdate(x => x.Id,
-                new Role()
+                new AspNetRole()
                 {
-                    Id = NextEntityId,
+                    Id = Guid.NewGuid().ToString(),
                     Name = "Tech Admin"
                 },
 
-                new Role()
+                new AspNetRole()
                 {
-                    Id = NextEntityId,
+                    Id = Guid.NewGuid().ToString(),
                     Name = "Club Admin"
                 },
 
-                new Role()
+                new AspNetRole()
                 {
-                    Id = NextEntityId,
+                    Id = Guid.NewGuid().ToString(),
                     Name = "Club User",
                 }
             );
