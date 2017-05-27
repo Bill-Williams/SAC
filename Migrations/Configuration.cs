@@ -10,7 +10,7 @@ using SAC.Domain.Models;
 
 namespace SAC.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<SacContext>
+    public sealed class Configuration : DbMigrationsConfiguration<SacContext>
     {
         public Configuration()
         {
