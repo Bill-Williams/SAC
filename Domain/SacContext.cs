@@ -12,7 +12,7 @@ namespace SAC.Domain
         }
 
         public SacContext()
-            : base("SAC") { }
+            : base("SacContext") { }
 
         public SacContext(string connectionStringName)
             : base(connectionStringName) { }
