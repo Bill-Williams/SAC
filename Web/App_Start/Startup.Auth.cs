@@ -48,23 +48,32 @@ namespace SAC.Web
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseMicrosoftAccountAuthentication(
+                clientId: "69997243-9b41-4890-a449-3cdc91c02ac9",
+                clientSecret: System.Environment.GetEnvironmentVariable("api-MS"));
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            app.UseTwitterAuthentication(
+               consumerKey: "gObyL8ird9nMbTlyEB0vh4mgA",
+               consumerSecret: System.Environment.GetEnvironmentVariable("api-Twitter"));
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+//There are two keys for Facebook.  One is live and one is test.  They don't allow multi domain access from what I can tell.
+#if DEBUG
+            //TEST
+            app.UseFacebookAuthentication(
+               appId: "438970499791540",
+               appSecret: System.Environment.GetEnvironmentVariable("api-Facebook"));
+#else
+            // LIVE
+            app.UseFacebookAuthentication(
+               appId: "424419464593148",
+               appSecret: System.Environment.GetEnvironmentVariable("api-Facebook"));
+#endif
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "65715418484-rthhdl9q054anp71utc9eh1ikno739sn.apps.googleusercontent.com",
+                ClientSecret = System.Environment.GetEnvironmentVariable("api-Google")
+            });
         }
     }
 }
