@@ -24,7 +24,7 @@ namespace SAC.Web
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("azure_7569176bdd96be4db440d7fc26d127c8@azure.com"),
+                From = new EmailAddress("azure_7569176bdd96be4db440d7fc26d127c8@azure.com","Southern Archery Circut"),
                 Subject = message.Subject,
                 PlainTextContent = message.Body,
                 HtmlContent = message.Body
