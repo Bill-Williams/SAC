@@ -124,19 +124,6 @@ namespace SAC.Migrations
                 new Club()
                 {
                     Id = NextEntityId,
-                    Name = "Fort Mill Bowhunters",
-                    Address = "1400 Williams Rd",
-                    CityStateZip = "Fort Mill, SC",
-                    Contact = "Adam McAnulty 803-242-3149  or  Billy Evans 803-412-1528",
-                    Phone = "",
-                    Email = "kitchensthatworkinc@gmail.com ",
-                    Website = "https://www.facebook.com/pages/Fort-Mill-Bowhunters/361416573871861?fref=ts",
-                    IconFileName = "FortMill.png"
-                },
-
-                new Club()
-                {
-                    Id = NextEntityId,
                     Name = "Indian Trail Bow Club",
                     Address = "",
                     CityStateZip = "Indian Trail, NC",
