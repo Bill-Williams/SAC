@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using SAC.Web.Models;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace SAC.Web
 {
@@ -18,8 +20,17 @@ namespace SAC.Web
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            var apiKey = System.Environment.GetEnvironmentVariable("SendGrid");
+            var client = new SendGridClient(apiKey);
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("azure_7569176bdd96be4db440d7fc26d127c8@azure.com"),
+                Subject = message.Subject,
+                PlainTextContent = message.Body,
+                HtmlContent = message.Body
+            };
+            msg.AddTo(new EmailAddress(message.Destination, null));
+            return client.SendEmailAsync(msg);
         }
     }
 
