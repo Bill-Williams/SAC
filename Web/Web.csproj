@@ -210,6 +210,12 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\CRPC.jpg" />
+    <Content Include="Content\Images\FortMill.png" />
+    <Content Include="Content\Images\IndianTrail.jpg" />
+    <Content Include="Content\Images\Lakeview.jpg" />
+    <Content Include="Content\Images\RobinHood.jpg" />
+    <Content Include="Content\Images\SAC.PNG" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -288,7 +294,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
