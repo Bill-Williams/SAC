@@ -47,19 +47,19 @@ namespace SAC.Migrations
             context.Roles.AddOrUpdate(x => x.Id,
                 new AspNetRole()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = "0c1c19f6-bbe1-467d-925b-b23b7a96d8ac",
                     Name = "Tech Admin"
                 },
 
                 new AspNetRole()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = "0962b7ff-e0d3-4f51-8702-42310439ed5b",
                     Name = "Club Admin"
                 },
 
                 new AspNetRole()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = "14d00ad1-c170-4a68-a63c-7d0d9d139e84",
                     Name = "Club User",
                 }
             );
