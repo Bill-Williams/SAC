@@ -16,6 +16,8 @@ namespace SAC.Domain.Models
             AspNetRoles = new HashSet<AspNetRole>();
         }
 
+        [Key]
+        [StringLength(128)]
         public string Id { get; set; }
 
         [StringLength(256)]
@@ -43,9 +45,11 @@ namespace SAC.Domain.Models
         [StringLength(256)]
         public string UserName { get; set; }
 
+        [ForeignKey("UserId")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
 
+        [ForeignKey("UserId")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
 

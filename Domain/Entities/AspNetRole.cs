@@ -14,6 +14,7 @@ namespace SAC.Domain.Models
             AspNetUsers = new HashSet<AspNetUser>();
         }
 
+        [Key]
         public string Id { get; set; }
 
         [Required]

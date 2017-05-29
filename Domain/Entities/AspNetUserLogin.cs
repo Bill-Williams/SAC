@@ -20,6 +20,7 @@ namespace SAC.Domain.Models
         [Column(Order = 2)]
         public string UserId { get; set; }
 
-        public virtual AspNetUser AspNetUser { get; set; }
+        [ForeignKey("UserId")]
+        public virtual AspNetUser AspNetUser { get; }
     }
 }

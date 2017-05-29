@@ -8,16 +8,21 @@ namespace SAC.Domain.Models
 {
     public partial class AspNetUserClaim
     {
+        [Key]
+        [Column(Order = 0)]
         public int Id { get; set; }
 
         [Required]
-        [StringLength(128)]
+        [Column(Order = 1)]
         public string UserId { get; set; }
 
+        [Column(Order = 2)]
         public string ClaimType { get; set; }
 
+        [Column(Order = 3)]
         public string ClaimValue { get; set; }
 
-        public virtual AspNetUser AspNetUser { get; set; }
+        [ForeignKey("UserId")]
+        public virtual AspNetUser AspNetUser { get; }
     }
 }
