@@ -9,7 +9,7 @@ namespace SAC.Web.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("IdentityConn", throwIfV1Schema: false)
+            : base("SacConn", throwIfV1Schema: false)
         {
         }
 
