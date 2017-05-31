@@ -36,7 +36,7 @@ namespace SAC.Domain
                 .WithMany(x => x.AspNetUsers)
             .Map(x =>
             {
-                x.ToTable("AspNetUserRoles"); // third table is named Cookbooks
+                x.ToTable("AspNetUserRoles");
                 x.MapLeftKey("UserId");
                 x.MapRightKey("RoleId");
     });

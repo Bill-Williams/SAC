@@ -65,6 +65,7 @@
     <Compile Include="Entities\Schedule.cs" />
     <Compile Include="Entities\Competitor.cs" />
     <Compile Include="Entities\Tournament.cs" />
+    <Compile Include="TypeConverters\AspNetRoleTypeConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
