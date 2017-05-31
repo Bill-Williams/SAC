@@ -116,7 +116,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AspNetRoles, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.ListBoxFor(model => model.AspNetRoles, ((SAC.Web.Controllers.AdminController)ViewContext.Controller).GetRoles())
+                @Html.ListBoxFor(model => model.AspNetRoles, ((SAC.Web.Controllers.AdminController)ViewContext.Controller).GetRoles(), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AspNetRoles, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -137,7 +137,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
-            $("AspNetRoles").chosen();
+            $("#AspNetRoles").chosen();
         });
     </script>
 }
