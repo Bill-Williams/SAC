@@ -24,14 +24,16 @@ namespace SAC.Domain.TypeConverters
         {
             if (value is string)
             {
-                using (var db = new SacContext())
+                var db = SacContext.GetCurrentContext();
+                
+                //var c = db.Roles.AsNoTracking().FirstOrDefault(u => u.Id == (string)value);
+                var c = db.Roles.FirstOrDefault(u => u.Id == (string)value);
+
+                if (null != c)
                 {
-                    var c = db.Roles.AsNoTracking().FirstOrDefault(u => u.Id == (string)value);
-                    if (null != c)
-                    {
-                        return c;
-                    }
+                    return c;
                 }
+                
             }
             return base.ConvertFrom(context, culture, value);
         }

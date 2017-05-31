@@ -13,7 +13,7 @@ namespace SAC.Web.Controllers
 {
     public class AdminController : Controller
     {
-        private SacContext db = new SacContext();
+        private SacContext db = SacContext.GetCurrentContext();
 
         public MultiSelectList GetRoles()
         {
@@ -78,8 +78,12 @@ namespace SAC.Web.Controllers
 
                 if (TryUpdateModel<AspNetUser>(sourceUser))
                 {
-                    sourceUser.AspNetRoles.Select(r => db.Set<AspNetRole>().Attach(r));
-
+                    //foreach(var role in sourceUser.AspNetRoles)
+                    //{
+                    //    db.Set<AspNetRole>().Attach(role);
+                    //    db.Entry<AspNetRole>(role).State = EntityState.Modified;
+                    //}
+                    
                     db.SaveChanges();
                 }
                 return RedirectToAction("Users");
@@ -119,7 +123,7 @@ namespace SAC.Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
             }
             base.Dispose(disposing);
         }

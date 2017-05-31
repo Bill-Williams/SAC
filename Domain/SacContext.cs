@@ -5,6 +5,17 @@ namespace SAC.Domain
 {
     public class SacContext : DbContext
     {
+        private static SacContext _current { get; set; }
+
+        public static SacContext GetCurrentContext()
+        {
+            if(null == _current)
+            {
+                _current = new SacContext();
+            }
+
+            return _current;
+        }
 
         static SacContext()
         {
