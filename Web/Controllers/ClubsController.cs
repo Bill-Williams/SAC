@@ -39,7 +39,7 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Club/Create
-        [Authorize]
+        [Authorize(Roles = "Club Admin, Tech Admin")]
         public ActionResult Create()
         {
             return View();
@@ -48,7 +48,7 @@ namespace SAC.Web.Controllers
         // POST: Club/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
+        [Authorize(Roles = "Club Admin, Tech Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Address,CityStateZip,Contact,Phone,Email,Website,Directions,IconFileName")] Club club)
@@ -64,7 +64,7 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Club/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Club Admin, Tech Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -82,7 +82,7 @@ namespace SAC.Web.Controllers
         // POST: Club/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
+        [Authorize(Roles = "Club Admin, Tech Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Address,CityStateZip,Contact,Phone,Email,Website,Directions,IconFileName")] Club club)
@@ -97,7 +97,7 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Club/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Club Admin, Tech Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -113,7 +113,7 @@ namespace SAC.Web.Controllers
         }
 
         // POST: Club/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Club Admin, Tech Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
