@@ -48,18 +48,18 @@ namespace SAC.Web
             // Uncomment the following lines to enable logging in with third party login providers
             app.UseMicrosoftAccountAuthentication(
                 clientId: "69997243-9b41-4890-a449-3cdc91c02ac9",
-                clientSecret: System.Environment.GetEnvironmentVariable("api-MS"));
+                clientSecret: System.Environment.GetEnvironmentVariable("sac-MS"));
 
             app.UseTwitterAuthentication(
                consumerKey: "gObyL8ird9nMbTlyEB0vh4mgA",
-               consumerSecret: System.Environment.GetEnvironmentVariable("api-Twitter"));
+               consumerSecret: System.Environment.GetEnvironmentVariable("sac-Twitter"));
 
 //There are two keys for Facebook.  One is live and one is test.  They don't allow multi domain access from what I can tell.
 #if DEBUG
             //TEST
             app.UseFacebookAuthentication(
                appId: "438970499791540",
-               appSecret: System.Environment.GetEnvironmentVariable("api-Facebook"));
+               appSecret: System.Environment.GetEnvironmentVariable("sac-Facebook"));
 #else
             // LIVE
             app.UseFacebookAuthentication(
@@ -70,7 +70,7 @@ namespace SAC.Web
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = "65715418484-rthhdl9q054anp71utc9eh1ikno739sn.apps.googleusercontent.com",
-                ClientSecret = System.Environment.GetEnvironmentVariable("api-Google")
+                ClientSecret = System.Environment.GetEnvironmentVariable("sac-Google")
             });
         }
     }
