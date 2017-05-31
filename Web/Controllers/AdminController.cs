@@ -11,6 +11,8 @@ using SAC.Domain.Models;
 
 namespace SAC.Web.Controllers
 {
+    [Authorize(Roles = "Tech Admin")]
+    [RequireHttps]
     public class AdminController : Controller
     {
         private SacContext db = SacContext.GetCurrentContext();
