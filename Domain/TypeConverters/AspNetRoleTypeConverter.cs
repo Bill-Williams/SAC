@@ -26,9 +26,7 @@ namespace SAC.Domain.TypeConverters
             {
                 using (var db = new SacContext())
                 {
-                    //var c = db.Roles.AsNoTracking().FirstOrDefault(u => u.Id == (string)value); //.Where(u => u.Id == (string)value).FirstOrDefault();
-                    var c = db.Roles.FirstOrDefault(u => u.Id == (string)value); //.Where(u => u.Id == (string)value).FirstOrDefault();
-                    db.Set<AspNetRole>().Remove(c);
+                    var c = db.Roles.AsNoTracking().FirstOrDefault(u => u.Id == (string)value);
                     if (null != c)
                     {
                         return c;
