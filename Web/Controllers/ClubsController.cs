@@ -23,6 +23,21 @@ namespace SAC.Web.Controllers
             return View(db.Clubs.ToList());
         }
 
+        // GET: Club/Directions/5
+        public ActionResult Directions(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Club club = db.Clubs.Find(id);
+            if (club == null)
+            {
+                return HttpNotFound();
+            }
+            return View(club);
+        }
+
         // GET: Club/Details/5
         public ActionResult Details(int? id)
         {

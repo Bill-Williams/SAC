@@ -12,7 +12,7 @@ namespace SAC.Web
                       "~/Scripts/chosen.jquery.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js").Include(
+                        "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -29,8 +29,11 @@ namespace SAC.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"
-                      , "~/Content/chosen.css"));
+                      "~/Content/site.css",
+                      "~/Content/chosen.css",
+                      "~/Content/themes/darkhive/jquery-ui.css",
+                      "~/Content/themes/darkhive/jquery-ui.structure.css",
+                      "~/Content/themes/darkhive/jquery-ui.theme.css"));
         }
     }
 }

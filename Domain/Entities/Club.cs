@@ -22,13 +22,19 @@ namespace SAC.Domain.Models
         [MaxLength(250)]
         public string Contact { get; set; }
 
-        [MaxLength(100)]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Please enter a valid Phone number")]
+        [DisplayFormat(ApplyFormatInEditMode = true, ConvertEmptyStringToNull = true)]
         public string Phone { get; set; }
 
-        [MaxLength(100)]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
+        [DisplayFormat(ApplyFormatInEditMode = true, ConvertEmptyStringToNull = true)]
         public string Email { get; set; }
 
-        [MaxLength(100)]
+        [DataType(DataType.Url)]
+        [Url(ErrorMessage = "Please enter a valid URL")]
+        [DisplayFormat(ApplyFormatInEditMode = true, ConvertEmptyStringToNull = true)]
         public string Website { get; set; }
 
         [MaxLength(2000)]

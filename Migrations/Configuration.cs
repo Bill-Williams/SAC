@@ -15,7 +15,6 @@ namespace SAC.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-
         }
 
         protected override void Seed(SacContext context)
@@ -32,7 +31,7 @@ namespace SAC.Migrations
             SeedRoles(context);
 
             NextEntityId = 0;
-            SeedClubs(context);
+            //SeedClubs(context);
             
             NextEntityId = 0;
             SeedClasses(context);
@@ -91,7 +90,7 @@ namespace SAC.Migrations
                     Contact = "Bill Steele",
                     Phone = "(803) 548-7252",
                     Email = "BillSteele@LeroySprings.com",
-                    Website = "www.ascgreenway.org",
+                    Website = "http://www.ascgreenway.org",
                     IconFileName = "Greenway.png"
                 },
 
@@ -115,7 +114,7 @@ namespace SAC.Migrations
                     Address = "1400 Williams Rd",
                     CityStateZip = "Fort Mill, SC",
                     Contact = "Adam McAnulty 803-242-3149  or  Billy Evans 803-412-1528",
-                    Phone = "",
+                    Phone = "(803) 242-3149",
                     Email = "kitchensthatworkinc@gmail.com ",
                     Website = "https://www.facebook.com/pages/Fort-Mill-Bowhunters/361416573871861?fref=ts",
                     IconFileName = "FortMill.png"
@@ -130,7 +129,7 @@ namespace SAC.Migrations
                     Contact = "Shane Kaylor",
                     Phone = "(704) 779-7253",
                     Email = "",
-                    Website = "www.indiantrailbowclub.com",
+                    Website = "http://www.indiantrailbowclub.com",
                     IconFileName = "IndianTrail.png"
                 },
 

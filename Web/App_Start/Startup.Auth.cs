@@ -64,7 +64,7 @@ namespace SAC.Web
             // LIVE
             app.UseFacebookAuthentication(
                appId: "424419464593148",
-               appSecret: System.Environment.GetEnvironmentVariable("api-Facebook"));
+               appSecret: System.Environment.GetEnvironmentVariable("sac-Facebook"));
 #endif
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()

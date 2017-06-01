@@ -4,87 +4,63 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="jumbotron">
+    <h2>Your Local Clubs</h2>
+    <p class="lead">Find information about your local clubs below and check out their websites.  Get driving directions and come visit.</p>
+</div>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4">
+
+            <h3>@item.Name</h3>
+
+            <div class="row">
+                <div class="col-md-10">
+                    @Html.ActionLink("Get Directions", "Directions", new { id = item.Id }, htmlAttributes: new { @class = "ui-button ui-widget ui-corner-all" })
+                </div>
+            </div>
+
+            <div class="row">
+                @Html.LabelFor(model => item.Website, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <a href="@item.Website" target="_blank">Click Here To Visit Now</a>
+                </div>
+            </div>
+
+            <div class="row">
+                @Html.LabelFor(model => item.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <a href="mailto:@item.Email?Subject=Infromation about @item.Name">@item.Contact</a>
+                </div>
+            </div>
+
+            <div class="row">
+                @Html.LabelFor(model => item.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <a href="tel:@item.Phone">@item.Phone</a>
+                </div>
+            </div>
+
+            @if (User.IsInRole("Club Admin")
+               || User.IsInRole("Tech Admin"))
+            {
+                <div class="form-group">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </div>
+            }
+
+        </div>
+    }
+</div>
 
 @if (User.IsInRole("Club Admin")
-|| User.IsInRole("Tech Admin"))
+                || User.IsInRole("Tech Admin"))
 {
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 }
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CityStateZip)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Contact)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Website)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Directions)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IconFileName)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CityStateZip)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Contact)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Website)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Directions)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IconFileName)
-        </td>
-        @if (User.IsInRole("Club Admin")
-        || User.IsInRole("Tech Admin"))
-        {
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-        }
-    </tr>
-}
-
-</table>

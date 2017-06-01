@@ -62,10 +62,16 @@
     <Compile Include="Migrations\201705291144251_AspNetUsers2.Designer.cs">
       <DependentUpon>201705291144251_AspNetUsers2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705311453314_Clubs.cs" />
+    <Compile Include="Migrations\201705311453314_Clubs.Designer.cs">
+      <DependentUpon>201705311453314_Clubs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +90,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705291144251_AspNetUsers2.resx">
       <DependentUpon>201705291144251_AspNetUsers2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705311453314_Clubs.resx">
+      <DependentUpon>201705311453314_Clubs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
