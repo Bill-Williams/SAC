@@ -12,32 +12,40 @@ namespace SAC.Migrations
 {
     public sealed class Configuration : DbMigrationsConfiguration<SacContext>
     {
+        private bool initialMigration { get; set; }
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+
+            //Check if the initial migration is pending
+            var migrator = new DbMigrator(this);
+            initialMigration = migrator.GetPendingMigrations().Any(m => m.Contains("Initial"));
         }
 
         protected override void Seed(SacContext context)
         {
-
-          
-            NextEntityId = 0;
-            SeedColors(context);
-            // Save to get foreign keys
-
-            context.SaveChanges();
-
-            NextEntityId = 0;
-            SeedRoles(context);
-
-            NextEntityId = 0;
-            //SeedClubs(context);
+            //only seed if initial migration was performed this update
+            if (initialMigration)
+            {
+                NextEntityId = 0;
+                SeedColors(context);
             
-            NextEntityId = 0;
-            SeedClasses(context);
+                // Save to get foreign keys
+                context.SaveChanges();
 
-            // Save everying added to the context
-            context.SaveChanges();
+                NextEntityId = 0;
+                SeedRoles(context);
+
+                NextEntityId = 0;
+                SeedClubs(context);
+
+                NextEntityId = 0;
+                SeedClasses(context);
+
+                // Save everying added to the context
+                context.SaveChanges();
+            }
         }
 
         private void SeedRoles(SacContext context)
@@ -67,6 +75,7 @@ namespace SAC.Migrations
 
         private void SeedClubs(SacContext context)
         {
+
             context.Clubs.AddOrUpdate(x => x.Id,
                 new Club()
                 {
@@ -101,8 +110,8 @@ namespace SAC.Migrations
                     Address = "Chester State Park",
                     CityStateZip = "Chester, SC",
                     Contact = "Jason or Dianna Ghent",
-                    Phone = "",
-                    Email = "",
+                    //Phone = "",
+                    //Email = "",
                     Website = "https://www.facebook.com/lakeview.archeryclub?fref=ts",
                     IconFileName = "Lakeview.png"
                 },
@@ -115,7 +124,7 @@ namespace SAC.Migrations
                     CityStateZip = "Fort Mill, SC",
                     Contact = "Adam McAnulty 803-242-3149  or  Billy Evans 803-412-1528",
                     Phone = "(803) 242-3149",
-                    Email = "kitchensthatworkinc@gmail.com ",
+                    Email = "kitchensthatworkinc@gmail.com",
                     Website = "https://www.facebook.com/pages/Fort-Mill-Bowhunters/361416573871861?fref=ts",
                     IconFileName = "FortMill.png"
                 },
@@ -128,7 +137,7 @@ namespace SAC.Migrations
                     CityStateZip = "Indian Trail, NC",
                     Contact = "Shane Kaylor",
                     Phone = "(704) 779-7253",
-                    Email = "",
+                    //Email = "",
                     Website = "http://www.indiantrailbowclub.com",
                     IconFileName = "IndianTrail.png"
                 },
