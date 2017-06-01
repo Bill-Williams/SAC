@@ -380,10 +380,6 @@
       <Project>{4535e84b-614a-4af1-840d-fa6b3bb00672}</Project>
       <Name>Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Migrations\Migrations.csproj">
-      <Project>{3d5b5e3b-0e65-411e-a1d1-71ee202d8db8}</Project>
-      <Name>Migrations</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
