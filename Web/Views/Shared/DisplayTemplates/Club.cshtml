@@ -1,0 +1,39 @@
+﻿@model SAC.Domain.Models.Club
+
+<h3>@Model.Name</h3>
+
+<div class="row">
+    <div class="col-md-10">
+        @Html.ActionLink("Get Directions", "Directions", new { id = Model.Id }, htmlAttributes: new { @class = "ui-button ui-widget ui-corner-all" })
+    </div>
+</div>
+
+<div class="row">
+    @Html.LabelFor(model => model.Website, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <a href="@Model.Website" target="_blank">Click Here To Visit Now</a>
+    </div>
+</div>
+
+<div class="row">
+    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <a href="mailto:@Model.Email?Subject=Infromation about @Model.Name">@Model.Contact</a>
+    </div>
+</div>
+
+<div class="row">
+    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DisplayFor(model => model.Phone, "Phone")
+    </div>
+</div>
+
+@if (User.IsInRole("Club Admin")
+    || User.IsInRole("Tech Admin"))
+{
+    <div class="form-group">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+    </div>
+}
