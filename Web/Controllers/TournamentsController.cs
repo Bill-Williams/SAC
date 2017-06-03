@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SAC.Domain;
+using SAC.Domain.Models;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using SAC.Domain;
-using SAC.Domain.Models;
 
 namespace SAC.Web.Controllers
 {
@@ -18,7 +15,7 @@ namespace SAC.Web.Controllers
         // GET: Tournaments
         public ActionResult Index()
         {
-            var tournaments = db.Tournaments.Include(t => t.Schedule);
+            var tournaments = db.Tournaments.Include(t => t.Schedule.Club);
             return View(tournaments.ToList());
         }
 
@@ -29,7 +26,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tournament tournament = db.Tournaments.Find(id);
+            Tournament tournament = db.Tournaments.Include(t => t.Schedule.Club).FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();

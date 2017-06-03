@@ -36,7 +36,6 @@ namespace SAC.Domain.Models
         public int ColorId { get; set; }
         [ForeignKey("ColorId")]
         [Column(Order = 1)]
-        [Display(Name = "Color")]
         public virtual Color Color { get; set; }
     }
 }

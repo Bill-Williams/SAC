@@ -29,7 +29,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Schedule schedule = db.Schedules.Find(id);
+            Schedule schedule = db.Schedules.Include(s => s.Club).FirstOrDefault(c => c.Id == id);
             if (schedule == null)
             {
                 return HttpNotFound();

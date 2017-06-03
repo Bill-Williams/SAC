@@ -18,7 +18,7 @@ namespace SAC.Web.Controllers
         // GET: Classes
         public ActionResult Index()
         {
-            var classes = db.Classes.Include(x => x.Color);
+            var classes = db.Classes.Include(c => c.Color);
             return View(classes.ToList());
         }
 
@@ -29,7 +29,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Class @class = db.Classes.Include(x => x.Color).FirstOrDefault(x => x.Id == id);
+            Class @class = db.Classes.Include(x => x.Color).FirstOrDefault(c => c.Id == id);
             if (@class == null)
             {
                 return HttpNotFound();
