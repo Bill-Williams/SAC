@@ -193,6 +193,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
     <Compile Include="Controllers\ClubsController.cs" />
+    <Compile Include="Controllers\ColorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DbContexts\ApplicationDbContext.cs" />
@@ -379,6 +380,11 @@
     <Content Include="Views\Classes\Details.cshtml" />
     <Content Include="Views\Classes\Edit.cshtml" />
     <Content Include="Views\Classes\Index.cshtml" />
+    <Content Include="Views\Colors\Create.cshtml" />
+    <Content Include="Views\Colors\Delete.cshtml" />
+    <Content Include="Views\Colors\Details.cshtml" />
+    <Content Include="Views\Colors\Edit.cshtml" />
+    <Content Include="Views\Colors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
