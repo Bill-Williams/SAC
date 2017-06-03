@@ -1,3 +1,5 @@
-﻿<a href='@Url.Action("Contact", "HomeController")'>
-    <img src='@Url.Content("~/Content/Images/facebook.png")' />
+﻿@model SAC.Web.Models.ContactViewModel
+
+<a href='@Model.SacFacebookURL' target="_blank">
+    <img src='@Url.Content(Model.FacebookImg)' />
 </a>

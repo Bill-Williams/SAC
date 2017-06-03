@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SAC.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -25,9 +26,7 @@ namespace SAC.Web.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Url = "https://www.facebook.com/southernarcherycircuit/";
-
-            return View();
+            return View(new ContactViewModel());
         }
     }
 }
