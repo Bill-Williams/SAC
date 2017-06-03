@@ -28,19 +28,15 @@ namespace SAC.Migrations
             //only seed if initial migration was performed this update
             if (initialMigration)
             {
-                NextEntityId = 0;
                 SeedColors(context);
             
                 // Save to get foreign keys
                 context.SaveChanges();
 
-                NextEntityId = 0;
                 SeedRoles(context);
 
-                NextEntityId = 0;
                 SeedClubs(context);
 
-                NextEntityId = 0;
                 SeedClasses(context);
 
                 // Save everying added to the context
@@ -75,11 +71,9 @@ namespace SAC.Migrations
 
         private void SeedClubs(SacContext context)
         {
-
             context.Clubs.AddOrUpdate(x => x.Id,
                 new Club()
                 {
-                    Id = NextEntityId,
                     Name = "Robin Hood Archery Club",
                     Address = "3870 Homestead Rd",
                     CityStateZip = "Rock Hill, SC",
@@ -87,12 +81,12 @@ namespace SAC.Migrations
                     Phone = "(803) 329-6639",
                     Email = "ken@huntintheworld.com",
                     Website = "https://www.facebook.com/pages/MECKLENBURG-BOWHUNTERS/132290430122624?ref=hl",
-                    IconFileName = "RobinHood.png"
+                    IconFileName = "RobinHood.png",
+                    ShortName = "RobinHood"
                 },
 
                 new Club()
                 {
-                    Id = NextEntityId,
                     Name = "Greenway Archery Club",
                     Address = "1300 Hwy. 21 By-pass",
                     CityStateZip = "Fort Mill, SC",
@@ -100,12 +94,12 @@ namespace SAC.Migrations
                     Phone = "(803) 548-7252",
                     Email = "BillSteele@LeroySprings.com",
                     Website = "http://www.ascgreenway.org",
-                    IconFileName = "Greenway.png"
+                    IconFileName = "Greenway.png",
+                    ShortName = "Greenway"
                 },
 
                 new Club()
                 {
-                    Id = NextEntityId,
                     Name = "Lakeview Archery Club",
                     Address = "Chester State Park",
                     CityStateZip = "Chester, SC",
@@ -113,12 +107,12 @@ namespace SAC.Migrations
                     //Phone = "",
                     //Email = "",
                     Website = "https://www.facebook.com/lakeview.archeryclub?fref=ts",
-                    IconFileName = "Lakeview.png"
+                    IconFileName = "Lakeview.png",
+                    ShortName = "Lakeview"
                 },
 
                 new Club()
                 {
-                    Id = NextEntityId,
                     Name = "Fort Mill Bowhunters",
                     Address = "1400 Williams Rd",
                     CityStateZip = "Fort Mill, SC",
@@ -126,12 +120,12 @@ namespace SAC.Migrations
                     Phone = "(803) 242-3149",
                     Email = "kitchensthatworkinc@gmail.com",
                     Website = "https://www.facebook.com/pages/Fort-Mill-Bowhunters/361416573871861?fref=ts",
-                    IconFileName = "FortMill.png"
+                    IconFileName = "FortMill.png",
+                    ShortName = "FortMill"
                 },
 
                 new Club()
                 {
-                    Id = NextEntityId,
                     Name = "Indian Trail Bow Club",
                     Address = "",
                     CityStateZip = "Indian Trail, NC",
@@ -139,12 +133,12 @@ namespace SAC.Migrations
                     Phone = "(704) 779-7253",
                     //Email = "",
                     Website = "http://www.indiantrailbowclub.com",
-                    IconFileName = "IndianTrail.png"
+                    IconFileName = "IndianTrail.png",
+                    ShortName = "IndianTrail"
                 },
 
                 new Club()
                 {
-                    Id = NextEntityId,
                     Name = "Charlotte Rifle & Pistol Club",
                     Address = "9130 Kensington Dr.",
                     CityStateZip = "Waxhaw, NC 28173",
@@ -152,60 +146,53 @@ namespace SAC.Migrations
                     Phone = "(704) 930-8818",
                     Email = "Archery@CRPCPrograms.org",
                     Website = "http://crpc.clubexpress.com/",
-                    IconFileName = "CRPC.png"
+                    IconFileName = "CRPC.png",
+                    ShortName = "CRPC"
                 }
             );
         }
 
         private void SeedColors(SacContext context)
         {
-
             context.Colors.AddOrUpdate(x => x.Id,
                 new Color()
                 {
-                    Id = NextEntityId,
                     Name = "Green",
                     HexCode = "#00FF00"
                 },
 
                 new Color()
                 {
-                    Id = NextEntityId,
                     Name = "Yellow",
                     HexCode = "#FFFF00"
                 },
 
                 new Color()
                 {
-                    Id = NextEntityId,
                     Name = "Blue",
                     HexCode = "#0000FF"
                 },
 
                 new Color()
                 {
-                    Id = NextEntityId,
                     Name = "Red",
                     HexCode = "#FF0000"
                 },
 
                 new Color()
                 {
-                    Id = NextEntityId,
                     Name = "Purple",
                     HexCode = "#800080"
                 },
 
                 new Color()
                 {
-                    Id = NextEntityId,
                     Name = "Orange",
                     HexCode = "#FFA500"
                 },
 
                 new Color()
                 {
-                    Id = NextEntityId,
                     Name = "White",
                     HexCode = "#FFFFFF"
                 }
@@ -416,16 +403,6 @@ namespace SAC.Migrations
                     ColorId = colors["Orange"]
                 }
             );
-        }
-
-        private int _entityId;
-        private int NextEntityId {
-            get
-            {
-                _entityId++;
-                return _entityId;
-            }
-            set { _entityId = value; }
         }
     }
 }

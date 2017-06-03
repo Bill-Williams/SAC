@@ -11,11 +11,12 @@ namespace SAC.Domain.Models
     public class Schedule : BaseEntity
     {
         [Required]
-        public int ClubId { get; set; }
+        public Guid ClubId { get; set; }
         [ForeignKey("ClubId")]
         [Column(Order = 1)]
         public virtual Club Club { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Club/Directions/5
-        public ActionResult Directions(int? id)
+        public ActionResult Directions(Guid? id)
         {
             if (id == null)
             {
@@ -65,7 +65,7 @@ namespace SAC.Web.Controllers
 
         // GET: Club/Edit/5
         [Authorize(Roles = "Club Admin, Tech Admin")]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
@@ -98,7 +98,7 @@ namespace SAC.Web.Controllers
 
         // GET: Club/Delete/5
         [Authorize(Roles = "Club Admin, Tech Admin")]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {

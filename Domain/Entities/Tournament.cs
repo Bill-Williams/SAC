@@ -11,7 +11,7 @@ namespace SAC.Domain.Models
     public class Tournament : BaseEntity
     {
         [Required]
-        public int ScheduleId { get; set; }
+        public Guid ScheduleId { get; set; }
         [ForeignKey("ScheduleId")]
         [Column(Order = 1)]
         public virtual Schedule Schedule { get; set; }

@@ -13,6 +13,9 @@ namespace SAC.Domain.Models
         [MaxLength(100)]
         public string Name { get; set; }
 
+        [MaxLength(15)]
+        public string ShortName { get; set; }
+
         [MaxLength(100)]
         public string Address { get; set; }
 

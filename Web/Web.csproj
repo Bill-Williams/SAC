@@ -403,6 +403,8 @@
     <Content Include="Views\Tournaments\Details.cshtml" />
     <Content Include="Views\Tournaments\Edit.cshtml" />
     <Content Include="Views\Tournaments\Index.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Shortdate.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\TournamentMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

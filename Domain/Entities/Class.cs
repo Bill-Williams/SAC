@@ -33,7 +33,7 @@ namespace SAC.Domain.Models
         public string Restrictions { get; set; }
 
         [Required]
-        public int ColorId { get; set; }
+        public Guid ColorId { get; set; }
         [ForeignKey("ColorId")]
         [Column(Order = 1)]
         public virtual Color Color { get; set; }

@@ -1,0 +1,11 @@
+﻿@model IEnumerable<SAC.Domain.Models.Tournament>
+
+<div>
+    @foreach (var item in Model)
+    {
+        <div style="margin-bottom:10px">
+            @{var linkText = $"{item.Schedule.Date.ToShortDateString()}  {item.Schedule.Club.ShortName}";}
+            <b>@Html.ActionLink(linkText, "Details", "Tournaments", new { id = item.Id }, null)</b>
+        </div>
+    }
+</div>

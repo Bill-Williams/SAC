@@ -1,4 +1,5 @@
-﻿using SAC.Domain;
+﻿using System;
+using SAC.Domain;
 using SAC.Domain.Models;
 using System.Data;
 using System.Data.Entity;
@@ -20,7 +21,7 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Tournaments/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
@@ -60,7 +61,7 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Tournaments/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
@@ -93,7 +94,7 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Tournaments/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {

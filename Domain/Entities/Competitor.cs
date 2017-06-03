@@ -11,13 +11,13 @@ namespace SAC.Domain.Models
     public class Competitor : BaseEntity
     {
         [Required]
-        public int ArcherId { get; set; }
+        public Guid ArcherId { get; set; }
         [ForeignKey("ArcherId")]
         [Column(Order = 1)]
         public virtual Archer Archer { get; set; }
 
         [Required]
-        public int ClassId { get; set; }
+        public Guid ClassId { get; set; }
         [ForeignKey("ClassId")]
         [Column(Order = 1)]
         public virtual Class Class { get; set; }

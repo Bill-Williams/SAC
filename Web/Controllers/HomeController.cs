@@ -4,16 +4,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SAC.Domain;
+using SAC.Domain.Models;
+using System.Data.Entity;
 
 namespace SAC.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private SacContext db = new SacContext();
+
         public ActionResult Index()
         {
             ViewBag.Title = "Southern Archery Circuit";
             ViewBag.Message = "Tournament Scores";
-            return View();
+            
+            // Get the 
+            var tournaments = db.Tournaments
+                .Where(t => t.Schedule.Date.Year == DateTime.Now.Year)
+                .Include(t => t.Schedule.Club).ToList();
+
+            return View(tournaments.OrderByDescending(t => t.Schedule.Date));
         }
 
         public ActionResult About()

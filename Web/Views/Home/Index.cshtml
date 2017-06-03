@@ -1,4 +1,6 @@
-﻿<div>
+﻿@model IEnumerable<SAC.Domain.Models.Tournament>
+
+<div class="row">
 
     <div style="float: left">
         <img src="~/Content/Images/SAC.PNG" />
@@ -10,6 +12,14 @@
     </div>
 </div>
 
-<div style="float: left">
-    <img src="~/Content/Images/SAC2.jpg" />
+
+
+<div class="row" style="margin-top:20px">
+    <div class="col-sm-push-3" style="float:left; margin-right:50px">
+        @Html.DisplayFor(x => x, "TournamentMenu")
+    </div>
+
+    <div class="col-sm-push-3" align="center">
+        <img style width="600" height="300" src="~/Content/Images/SAC2.jpg" />
+    </div>
 </div>
