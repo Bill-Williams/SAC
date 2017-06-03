@@ -10,19 +10,22 @@ namespace SAC.Web.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Title = "Southern Archery Circuit";
+            ViewBag.Message = "Tournament Scores";
             return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Title = "Southern Archery Circuit";
+            ViewBag.Message = "The Southern Archery Circuit is comprised of archery clubs that host 3D archery tournaments in NC and SC.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Url = "https://www.facebook.com/southernarcherycircuit/";
 
             return View();
         }

@@ -214,11 +214,13 @@
     <Content Include="Content\chosen.css" />
     <Content Include="Content\chosen.min.css" />
     <Content Include="Content\Images\CRPC.jpg" />
+    <Content Include="Content\Images\facebook.png" />
     <Content Include="Content\Images\FortMill.png" />
     <Content Include="Content\Images\IndianTrail.jpg" />
     <Content Include="Content\Images\Lakeview.jpg" />
     <Content Include="Content\Images\RobinHood.jpg" />
     <Content Include="Content\Images\SAC.PNG" />
+    <Content Include="Content\Images\SAC2.jpg" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
