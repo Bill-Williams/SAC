@@ -15,7 +15,7 @@ namespace SAC.Web.Controllers
     [RequireHttps]
     public class AdminController : Controller
     {
-        private SacContext db = SacContext.GetCurrentContext();
+        private SacContext db = new SacContext();
 
         public MultiSelectList GetRoles()
         {
@@ -58,7 +58,9 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.Users.Find(id);
+
+            AspNetUser aspNetUser = db.Users.Include("AspNetRoles").First(u => u.Id == id);
+
             if (aspNetUser == null)
             {
                 return HttpNotFound();
@@ -72,22 +74,30 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("UserEdit")]
         [ValidateAntiForgeryToken]
-        public ActionResult UserEditPost(string id)
+        public ActionResult UserEditPost(AspNetUser user)
         {
             if (ModelState.IsValid)
             {
-                var sourceUser = db.Users.Find(id);
+                //db.Entry(user).State = EntityState.Modified;
+                var _user = db.Users.Include("AspNetRoles").First(u => u.Id == user.Id);
 
-                if (TryUpdateModel<AspNetUser>(sourceUser))
+                var deletedRoles = _user.AspNetRoles.Except(user.AspNetRoles);
+
+                var addedRoles = user.AspNetRoles.Except(_user.AspNetRoles);
+
+                deletedRoles.ToList().ForEach(r => _user.AspNetRoles.Remove(r));
+
+                foreach(var role in addedRoles)
                 {
-                    //foreach(var role in sourceUser.AspNetRoles)
-                    //{
-                    //    db.Set<AspNetRole>().Attach(role);
-                    //    db.Entry<AspNetRole>(role).State = EntityState.Modified;
-                    //}
-                    
-                    db.SaveChanges();
+                    if (db.Entry(role).State == EntityState.Detached)
+                    {
+                        var addedRole = db.Roles.Find(role.Id);
+                        _user.AspNetRoles.Add(addedRole);
+                    }
                 }
+
+                db.SaveChanges();
+
                 return RedirectToAction("Users");
             }
             return HttpNotFound();
@@ -125,7 +135,7 @@ namespace SAC.Web.Controllers
         {
             if (disposing)
             {
-                //db.Dispose();
+                db.Dispose();
             }
             base.Dispose(disposing);
         }

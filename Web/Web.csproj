@@ -359,7 +359,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Clubs\Create.cshtml" />
     <Content Include="Views\Clubs\Delete.cshtml" />
-    <Content Include="Views\Clubs\Details.cshtml" />
     <Content Include="Views\Clubs\Edit.cshtml" />
     <Content Include="Views\Clubs\Index.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
@@ -370,6 +369,9 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\UserDelete.cshtml" />
     <Content Include="Views\Clubs\Directions.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Club.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Club.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Phone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

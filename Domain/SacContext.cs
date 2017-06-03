@@ -7,26 +7,22 @@ namespace SAC.Domain
     {
         private static SacContext _current { get; set; }
 
-        public static SacContext GetCurrentContext()
-        {
-            if(null == _current)
-            {
-                _current = new SacContext();
-            }
-
-            return _current;
-        }
-
         static SacContext()
         {
             Database.SetInitializer<SacContext>(null);
         }
 
         public SacContext()
-            : base("SacConn") { }
+            : base("SacConn")
+        {
+            this.Configuration.ProxyCreationEnabled = false;
+        }
 
         public SacContext(string connectionStringName)
-            : base(connectionStringName) { }
+            : base(connectionStringName)
+        {
+            this.Configuration.ProxyCreationEnabled = false;
+        }
 
         public DbSet<Color> Colors { get; set; }
         public DbSet<Class> Classes { get; set; }
@@ -39,7 +35,7 @@ namespace SAC.Domain
         public DbSet<AspNetUser> Users { get; set; }
         public DbSet<AspNetUserClaim> UserClaims { get; set; }
         public DbSet<AspNetUserLogin> UserLogins { get; set; }
-        
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetUser>()
@@ -50,7 +46,7 @@ namespace SAC.Domain
                 x.ToTable("AspNetUserRoles");
                 x.MapLeftKey("UserId");
                 x.MapRightKey("RoleId");
-    });
+            });
         }
     }
 }

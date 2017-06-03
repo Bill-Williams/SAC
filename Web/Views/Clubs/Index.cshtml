@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SAC.Domain.Models.Club>
+﻿@using SAC.Domain.Models
+@model IEnumerable<Club>
 
 @{
     ViewBag.Title = "Index";
@@ -13,54 +14,15 @@
     @foreach (var item in Model)
     {
         <div class="col-lg-4">
-
-            <h3>@item.Name</h3>
-
-            <div class="row">
-                <div class="col-md-10">
-                    @Html.ActionLink("Get Directions", "Directions", new { id = item.Id }, htmlAttributes: new { @class = "ui-button ui-widget ui-corner-all" })
-                </div>
-            </div>
-
-            <div class="row">
-                @Html.LabelFor(model => item.Website, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <a href="@item.Website" target="_blank">Click Here To Visit Now</a>
-                </div>
-            </div>
-
-            <div class="row">
-                @Html.LabelFor(model => item.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <a href="mailto:@item.Email?Subject=Infromation about @item.Name">@item.Contact</a>
-                </div>
-            </div>
-
-            <div class="row">
-                @Html.LabelFor(model => item.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <a href="tel:@item.Phone">@item.Phone</a>
-                </div>
-            </div>
-
-            @if (User.IsInRole("Club Admin")
-               || User.IsInRole("Tech Admin"))
-            {
-                <div class="form-group">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </div>
-            }
-
+            @Html.DisplayFor(model => item)
         </div>
     }
 </div>
 
 @if (User.IsInRole("Club Admin")
-                || User.IsInRole("Tech Admin"))
+    || User.IsInRole("Tech Admin"))
 {
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 }

@@ -38,21 +38,6 @@ namespace SAC.Web.Controllers
             return View(club);
         }
 
-        // GET: Club/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Club club = db.Clubs.Find(id);
-            if (club == null)
-            {
-                return HttpNotFound();
-            }
-            return View(club);
-        }
-
         // GET: Club/Create
         [Authorize(Roles = "Club Admin, Tech Admin")]
         public ActionResult Create()
