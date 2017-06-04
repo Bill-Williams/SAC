@@ -26,7 +26,7 @@ namespace SAC.Migrations
         protected override void Seed(SacContext context)
         {
             //only seed if initial migration was performed this update
-            if (initialMigration)
+            if (true)
             {
                 SeedColors(context);
 
@@ -130,6 +130,19 @@ namespace SAC.Migrations
                     Website = "https://www.facebook.com/pages/MECKLENBURG-BOWHUNTERS/132290430122624?ref=hl",
                     IconFileName = "RobinHood.png",
                     ShortName = "RobinHood"
+                },
+
+                new Club()
+                {
+                    Name = "Mecklenburg Wildlife Club",
+                    Address = "2301 Wildlife Rd",
+                    CityStateZip = "Charlotte, NC",
+                    Contact = "Steven Walters",
+                    Phone = "(704) 906-7651",
+                    //Email = "",
+                    Website = "https://www.facebook.com/pages/MECKLENBURG-BOWHUNTERS/132290430122624?ref=hl",
+                    IconFileName = "Mecklenburg.png",
+                    ShortName = "Mecklenburg"
                 },
 
                 new Club()

@@ -17,6 +17,7 @@ namespace SAC.Domain.Models
         public virtual Club Club { get; set; }
 
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
     }
 }
