@@ -13,7 +13,7 @@ namespace SAC.Web.Controllers
 {
     [Authorize(Roles = "Tech Admin")]
     [RequireHttps]
-    public class AdminController : Controller
+    public class UsersController : Controller
     {
         private SacContext db = new SacContext();
 
@@ -22,22 +22,14 @@ namespace SAC.Web.Controllers
             return new MultiSelectList((IEnumerable<AspNetRole>)db.Roles , "Id", "Name");
         }
 
-        // GET: Admin
+        // GET: Users
         public ActionResult Index()
-        {
-            return View();
-        }
-
-#region Users
-
-        // GET: Admin/Users
-        public ActionResult Users()
         {
             return View(db.Users.ToList());
         }
 
-        // GET: Admin/UserDetails/5
-        public ActionResult UserDetails(string id)
+        // GET: Users/Details/5
+        public ActionResult Details(Guid id)
         {
             if (id == null)
             {
@@ -51,8 +43,8 @@ namespace SAC.Web.Controllers
             return View(aspNetUser);
         }
 
-        // GET: Admin/UserEdit/5
-        public ActionResult UserEdit(Guid? id)
+        // GET: Users/Edit/5
+        public ActionResult Edit(Guid? id)
         {
             if (id == null || !ModelState.IsValid)
             {
@@ -69,10 +61,10 @@ namespace SAC.Web.Controllers
             return View(aspNetUser);
         }
 
-        // POST: Admin/UserEdit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ActionName("UserEdit")]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public ActionResult UserEditPost(AspNetUser user)
         {
@@ -98,13 +90,13 @@ namespace SAC.Web.Controllers
 
                 db.SaveChanges();
 
-                return RedirectToAction("Users");
+                return RedirectToAction("Index");
             }
             return HttpNotFound();
         }
 
-        // GET: Admin/UserDelete/5
-        public ActionResult UserDelete(string id)
+        // GET: Users/Delete/5
+        public ActionResult Delete(Guid id)
         {
             if (id == null)
             {
@@ -118,18 +110,16 @@ namespace SAC.Web.Controllers
             return View(aspNetUser);
         }
 
-        // POST: Admin/UserDelete/5
-        [HttpPost, ActionName("UserDelete")]
+        // POST: Users/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult UserDeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(Guid id)
         {
             AspNetUser aspNetUser = db.Users.Find(id);
             db.Users.Remove(aspNetUser);
             db.SaveChanges();
-            return RedirectToAction("Users");
+            return RedirectToAction("Index");
         }
-
-        #endregion
 
         protected override void Dispose(bool disposing)
         {
