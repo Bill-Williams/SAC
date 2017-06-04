@@ -58,19 +58,16 @@ namespace SAC.Migrations
             context.Roles.AddOrUpdate(x => x.Id,
                 new AspNetRole()
                 {
-                    Id = Guid.NewGuid(),
                     Name = "Tech Admin"
                 },
 
                 new AspNetRole()
                 {
-                    Id = Guid.NewGuid(),
                     Name = "Club Admin"
                 },
 
                 new AspNetRole()
                 {
-                    Id = Guid.NewGuid(),
                     Name = "Club User"
                 }
             );
@@ -81,7 +78,6 @@ namespace SAC.Migrations
             context.Users.AddOrUpdate(x => x.Id,
                 new AspNetUser()
                 {
-                    Id = Guid.NewGuid(),
                     Email = "george.prado@outlook.com",
                     EmailConfirmed = true,
                     PasswordHash = "AIgbEEDXPWZVazTJQ5ZSSTUSlxMDDvJ8URKgl60fek7K+NDDDnJ4vzhEZk/gbwyhbg==",
@@ -95,7 +91,6 @@ namespace SAC.Migrations
 
                 new AspNetUser()
                 {
-                    Id = Guid.NewGuid(),
                     Email = "bill@billwilliams.biz",
                     EmailConfirmed = true,
                     PasswordHash = "ANP0iJZ4D3Tw+UD4ddXYiUD7G+95D00LR9+DuhHZaH9zS+PtOC91I0bhaNib423dIQ==",

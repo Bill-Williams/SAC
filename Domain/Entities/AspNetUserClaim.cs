@@ -6,12 +6,8 @@ using System.Data.Entity.Spatial;
 
 namespace SAC.Domain.Models
 {
-    public partial class AspNetUserClaim
+    public partial class AspNetUserClaim : BaseEntity
     {
-        [Key]
-        [Column(Order = 0)]
-        public Guid Id { get; set; }
-
         [Required]
         [Column(Order = 1)]
         public Guid UserId { get; set; }

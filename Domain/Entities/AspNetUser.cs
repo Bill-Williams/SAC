@@ -6,7 +6,7 @@ using System.Data.Entity.Spatial;
 
 namespace SAC.Domain.Models
 {
-    public partial class AspNetUser
+    public partial class AspNetUser : BaseEntity
     {
         public AspNetUser()
         {
@@ -14,9 +14,6 @@ namespace SAC.Domain.Models
             AspNetUserLogins = new HashSet<AspNetUserLogin>();
             AspNetRoles = new HashSet<AspNetRole>();
         }
-
-        [Key]
-        public Guid Id { get; set; }
 
         [StringLength(256)]
         public string Email { get; set; }

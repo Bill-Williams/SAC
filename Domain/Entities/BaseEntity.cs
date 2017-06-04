@@ -12,6 +12,7 @@ namespace SAC.Domain.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column(Order = 0)]
         public Guid Id { get; set; }
     }
 }
