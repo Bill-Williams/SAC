@@ -29,17 +29,25 @@ namespace SAC.Migrations
             if (initialMigration)
             {
                 SeedColors(context);
-            
+
+                SeedRoles(context);
+
+
                 // Save to get foreign keys
                 context.SaveChanges();
 
-                SeedRoles(context);
+                SeedUsers(context);
 
                 SeedClubs(context);
 
                 SeedClasses(context);
 
                 // Save everying added to the context
+                context.SaveChanges();
+
+                SeedUserRoles(context);
+
+                // Save the added roles
                 context.SaveChanges();
             }
         }
@@ -50,23 +58,48 @@ namespace SAC.Migrations
             context.Roles.AddOrUpdate(x => x.Id,
                 new AspNetRole()
                 {
-                    Id = "0c1c19f6-bbe1-467d-925b-b23b7a96d8ac",
+                    Id = Guid.NewGuid(),
                     Name = "Tech Admin"
                 },
 
                 new AspNetRole()
                 {
-                    Id = "0962b7ff-e0d3-4f51-8702-42310439ed5b",
+                    Id = Guid.NewGuid(),
                     Name = "Club Admin"
                 },
 
                 new AspNetRole()
                 {
-                    Id = "14d00ad1-c170-4a68-a63c-7d0d9d139e84",
-                    Name = "Club User",
+                    Id = Guid.NewGuid(),
+                    Name = "Club User"
                 }
             );
+        }
 
+        private void SeedUsers(SacContext context)
+        {
+            context.Users.AddOrUpdate(x => x.Id,
+                new AspNetUser()
+                {
+                    Id = Guid.NewGuid(),
+                    Email = "george.prado@outlook.com",
+                    EmailConfirmed = true,
+                    PasswordHash = "AIgbEEDXPWZVazTJQ5ZSSTUSlxMDDvJ8URKgl60fek7K+NDDDnJ4vzhEZk/gbwyhbg==",
+                    SecurityStamp = "3a886fbb-6693-4890-b4dc-ddf19a756a7b",
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = true,
+                    AccessFailedCount = 0,
+                    UserName = "george.prado@outlook.com",
+                }
+            );
+        }
+
+        private void SeedUserRoles(SacContext context)
+        {
+            var admin = context.Roles.First(r => r.Name == "Tech Admin");
+
+            context.Users.ToList().ForEach(u => u.AspNetRoles.Add(admin));
         }
 
         private void SeedClubs(SacContext context)

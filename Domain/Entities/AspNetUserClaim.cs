@@ -10,11 +10,11 @@ namespace SAC.Domain.Models
     {
         [Key]
         [Column(Order = 0)]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [Column(Order = 1)]
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
 
         [Column(Order = 2)]
         public string ClaimType { get; set; }
