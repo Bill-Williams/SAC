@@ -17,7 +17,7 @@ namespace SAC.Domain.Models
         }
 
         [Key]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [StringLength(256)]
@@ -27,7 +27,7 @@ namespace SAC.Domain.Models
 
         public override string ToString()
         {
-            return this.Id;
+            return this.Id.ToString();
         }
     }
 }

@@ -26,7 +26,19 @@ namespace SAC.Domain.TypeConverters
             {
                 using (var db = new SacContext())
                 {
-                    var c = db.Roles.AsNoTracking().FirstOrDefault(u => u.Id == (string)value);
+                    var c = db.Roles.AsNoTracking().FirstOrDefault(u => u.Id.ToString() == (string)value);
+
+                    if (null != c)
+                    {
+                        return c;
+                    }
+                }
+            }
+            if (value is Guid)
+            {
+                using (var db = new SacContext())
+                {
+                    var c = db.Roles.AsNoTracking().FirstOrDefault(u => u.Id == (Guid)value);
 
                     if (null != c)
                     {

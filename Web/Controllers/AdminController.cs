@@ -52,9 +52,9 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Admin/UserEdit/5
-        public ActionResult UserEdit(string id)
+        public ActionResult UserEdit(Guid? id)
         {
-            if (id == null)
+            if (id == null || !ModelState.IsValid)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
