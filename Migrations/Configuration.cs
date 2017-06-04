@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using SAC.Domain;
 using SAC.Domain.Models;
+using System.Data.Entity.Validation;
+using Microsoft.AspNet.Identity;
 
 namespace SAC.Migrations
 {
@@ -26,22 +28,71 @@ namespace SAC.Migrations
         protected override void Seed(SacContext context)
         {
             //only seed if initial migration was performed this update
-            if (initialMigration)
+            if (true)
             {
                 SeedColors(context);
             
-                // Save to get foreign keys
-                context.SaveChanges();
-
                 SeedRoles(context);
+
+                // Save to get foreign keys
+                SaveChanges(context);
+
+                SeedUsers(context);
 
                 SeedClubs(context);
 
                 SeedClasses(context);
 
                 // Save everying added to the context
-                context.SaveChanges();
+                SaveChanges(context);
             }
+        }
+
+        private void SeedColors(SacContext context)
+        {
+            context.Colors.AddOrUpdate(x => x.Id,
+                new Color()
+                {
+                    Name = "Green",
+                    HexCode = "#00FF00"
+                },
+
+                new Color()
+                {
+                    Name = "Yellow",
+                    HexCode = "#FFFF00"
+                },
+
+                new Color()
+                {
+                    Name = "Blue",
+                    HexCode = "#0000FF"
+                },
+
+                new Color()
+                {
+                    Name = "Red",
+                    HexCode = "#FF0000"
+                },
+
+                new Color()
+                {
+                    Name = "Purple",
+                    HexCode = "#800080"
+                },
+
+                new Color()
+                {
+                    Name = "Orange",
+                    HexCode = "#FFA500"
+                },
+
+                new Color()
+                {
+                    Name = "White",
+                    HexCode = "#FFFFFF"
+                }
+            );
         }
 
         private void SeedRoles(SacContext context)
@@ -50,23 +101,52 @@ namespace SAC.Migrations
             context.Roles.AddOrUpdate(x => x.Id,
                 new AspNetRole()
                 {
-                    Id = "0c1c19f6-bbe1-467d-925b-b23b7a96d8ac",
+                    Id = Guid.NewGuid().ToString(),
                     Name = "Tech Admin"
                 },
 
                 new AspNetRole()
                 {
-                    Id = "0962b7ff-e0d3-4f51-8702-42310439ed5b",
+                    Id = Guid.NewGuid().ToString(),
                     Name = "Club Admin"
                 },
 
                 new AspNetRole()
                 {
-                    Id = "14d00ad1-c170-4a68-a63c-7d0d9d139e84",
+                    Id = Guid.NewGuid().ToString(),
                     Name = "Club User",
                 }
             );
 
+        }
+
+        private void SeedUsers(SacContext context)
+        {
+            var passwordHash = new PasswordHasher();
+            string password = passwordHash.HashPassword("password");
+
+            context.Users.AddOrUpdate(x => x.Id,
+                new AspNetUser()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = "bill@billwilliams.biz",
+                    Email = "bill@billwilliams.biz",
+                    PasswordHash = password,
+                    EmailConfirmed = true
+                },
+
+                new AspNetUser()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = "george.prado@outlook.com",
+                    Email = "george.prado@outlook.com",
+                    PasswordHash = password,
+                    EmailConfirmed = true
+                }
+            );
+
+            var techRole = context.Roles.FirstOrDefault(r => r.Name == "Tech Admin");
+            context.Users.ToList().ForEach(u => u.AspNetRoles.Add(techRole));
         }
 
         private void SeedClubs(SacContext context)
@@ -148,53 +228,6 @@ namespace SAC.Migrations
                     Website = "http://crpc.clubexpress.com/",
                     IconFileName = "CRPC.png",
                     ShortName = "CRPC"
-                }
-            );
-        }
-
-        private void SeedColors(SacContext context)
-        {
-            context.Colors.AddOrUpdate(x => x.Id,
-                new Color()
-                {
-                    Name = "Green",
-                    HexCode = "#00FF00"
-                },
-
-                new Color()
-                {
-                    Name = "Yellow",
-                    HexCode = "#FFFF00"
-                },
-
-                new Color()
-                {
-                    Name = "Blue",
-                    HexCode = "#0000FF"
-                },
-
-                new Color()
-                {
-                    Name = "Red",
-                    HexCode = "#FF0000"
-                },
-
-                new Color()
-                {
-                    Name = "Purple",
-                    HexCode = "#800080"
-                },
-
-                new Color()
-                {
-                    Name = "Orange",
-                    HexCode = "#FFA500"
-                },
-
-                new Color()
-                {
-                    Name = "White",
-                    HexCode = "#FFFFFF"
                 }
             );
         }
@@ -403,6 +436,37 @@ namespace SAC.Migrations
                     ColorId = colors["Orange"]
                 }
             );
+        }
+
+        /// <summary>
+        /// Wrapper for SaveChanges adding the Validation Messages to the generated exception
+        /// </summary>
+        /// <param name="context">The context.</param>
+        private void SaveChanges(SacContext context)
+        {
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+
+                throw new DbEntityValidationException(
+                    "Entity Validation Failed - errors follow:\n" +
+                    sb.ToString(), ex
+                ); // Add the original exception as the innerException
+            }
         }
     }
 }
