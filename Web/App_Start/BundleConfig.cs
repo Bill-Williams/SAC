@@ -11,6 +11,9 @@ namespace SAC.Web
             bundles.Add(new ScriptBundle("~/bundles/chosen").Include(
                       "~/Scripts/chosen.jquery.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+                      "~/Scripts/DataTables/jquery.dataTables.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui-{version}.js"));
@@ -31,6 +34,7 @@ namespace SAC.Web
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/chosen.css",
+                      "~/Context/DataTables/css/jquery.dataTables.css",
                       "~/Content/themes/darkhive/jquery-ui.css",
                       "~/Content/themes/darkhive/jquery-ui.structure.css",
                       "~/Content/themes/darkhive/jquery-ui.theme.css"));
