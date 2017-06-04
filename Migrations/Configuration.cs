@@ -91,6 +91,20 @@ namespace SAC.Migrations
                     LockoutEnabled = true,
                     AccessFailedCount = 0,
                     UserName = "george.prado@outlook.com",
+                },
+
+                new AspNetUser()
+                {
+                    Id = Guid.NewGuid(),
+                    Email = "bill@billwilliams.biz",
+                    EmailConfirmed = true,
+                    PasswordHash = "ANP0iJZ4D3Tw+UD4ddXYiUD7G+95D00LR9+DuhHZaH9zS+PtOC91I0bhaNib423dIQ==",
+                    SecurityStamp = "f7cdf28c-3c90-4de0-8f51-c657fd145ccd",
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = true,
+                    AccessFailedCount = 0,
+                    UserName = "bill@billwilliams.biz",
                 }
             );
         }
