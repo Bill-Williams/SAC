@@ -25,7 +25,7 @@ namespace SAC.Web.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return View(db.Users.Include("AspNetRoles").ToList());
         }
 
         // GET: Users/Details/5

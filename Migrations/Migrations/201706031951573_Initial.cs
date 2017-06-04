@@ -84,7 +84,7 @@ namespace SAC.Migrations
                 "dbo.AspNetRoles",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 256),
                     })
                 .PrimaryKey(t => t.Id);
@@ -93,7 +93,7 @@ namespace SAC.Migrations
                 "dbo.AspNetUsers",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -112,7 +112,7 @@ namespace SAC.Migrations
                 "dbo.AspNetUserClaims",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         UserId = c.Guid(nullable: false),
                         ClaimType = c.String(),
                         ClaimValue = c.String(),

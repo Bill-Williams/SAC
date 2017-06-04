@@ -9,15 +9,12 @@ using System.Data.Entity.Spatial;
 namespace SAC.Domain.Models
 {
     [TypeConverter(typeof(AspNetRoleTypeConverter))]
-    public partial class AspNetRole
+    public partial class AspNetRole : BaseEntity
     {
         public AspNetRole()
         {
             AspNetUsers = new HashSet<AspNetUser>();
         }
-
-        [Key]
-        public Guid Id { get; set; }
 
         [Required]
         [StringLength(256)]

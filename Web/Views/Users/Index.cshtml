@@ -6,7 +6,13 @@
 
 <h2>Manage Users</h2>
 
-<table class="display" id="tblUsers">
+<style>
+    th{
+        padding:5px;
+    }
+</style>
+
+<table class="table-bordered table-hover" id="tblUsers">
     <thead>
         <tr>
             <th>
@@ -44,7 +50,7 @@
                     @Html.DisplayFor(modelItem => item.AccessFailedCount)
                 </td>
                 <td>
-                    @Html.Display(string.Join(",", item.AspNetRoles.Select(r => r.Name)))
+                    <span>@string.Join(",", item.AspNetRoles.Select(r => r.Name))</span>
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
@@ -59,9 +65,7 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            alert('before');
             $('#tblUsers').DataTable();
-            alert('after');
         });
     </script>
 }
