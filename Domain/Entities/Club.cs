@@ -21,12 +21,15 @@ namespace SAC.Domain.Models
 
         [Required]
         [MaxLength(15)]
+        [Display(Name = "Short Name")]
         public string ShortName { get; set; }
 
         [MaxLength(100)]
         public string Address { get; set; }
 
         [MaxLength(100)]
+        [Display(Name = "City, State & ZIP")]
+
         public string CityStateZip { get; set; }
 
         [MaxLength(250)]

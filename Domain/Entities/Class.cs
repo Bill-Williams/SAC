@@ -26,6 +26,7 @@ namespace SAC.Domain.Models
         public bool Known { get; set; }
 
         [Required]
+        [Display(Name = "Max Yardage")]
         public int MaximumYardage { get; set; }
 
         [MaxLength(100)]

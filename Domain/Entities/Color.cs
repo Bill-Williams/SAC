@@ -10,6 +10,7 @@ namespace SAC.Domain.Models
     public class Color : BaseEntity
     {
         [Required]
+        [Display(Name = "Color")]
         public string Name { get; set; }
 
         [Required]
