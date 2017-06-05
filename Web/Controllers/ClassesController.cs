@@ -18,7 +18,7 @@ namespace SAC.Web.Controllers
         // GET: Classes
         public ActionResult Index()
         {
-            return View(db.Classes.ToList());
+            return View(db.Classes.Include(c => c.Color));
         }
 
         // GET: Classes/Details/5
@@ -28,7 +28,8 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Class @class = db.Classes.Find(id);
+            Class @class = db.Classes.Include(c => c.Color).FirstOrDefault(c => c.Id == id);
+
             if (@class == null)
             {
                 return HttpNotFound();
@@ -51,7 +52,6 @@ namespace SAC.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                @class.Id = Guid.NewGuid();
                 db.Classes.Add(@class);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -67,7 +67,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Class @class = db.Classes.Find(id);
+            Class @class = db.Classes.Include(c => c.Color).FirstOrDefault(c => c.Id == id);
             if (@class == null)
             {
                 return HttpNotFound();
@@ -98,7 +98,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Class @class = db.Classes.Find(id);
+            Class @class = db.Classes.Include(c => c.Color).FirstOrDefault(c => c.Id == id);
             if (@class == null)
             {
                 return HttpNotFound();

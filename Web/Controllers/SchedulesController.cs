@@ -29,7 +29,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Schedule schedule = db.Schedules.Find(id);
+            Schedule schedule = db.Schedules.Include(s => s.Tournament).FirstOrDefault(s => s.Id == id);
             if (schedule == null)
             {
                 return HttpNotFound();
@@ -53,7 +53,6 @@ namespace SAC.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                schedule.Id = Guid.NewGuid();
                 db.Schedules.Add(schedule);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -70,7 +69,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Schedule schedule = db.Schedules.Find(id);
+            Schedule schedule = db.Schedules.Include(s => s.Tournament).FirstOrDefault(s => s.Id == id);
             if (schedule == null)
             {
                 return HttpNotFound();

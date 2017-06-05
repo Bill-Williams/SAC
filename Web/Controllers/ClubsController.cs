@@ -20,7 +20,7 @@ namespace SAC.Web.Controllers
         // GET: Club
         public ActionResult Index()
         {
-            return View(db.Clubs.ToList());
+            return View(db.Clubs.OrderBy(c => c.Name));
         }
 
         // GET: Club/Directions/5

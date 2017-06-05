@@ -191,6 +191,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
+    <Compile Include="Controllers\CompetitorsController.cs" />
     <Compile Include="Controllers\SchedulesController.cs" />
     <Compile Include="Controllers\TournamentsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -641,6 +642,11 @@
     <Content Include="Views\Shared\DisplayTemplates\Shortdate.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TournamentMenu.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Confirmed.cshtml" />
+    <Content Include="Views\Competitors\Create.cshtml" />
+    <Content Include="Views\Competitors\Delete.cshtml" />
+    <Content Include="Views\Competitors\Details.cshtml" />
+    <Content Include="Views\Competitors\Edit.cshtml" />
+    <Content Include="Views\Competitors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

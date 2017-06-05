@@ -11,112 +11,116 @@ using SAC.Domain.Models;
 
 namespace SAC.Web.Controllers
 {
-    public class TournamentsController : Controller
+    public class CompetitorsController : Controller
     {
         private SacContext db = new SacContext();
 
-        // GET: Tournaments
+        // GET: Competitors
         public ActionResult Index()
         {
-            var tournaments = db.Tournaments.Include(t => t.Schedule);
-            return View(tournaments.ToList());
+            var competitors = db.Competitors.Include(c => c.Archer).Include(c => c.Class);
+            return View(competitors.ToList());
         }
 
-        // GET: Tournaments/Details/5
+        // GET: Competitors/Details/5
         public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = db.Tournaments.Include(t => t.Schedule).FirstOrDefault(t => t.Id == id);
-            if (tournament == null)
+            var competitor = db.Competitors.Include(c => c.Archer).Include(c => c.Class).FirstOrDefault(c => c.Id == id);
+            if (competitor == null)
             {
                 return HttpNotFound();
             }
-            return View(tournament);
+            return View(competitor);
         }
 
-        // GET: Tournaments/Create
+        // GET: Competitors/Create
         public ActionResult Create()
         {
-            ViewBag.Id = new SelectList(db.Schedules, "Id", "Id");
+            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name");
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code");
             return View();
         }
 
-        // POST: Tournaments/Create
+        // POST: Competitors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Completed")] Tournament tournament)
+        public ActionResult Create([Bind(Include = "Id,ArcherId,ClassId,Score,Bonus")] Competitor competitor)
         {
             if (ModelState.IsValid)
             {
-                db.Tournaments.Add(tournament);
+                db.Competitors.Add(competitor);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Id = new SelectList(db.Schedules, "Id", "Id", tournament.Id);
-            return View(tournament);
+            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name", competitor.ArcherId);
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code", competitor.ClassId);
+            return View(competitor);
         }
 
-        // GET: Tournaments/Edit/5
+        // GET: Competitors/Edit/5
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = db.Tournaments.Include(t => t.Schedule).FirstOrDefault(t => t.Id == id);
-            if (tournament == null)
+            var competitor = db.Competitors.Include(c => c.Archer).Include(c => c.Class).FirstOrDefault(c => c.Id == id);
+            if (competitor == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Id = new SelectList(db.Schedules, "Id", "Id", tournament.Id);
-            return View(tournament);
+            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name", competitor.ArcherId);
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code", competitor.ClassId);
+            return View(competitor);
         }
 
-        // POST: Tournaments/Edit/5
+        // POST: Competitors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Completed")] Tournament tournament)
+        public ActionResult Edit([Bind(Include = "Id,ArcherId,ClassId,Score,Bonus")] Competitor competitor)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tournament).State = EntityState.Modified;
+                db.Entry(competitor).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Id = new SelectList(db.Schedules, "Id", "Id", tournament.Id);
-            return View(tournament);
+            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name", competitor.ArcherId);
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code", competitor.ClassId);
+            return View(competitor);
         }
 
-        // GET: Tournaments/Delete/5
+        // GET: Competitors/Delete/5
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tournament tournament = db.Tournaments.Find(id);
-            if (tournament == null)
+            Competitor competitor = db.Competitors.Find(id);
+            if (competitor == null)
             {
                 return HttpNotFound();
             }
-            return View(tournament);
+            return View(competitor);
         }
 
-        // POST: Tournaments/Delete/5
+        // POST: Competitors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Tournament tournament = db.Tournaments.Find(id);
-            db.Tournaments.Remove(tournament);
+            Competitor competitor = db.Competitors.Find(id);
+            db.Competitors.Remove(competitor);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

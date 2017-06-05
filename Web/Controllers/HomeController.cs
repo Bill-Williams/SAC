@@ -21,10 +21,9 @@ namespace SAC.Web.Controllers
 
             var tournaments = db.Tournaments
                 .Where(t => t.Schedule.Date.Year == DateTime.Now.Year)
-                .Include(t => t.Schedule.Club).ToList();
+                .Include(t => t.Schedule.Club);
 
-            //return View(tournaments.OrderByDescending(t => t.Schedule.Date));
-            return View();
+            return View(tournaments.OrderByDescending(t => t.Schedule.Date));
         }
 
         public ActionResult About()
