@@ -18,8 +18,7 @@ namespace SAC.Web.Controllers
         // GET: Classes
         public ActionResult Index()
         {
-            var classes = db.Classes.Include(c => c.Color);
-            return View(classes.ToList());
+            return View(db.Classes.ToList());
         }
 
         // GET: Classes/Details/5
@@ -29,7 +28,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Class @class = db.Classes.Include(x => x.Color).FirstOrDefault(c => c.Id == id);
+            Class @class = db.Classes.Find(id);
             if (@class == null)
             {
                 return HttpNotFound();
@@ -40,7 +39,6 @@ namespace SAC.Web.Controllers
         // GET: Classes/Create
         public ActionResult Create()
         {
-            ViewBag.ColorId = new SelectList(db.Colors, "Id", "Name");
             return View();
         }
 
@@ -49,16 +47,16 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Code,Name,Description,Known,MaximumYardage,Restrictions,ColorId")] Class @class)
+        public ActionResult Create([Bind(Include = "Id,Code,Name,Description,Known,MaximumYardage,Restrictions")] Class @class)
         {
             if (ModelState.IsValid)
             {
+                @class.Id = Guid.NewGuid();
                 db.Classes.Add(@class);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ColorId = new SelectList(db.Colors, "Id", "Name", @class.ColorId);
             return View(@class);
         }
 
@@ -74,7 +72,6 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ColorId = new SelectList(db.Colors, "Id", "Name", @class.ColorId);
             return View(@class);
         }
 
@@ -83,7 +80,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Code,Name,Description,Known,MaximumYardage,Restrictions,ColorId")] Class @class)
+        public ActionResult Edit([Bind(Include = "Id,Code,Name,Description,Known,MaximumYardage,Restrictions")] Class @class)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +88,6 @@ namespace SAC.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ColorId = new SelectList(db.Colors, "Id", "Name", @class.ColorId);
             return View(@class);
         }
 
@@ -113,7 +109,7 @@ namespace SAC.Web.Controllers
         // POST: Classes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Guid id)
         {
             Class @class = db.Classes.Find(id);
             db.Classes.Remove(@class);

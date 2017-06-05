@@ -18,7 +18,7 @@ namespace SAC.Web.Controllers
         // GET: Schedules
         public ActionResult Index()
         {
-            var schedules = db.Schedules.Include(s => s.Club);
+            var schedules = db.Schedules.Include(s => s.Tournament);
             return View(schedules.ToList());
         }
 
@@ -29,7 +29,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Schedule schedule = db.Schedules.Include(s => s.Club).FirstOrDefault(c => c.Id == id);
+            Schedule schedule = db.Schedules.Find(id);
             if (schedule == null)
             {
                 return HttpNotFound();
@@ -40,7 +40,7 @@ namespace SAC.Web.Controllers
         // GET: Schedules/Create
         public ActionResult Create()
         {
-            ViewBag.ClubId = new SelectList(db.Clubs, "Id", "Name");
+            ViewBag.Id = new SelectList(db.Tournaments, "Id", "Id");
             return View();
         }
 
@@ -49,16 +49,17 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ClubId,Date")] Schedule schedule)
+        public ActionResult Create([Bind(Include = "Id,Date")] Schedule schedule)
         {
             if (ModelState.IsValid)
             {
+                schedule.Id = Guid.NewGuid();
                 db.Schedules.Add(schedule);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClubId = new SelectList(db.Clubs, "Id", "Name", schedule.ClubId);
+            ViewBag.Id = new SelectList(db.Tournaments, "Id", "Id", schedule.Id);
             return View(schedule);
         }
 
@@ -74,7 +75,7 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ClubId = new SelectList(db.Clubs, "Id", "Name", schedule.ClubId);
+            ViewBag.Id = new SelectList(db.Tournaments, "Id", "Id", schedule.Id);
             return View(schedule);
         }
 
@@ -83,7 +84,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ClubId,Date")] Schedule schedule)
+        public ActionResult Edit([Bind(Include = "Id,Date")] Schedule schedule)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +92,7 @@ namespace SAC.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ClubId = new SelectList(db.Clubs, "Id", "Name", schedule.ClubId);
+            ViewBag.Id = new SelectList(db.Tournaments, "Id", "Id", schedule.Id);
             return View(schedule);
         }
 
@@ -113,7 +114,7 @@ namespace SAC.Web.Controllers
         // POST: Schedules/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Guid id)
         {
             Schedule schedule = db.Schedules.Find(id);
             db.Schedules.Remove(schedule);

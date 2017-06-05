@@ -26,7 +26,7 @@ namespace SAC.Migrations
                         Description = c.String(nullable: false, maxLength: 250),
                         Known = c.Boolean(nullable: false),
                         MaximumYardage = c.Int(nullable: false),
-                        Restrictions = c.String(nullable: false, maxLength: 100),
+                        Restrictions = c.String(maxLength: 100),
                         ColorId = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -49,7 +49,7 @@ namespace SAC.Migrations
                     {
                         Id = c.Guid(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 100),
-                        ShortName = c.String(maxLength: 15),
+                        ShortName = c.String(nullable: false, maxLength: 15),
                         Address = c.String(maxLength: 100),
                         CityStateZip = c.String(maxLength: 100),
                         Contact = c.String(maxLength: 250),
@@ -58,34 +58,6 @@ namespace SAC.Migrations
                         Website = c.String(),
                         Directions = c.String(maxLength: 2000),
                         IconFileName = c.String(),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Competitors",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false, identity: true),
-                        ArcherId = c.Guid(nullable: false),
-                        ClassId = c.Guid(nullable: false),
-                        Score = c.Int(nullable: false),
-                        Bonus = c.Int(nullable: false),
-                        Tournament_Id = c.Guid(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Archers", t => t.ArcherId, cascadeDelete: true)
-                .ForeignKey("dbo.Classes", t => t.ClassId, cascadeDelete: true)
-                .ForeignKey("dbo.Tournaments", t => t.Tournament_Id)
-                .Index(t => t.ArcherId)
-                .Index(t => t.ClassId)
-                .Index(t => t.Tournament_Id);
-            
-            CreateTable(
-                "dbo.AspNetRoles",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 256),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -105,6 +77,15 @@ namespace SAC.Migrations
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 256),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -134,12 +115,32 @@ namespace SAC.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
+                "dbo.Competitors",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        ArcherId = c.Guid(nullable: false),
+                        ClassId = c.Guid(nullable: false),
+                        Score = c.Int(nullable: false),
+                        Bonus = c.Int(nullable: false),
+                        Tournament_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Archers", t => t.ArcherId, cascadeDelete: true)
+                .ForeignKey("dbo.Classes", t => t.ClassId, cascadeDelete: true)
+                .ForeignKey("dbo.Tournaments", t => t.Tournament_Id)
+                .Index(t => t.ArcherId)
+                .Index(t => t.ClassId)
+                .Index(t => t.Tournament_Id);
+            
+            CreateTable(
                 "dbo.Schedules",
                 c => new
                     {
                         Id = c.Guid(nullable: false, identity: true),
                         ClubId = c.Guid(nullable: false),
                         Date = c.DateTime(nullable: false),
+                        TournamentId = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Clubs", t => t.ClubId, cascadeDelete: true)
@@ -150,11 +151,12 @@ namespace SAC.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false, identity: true),
+                        Completed = c.Boolean(nullable: false),
                         ScheduleId = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Schedules", t => t.ScheduleId, cascadeDelete: true)
-                .Index(t => t.ScheduleId);
+                .ForeignKey("dbo.Schedules", t => t.Id)
+                .Index(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetUserRoles",
@@ -169,38 +171,56 @@ namespace SAC.Migrations
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
             
+            CreateTable(
+                "dbo.AspNetUserClubs",
+                c => new
+                    {
+                        UserId = c.Guid(nullable: false),
+                        ClubId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.ClubId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Clubs", t => t.ClubId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.ClubId);
+            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Tournaments", "ScheduleId", "dbo.Schedules");
+            DropForeignKey("dbo.Tournaments", "Id", "dbo.Schedules");
             DropForeignKey("dbo.Competitors", "Tournament_Id", "dbo.Tournaments");
             DropForeignKey("dbo.Schedules", "ClubId", "dbo.Clubs");
+            DropForeignKey("dbo.Competitors", "ClassId", "dbo.Classes");
+            DropForeignKey("dbo.Competitors", "ArcherId", "dbo.Archers");
+            DropForeignKey("dbo.AspNetUserClubs", "ClubId", "dbo.Clubs");
+            DropForeignKey("dbo.AspNetUserClubs", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Competitors", "ClassId", "dbo.Classes");
-            DropForeignKey("dbo.Competitors", "ArcherId", "dbo.Archers");
             DropForeignKey("dbo.Classes", "ColorId", "dbo.Colors");
+            DropIndex("dbo.AspNetUserClubs", new[] { "ClubId" });
+            DropIndex("dbo.AspNetUserClubs", new[] { "UserId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
-            DropIndex("dbo.Tournaments", new[] { "ScheduleId" });
+            DropIndex("dbo.Tournaments", new[] { "Id" });
             DropIndex("dbo.Schedules", new[] { "ClubId" });
-            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
-            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.Competitors", new[] { "Tournament_Id" });
             DropIndex("dbo.Competitors", new[] { "ClassId" });
             DropIndex("dbo.Competitors", new[] { "ArcherId" });
+            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
+            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.Classes", new[] { "ColorId" });
+            DropTable("dbo.AspNetUserClubs");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.Tournaments");
             DropTable("dbo.Schedules");
+            DropTable("dbo.Competitors");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
-            DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetRoles");
-            DropTable("dbo.Competitors");
+            DropTable("dbo.AspNetUsers");
             DropTable("dbo.Clubs");
             DropTable("dbo.Colors");
             DropTable("dbo.Classes");

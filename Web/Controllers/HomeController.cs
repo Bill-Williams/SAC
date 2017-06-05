@@ -18,13 +18,13 @@ namespace SAC.Web.Controllers
         {
             ViewBag.Title = "Southern Archery Circuit";
             ViewBag.Message = "Tournament Scores";
-            
-            // Get the 
+
             var tournaments = db.Tournaments
                 .Where(t => t.Schedule.Date.Year == DateTime.Now.Year)
                 .Include(t => t.Schedule.Club).ToList();
 
-            return View(tournaments.OrderByDescending(t => t.Schedule.Date));
+            //return View(tournaments.OrderByDescending(t => t.Schedule.Date));
+            return View();
         }
 
         public ActionResult About()

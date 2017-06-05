@@ -26,7 +26,7 @@ namespace SAC.Migrations
         protected override void Seed(SacContext context)
         {
             //only seed if initial migration was performed this update
-            if (true)
+            if (initialMigration)
             {
                 SeedColors(context);
 
@@ -59,6 +59,11 @@ namespace SAC.Migrations
                 new AspNetRole()
                 {
                     Name = "Tech Admin"
+                },
+
+                new AspNetRole()
+                {
+                    Name = "Scheduler"
                 },
 
                 new AspNetRole()
@@ -151,19 +156,6 @@ namespace SAC.Migrations
                     Website = "http://www.ascgreenway.org",
                     IconFileName = "Greenway.png",
                     ShortName = "Greenway"
-                },
-
-                new Club()
-                {
-                    Name = "Lakeview Archery Club",
-                    Address = "Chester State Park",
-                    CityStateZip = "Chester, SC",
-                    Contact = "Jason or Dianna Ghent",
-                    //Phone = "",
-                    //Email = "",
-                    Website = "https://www.facebook.com/lakeview.archeryclub?fref=ts",
-                    IconFileName = "Lakeview.png",
-                    ShortName = "Lakeview"
                 },
 
                 new Club()

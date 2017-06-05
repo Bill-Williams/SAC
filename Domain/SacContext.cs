@@ -47,6 +47,16 @@ namespace SAC.Domain
                 x.MapLeftKey("UserId");
                 x.MapRightKey("RoleId");
             });
+
+            modelBuilder.Entity<AspNetUser>()
+                .HasMany(x => x.Clubs)
+                .WithMany(x => x.Users)
+            .Map(x =>
+            {
+                x.ToTable("AspNetUserClubs");
+                x.MapLeftKey("UserId");
+                x.MapRightKey("ClubId");
+            });
         }
     }
 }

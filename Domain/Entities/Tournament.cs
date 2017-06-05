@@ -10,13 +10,19 @@ namespace SAC.Domain.Models
 {
     public class Tournament : BaseEntity
     {
-        [Required]
-        public Guid ScheduleId { get; set; }
-        [ForeignKey("ScheduleId")]
-        [Column(Order = 1)]
-        public virtual Schedule Schedule { get; set; }
+        public Tournament()
+        {
+            Competitors = new HashSet<Competitor>();
+        }
+
+        public bool Completed { get; set; }
 
         public ICollection<Competitor> Competitors { get; set; }
+
+        public Guid ScheduleId { get; set; }
+
+        [Required]
+        public virtual Schedule Schedule { get; set; }
 
     }
 }

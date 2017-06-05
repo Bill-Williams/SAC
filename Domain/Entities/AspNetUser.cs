@@ -47,5 +47,8 @@ namespace SAC.Domain.Models
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
 
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+
+        public virtual ICollection<Club> Clubs { get; set; }
+
     }
 }

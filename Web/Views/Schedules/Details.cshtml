@@ -11,6 +11,14 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Tournament.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tournament.Id)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Date)
         </dt>
 
@@ -18,13 +26,6 @@
             @Html.DisplayFor(model => model.Date)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Club)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Club.Name)
-        </dd>
     </dl>
 </div>
 <p>

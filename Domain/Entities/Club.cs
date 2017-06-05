@@ -9,10 +9,16 @@ namespace SAC.Domain.Models
 {
     public class Club : BaseEntity
     {
+        public Club()
+        {
+            Users = new HashSet<AspNetUser>();
+        }
+
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
 
+        [Required]
         [MaxLength(15)]
         public string ShortName { get; set; }
 
@@ -44,5 +50,8 @@ namespace SAC.Domain.Models
         public string Directions { get; set; }
 
         public string IconFileName { get; set; }
+
+        public virtual ICollection<AspNetUser> Users { get; set; }
+
     }
 }

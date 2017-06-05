@@ -28,14 +28,11 @@ namespace SAC.Domain.Models
         [Required]
         public int MaximumYardage { get; set; }
 
-        [Required]
         [MaxLength(100)]
         public string Restrictions { get; set; }
 
-        [Required]
         public Guid ColorId { get; set; }
-        [ForeignKey("ColorId")]
-        [Column(Order = 1)]
+
         public virtual Color Color { get; set; }
     }
 }

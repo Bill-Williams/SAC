@@ -1,11 +1,13 @@
 ﻿using System;
-using SAC.Domain;
-using SAC.Domain.Models;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using SAC.Domain;
+using SAC.Domain.Models;
 
 namespace SAC.Web.Controllers
 {
@@ -16,7 +18,7 @@ namespace SAC.Web.Controllers
         // GET: Tournaments
         public ActionResult Index()
         {
-            var tournaments = db.Tournaments.Include(t => t.Schedule.Club);
+            var tournaments = db.Tournaments.Include(t => t.Schedule);
             return View(tournaments.ToList());
         }
 
@@ -27,7 +29,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tournament tournament = db.Tournaments.Include(t => t.Schedule.Club).FirstOrDefault(t => t.Id == id);
+            Tournament tournament = db.Tournaments.Find(id);
             if (tournament == null)
             {
                 return HttpNotFound();
@@ -38,7 +40,7 @@ namespace SAC.Web.Controllers
         // GET: Tournaments/Create
         public ActionResult Create()
         {
-            ViewBag.ScheduleId = new SelectList(db.Schedules, "Id", "Id");
+            ViewBag.Id = new SelectList(db.Schedules, "Id", "Id");
             return View();
         }
 
@@ -47,16 +49,17 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ScheduleId")] Tournament tournament)
+        public ActionResult Create([Bind(Include = "Id,Completed")] Tournament tournament)
         {
             if (ModelState.IsValid)
             {
+                tournament.Id = Guid.NewGuid();
                 db.Tournaments.Add(tournament);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ScheduleId = new SelectList(db.Schedules, "Id", "Id", tournament.ScheduleId);
+            ViewBag.Id = new SelectList(db.Schedules, "Id", "Id", tournament.Id);
             return View(tournament);
         }
 
@@ -72,7 +75,7 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ScheduleId = new SelectList(db.Schedules, "Id", "Id", tournament.ScheduleId);
+            ViewBag.Id = new SelectList(db.Schedules, "Id", "Id", tournament.Id);
             return View(tournament);
         }
 
@@ -81,7 +84,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ScheduleId")] Tournament tournament)
+        public ActionResult Edit([Bind(Include = "Id,Completed")] Tournament tournament)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +92,7 @@ namespace SAC.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ScheduleId = new SelectList(db.Schedules, "Id", "Id", tournament.ScheduleId);
+            ViewBag.Id = new SelectList(db.Schedules, "Id", "Id", tournament.Id);
             return View(tournament);
         }
 
@@ -111,7 +114,7 @@ namespace SAC.Web.Controllers
         // POST: Tournaments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Guid id)
         {
             Tournament tournament = db.Tournaments.Find(id);
             db.Tournaments.Remove(tournament);
