@@ -38,7 +38,8 @@ namespace SAC.Web
                       "~/Content/themes/darkhive/jquery-ui.css",
                       "~/Content/themes/darkhive/jquery-ui.structure.css",
                       "~/Content/themes/darkhive/jquery-ui.theme.css",
-                      "~/Content/DataTables/css/dataTables.bootstrap.css"));
+                      "~/Content/DataTables/css/jquery.dataTables.css"
+            ));
         }
     }
 }

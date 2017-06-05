@@ -16,6 +16,7 @@ namespace SAC.Domain.Models
 
         [Required]
         [MaxLength(100)]
+        [Display(Name = "Club Name")]
         public string Name { get; set; }
 
         [Required]
