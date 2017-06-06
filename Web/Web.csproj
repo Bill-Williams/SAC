@@ -647,6 +647,10 @@
     <Content Include="Views\Competitors\Details.cshtml" />
     <Content Include="Views\Competitors\Edit.cshtml" />
     <Content Include="Views\Competitors\Index.cshtml" />
+    <Content Include="Views\Shared\MenuTechAdmin.cshtml" />
+    <Content Include="Views\Shared\MenuAdmin.cshtml" />
+    <Content Include="Views\Home\Privacy.cshtml" />
+    <Content Include="Views\Home\TermsOfService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

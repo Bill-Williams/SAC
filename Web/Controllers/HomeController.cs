@@ -38,5 +38,15 @@ namespace SAC.Web.Controllers
         {
             return View(new ContactViewModel());
         }
+
+        public ActionResult Privacy()
+        {
+            return View();
+        }
+
+        public ActionResult TermsOfService()
+        {
+            return View();
+        }
     }
 }
