@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Southern Archery Circut</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -24,34 +24,8 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Clubs", "Index", "Clubs")</li>
-
-
-                    <li class="divider"></li>
-                    <li class="dropdown dropdown-submenu">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin&nbsp;<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Archers", "Index", "Archers")</li>
-                            <li>@Html.ActionLink("Classes", "Index", "Classes")</li>
-                            <li>@Html.ActionLink("Schedules", "Index", "Schedules")</li>
-                            <li>@Html.ActionLink("Tournaments", "Index", "Tournaments")</li>
-                        </ul>
-                    </li>
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        if (User.IsInRole("Tech Admin"))
-                        {
-                            <li>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Site Admin&nbsp;<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Users", "Index", "Users")</li>
-                                    <li>@Html.ActionLink("Colors", "Index", "Colors")</li>
-                                </ul>
-                            </li>
-                        }
-                    }
-
-                    
+                    @Html.Partial("MenuAdmin")
+                    @Html.Partial("MenuTechAdmin")
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

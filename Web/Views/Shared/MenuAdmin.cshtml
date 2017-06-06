@@ -1,0 +1,36 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("Tech Admin")
+        || User.IsInRole("Club Admin")
+        || User.IsInRole("Scheduler"))
+    {
+        <li class="divider"></li>
+        <li class="dropdown dropdown-submenu">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin&nbsp;<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                @if (User.IsInRole("Tech Admin")
+                    || User.IsInRole("Club Admin")
+                    || User.IsInRole("Club User"))
+                {
+                    <li>@Html.ActionLink("Archers", "Index", "Archers")</li>
+                }
+                @if (User.IsInRole("Tech Admin")
+                    || User.IsInRole("Club Admin"))
+                {
+                    <li>@Html.ActionLink("Classes", "Index", "Classes")</li>
+                }
+                @if (User.IsInRole("Tech Admin")
+                    || User.IsInRole("Scheduler"))
+                {
+                    <li>@Html.ActionLink("Schedules", "Index", "Schedules")</li>
+                }
+                @if (User.IsInRole("Tech Admin")
+                    || User.IsInRole("Club Admin")
+                    || User.IsInRole("Scheduler"))
+                {
+                    <li>@Html.ActionLink("Tournaments", "Index", "Tournaments")</li>
+                }
+            </ul>
+        </li>
+    }
+}

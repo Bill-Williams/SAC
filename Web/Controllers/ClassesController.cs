@@ -11,6 +11,7 @@ using SAC.Domain.Models;
 
 namespace SAC.Web.Controllers
 {
+    [RequireHttps]
     public class ClassesController : Controller
     {
         private SacContext db = new SacContext();

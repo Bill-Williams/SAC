@@ -11,6 +11,8 @@ using SAC.Domain.Models;
 
 namespace SAC.Web.Controllers
 {
+    [Authorize(Roles = "Tech Admin,Club Admin,Club User")]
+    [RequireHttps]
     public class ArchersController : Controller
     {
         private SacContext db = new SacContext();

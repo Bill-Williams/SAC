@@ -1,0 +1,13 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("Tech Admin"))
+    {
+        <li>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Site Admin&nbsp;<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                <li>@Html.ActionLink("Colors", "Index", "Colors")</li>
+            </ul>
+        </li>
+    }
+}
