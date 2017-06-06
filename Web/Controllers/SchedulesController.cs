@@ -18,7 +18,7 @@ namespace SAC.Web.Controllers
         // GET: Schedules
         public ActionResult Index()
         {
-            var schedules = db.Schedules.Include(s => s.Tournament);
+            var schedules = db.Schedules.Include(s => s.Club);
             return View(schedules.ToList());
         }
 
@@ -29,7 +29,8 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Schedule schedule = db.Schedules.Include(s => s.Tournament).FirstOrDefault(s => s.Id == id);
+            var schedule = db.Schedules.Include(s => s.Club).FirstOrDefault(s => s.Id == id);
+
             if (schedule == null)
             {
                 return HttpNotFound();
@@ -40,7 +41,7 @@ namespace SAC.Web.Controllers
         // GET: Schedules/Create
         public ActionResult Create()
         {
-            ViewBag.Id = new SelectList(db.Tournaments, "Id", "Id");
+            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name");
             return View();
         }
 
@@ -49,7 +50,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Date")] Schedule schedule)
+        public ActionResult Create([Bind(Include = "Id,ClubId,Date")] Schedule schedule)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +59,7 @@ namespace SAC.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Id = new SelectList(db.Tournaments, "Id", "Id", schedule.Id);
+            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name", schedule.ClubId);
             return View(schedule);
         }
 
@@ -69,12 +70,12 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Schedule schedule = db.Schedules.Include(s => s.Tournament).FirstOrDefault(s => s.Id == id);
+            Schedule schedule = db.Schedules.Find(id);
             if (schedule == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Id = new SelectList(db.Tournaments, "Id", "Id", schedule.Id);
+            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name", schedule.ClubId);
             return View(schedule);
         }
 
@@ -83,7 +84,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Date")] Schedule schedule)
+        public ActionResult Edit([Bind(Include = "Id,ClubId,Date")] Schedule schedule)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +92,7 @@ namespace SAC.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Id = new SelectList(db.Tournaments, "Id", "Id", schedule.Id);
+            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name", schedule.ClubId);
             return View(schedule);
         }
 
@@ -102,7 +103,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Schedule schedule = db.Schedules.Find(id);
+            var schedule = db.Schedules.Include(s => s.Club).FirstOrDefault(s => s.Id == id);
             if (schedule == null)
             {
                 return HttpNotFound();
@@ -115,7 +116,7 @@ namespace SAC.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Schedule schedule = db.Schedules.Find(id);
+            var schedule = db.Schedules.Include(s => s.Club).FirstOrDefault(s => s.Id == id);
             db.Schedules.Remove(schedule);
             db.SaveChanges();
             return RedirectToAction("Index");
