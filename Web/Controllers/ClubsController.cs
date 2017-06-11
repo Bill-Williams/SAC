@@ -20,12 +20,14 @@ namespace SAC.Web.Controllers
         // GET: Club
         public ActionResult Index()
         {
+            ViewBag.Title = "Clubs";
             return View(db.Clubs.OrderBy(c => c.Name));
         }
 
         // GET: Club/Directions/5
         public ActionResult Directions(Guid? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -35,14 +37,25 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Title = club.Name;
             return View(club);
+        }
+
+        // GET: Admin
+        [Authorize(Roles = "Club Admin, Tech Admin")]
+        public ActionResult Admin()
+        {
+            ViewBag.Title = "Manage Clubs";
+            return View(db.Clubs.OrderBy(c => c.Name));
         }
 
         // GET: Club/Create
         [Authorize(Roles = "Club Admin, Tech Admin")]
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Title = "Create New Club";
+            return View(new Club());
         }
 
         // POST: Club/Create
@@ -51,15 +64,16 @@ namespace SAC.Web.Controllers
         [Authorize(Roles = "Club Admin, Tech Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Address,CityStateZip,Contact,Phone,Email,Website,Directions,IconFileName")] Club club)
+        public ActionResult Create(Club club)
         {
             if (ModelState.IsValid)
             {
                 db.Clubs.Add(club);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
 
+            ViewBag.Title = "Create New Club";
             return View(club);
         }
 
@@ -76,6 +90,8 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Title = "Edit Club";
             return View(club);
         }
 
@@ -85,14 +101,16 @@ namespace SAC.Web.Controllers
         [Authorize(Roles = "Club Admin, Tech Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Address,CityStateZip,Contact,Phone,Email,Website,Directions,IconFileName")] Club club)
+        public ActionResult Edit(Club club)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(club).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
+
+            ViewBag.Title = "Edit Club";
             return View(club);
         }
 
@@ -116,12 +134,12 @@ namespace SAC.Web.Controllers
         [Authorize(Roles = "Club Admin, Tech Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Guid id)
         {
             Club club = db.Clubs.Find(id);
             db.Clubs.Remove(club);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Admin");
         }
 
         protected override void Dispose(bool disposing)

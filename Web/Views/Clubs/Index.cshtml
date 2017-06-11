@@ -1,11 +1,8 @@
-﻿@using SAC.Domain.Models
-@model IEnumerable<Club>
+﻿@model IEnumerable<SAC.Domain.Models.Club>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Clubs";
 }
-
-<h2>Manage Clubs</h2>
 
 <div class="jumbotron">
     <h2>Your Local Clubs</h2>
@@ -20,11 +17,3 @@
         </div>
     }
 </div>
-
-@if (User.IsInRole("Club Admin")
-    || User.IsInRole("Tech Admin"))
-{
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-}

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SAC.Domain.Models.Club>
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="display tbl_pointer" id="tblClubs">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ShortName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Website)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr onclick="location.href = '@(Url.Action("Edit", "Clubs", new { id = item.Id }))'">
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)<br />
+                    @Html.DisplayFor(modelItem => item.CityStateZip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contact)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Website)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#tblClubs').DataTable();
+        });
+    </script>
+}

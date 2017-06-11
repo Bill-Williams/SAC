@@ -5,17 +5,8 @@
 }
 
 <h2>Manage Users</h2>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 
-<style>
-    th{
-        padding:5px;
-    }
-</style>
-
-<table class="display" id="tblUsers">
+<table class="display tbl_pointer" id="tblUsers">
     <thead>
         <tr>
             <th>
@@ -33,18 +24,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.AspNetRoles)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr onclick="location.href = '@(Url.Action("Edit", "Users", new { id = item.Id }))'">
                 <td>
                     @Html.DisplayFor(modelItem => item.Email) @Html.DisplayFor(modelItem => item.EmailConfirmed, "Confirmed")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber) @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
+                    @Html.DisplayFor(modelItem => item.PhoneNumber) @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed, "Confirmed")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
@@ -54,11 +44,6 @@
                 </td>
                 <td>
                     <span>@string.Join(",", item.AspNetRoles.Select(r => r.Name))</span>
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             </tr>
         }

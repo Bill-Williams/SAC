@@ -21,10 +21,5 @@ namespace SAC.Domain.Models
         public string Name { get; set; }
 
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
-
-        public override string ToString()
-        {
-            return this.Id.ToString();
-        }
     }
 }

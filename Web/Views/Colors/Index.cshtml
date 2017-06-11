@@ -1,22 +1,12 @@
 ﻿@model IEnumerable<SAC.Domain.Models.Color>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Manage Colors</h2>
+<h2>ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 
-<style>
-    th {
-        padding: 5px;
-    }
-</style>
-
-<table class="display" id="tblColors">
+<table class="display tbl_pointer" id="tblColors">
     <thead>
 
         <tr>
@@ -26,23 +16,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.HexCode)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr onclick="location.href = '@(Url.Action("Edit", "Colors", new { id = item.Id }))'">
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.HexCode)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             </tr>
         }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SAC.Domain.TypeConverters;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -7,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace SAC.Domain.Models
 {
+    [TypeConverter(typeof(ClubTypeConverter))]
     public class Club : BaseEntity
     {
         public Club()
@@ -56,6 +59,5 @@ namespace SAC.Domain.Models
         public string IconFileName { get; set; }
 
         public virtual ICollection<AspNetUser> Users { get; set; }
-
     }
 }

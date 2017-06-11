@@ -12,8 +12,6 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>AspNetUser</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
@@ -100,14 +98,23 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AspNetRoles, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.ListBoxFor(model => model.AspNetRoles, ((SAC.Web.Controllers.UsersController)ViewContext.Controller).GetRoles(), new { @class = "form-control" })
+                @Html.ListBoxFor(model => model.AspNetRoles, (MultiSelectList)ViewBag.Roles, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AspNetRoles, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            @Html.LabelFor(model => model.Clubs, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBoxFor(model => model.Clubs, (MultiSelectList)ViewBag.Clubs, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Clubs, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-push-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" /> |
+                @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
             </div>
         </div>
     </div>
@@ -122,6 +129,7 @@
     <script>
         $(document).ready(function () {
             $("#AspNetRoles").chosen();
+            $("#Clubs").chosen();
         });
     </script>
 }

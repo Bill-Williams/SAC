@@ -14,5 +14,10 @@ namespace SAC.Domain.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(Order = 0)]
         public Guid Id { get; set; }
+
+        public override string ToString()
+        {
+            return this.Id.ToString();
+        }
     }
 }

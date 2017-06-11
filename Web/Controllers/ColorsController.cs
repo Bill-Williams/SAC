@@ -20,22 +20,8 @@ namespace SAC.Web.Controllers
         // GET: Colors
         public ActionResult Index()
         {
+            ViewBag.Title = "Manage Colors";
             return View(db.Colors.ToList());
-        }
-
-        // GET: Colors/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Color color = db.Colors.Find(id);
-            if (color == null)
-            {
-                return HttpNotFound();
-            }
-            return View(color);
         }
 
         // GET: Colors/Create
@@ -110,7 +96,7 @@ namespace SAC.Web.Controllers
         // POST: Colors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Guid id)
         {
             Color color = db.Colors.Find(id);
             db.Colors.Remove(color);

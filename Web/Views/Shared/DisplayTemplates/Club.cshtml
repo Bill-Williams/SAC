@@ -28,12 +28,3 @@
         @Html.DisplayFor(model => model.Phone, "Phone")
     </div>
 </div>
-
-@if (User.IsInRole("Club Admin")
-    || User.IsInRole("Tech Admin"))
-{
-    <div class="form-group">
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
-    </div>
-}

@@ -606,7 +606,6 @@
     <Content Include="Views\Clubs\Index.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
@@ -621,7 +620,6 @@
     <Content Include="Views\Classes\Index.cshtml" />
     <Content Include="Views\Colors\Create.cshtml" />
     <Content Include="Views\Colors\Delete.cshtml" />
-    <Content Include="Views\Colors\Details.cshtml" />
     <Content Include="Views\Colors\Edit.cshtml" />
     <Content Include="Views\Colors\Index.cshtml" />
     <Content Include="Views\Archers\Create.cshtml" />
@@ -651,6 +649,7 @@
     <Content Include="Views\Shared\MenuAdmin.cshtml" />
     <Content Include="Views\Home\Privacy.cshtml" />
     <Content Include="Views\Home\TermsOfService.cshtml" />
+    <Content Include="Views\Clubs\Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
