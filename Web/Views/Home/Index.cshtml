@@ -1,4 +1,32 @@
-﻿@model IEnumerable<SAC.Domain.Models.Tournament>
+﻿<div class="row">
+
+    <div class="col-sm-2">
+        <h3>Latest Scores</h3>
+        
+        <span>bla bla bla</span><br />
+
+        @Html.ActionLink("See scores now", "Index", "Tournaments")
+    </div>
+
+    <div class="col-sm-2">
+        <h3>Upcoming Tournaments</h3>
+
+        <span>bla bla bla</span><br />
+
+        @Html.ActionLink("View schedule", "Index", "Schedules")
+    </div>
+
+    <div class="col-sm-2">
+        <h3>Local Clubs</h3>
+
+        <span>bla bla bla</span><br />
+
+        @Html.ActionLink("Club list", "Index", "Clubs")
+    </div>
+
+</div>
+
+@*@model IEnumerable<SAC.Domain.Models.Tournament>
 
 <div class="row" style="margin-top:20px">
     <div style="float: left; margin-right:25px">
@@ -9,11 +37,16 @@
         <h1>@ViewBag.Title.</h1>
         <h2>@ViewBag.Message</h2>
     </div>
-</div>
+</div>*@
+
+@*<div class="row" style="margin-top:20px">
+    <a href='@Model.SacFacebookURL' target="_blank">
+        <img src='@Url.Content(Model.FacebookImg)' />
+    </a>
+</div>*@
 
 
-
-<div class="row" style="margin-top:20px">
+@*<div class="row" style="margin-top:20px">
     <div class="col-sm-push-3" style="float:left; margin-right:50px">
         @Html.DisplayFor(x => x, "TournamentMenu")
     </div>
@@ -21,4 +54,4 @@
     <div class="col-sm-push-3" align="center">
         <img style width="600" height="300" src="~/Content/Images/SAC2.jpg" />
     </div>
-</div>
+</div>*@

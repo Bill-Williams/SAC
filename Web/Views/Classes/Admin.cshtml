@@ -1,6 +1,16 @@
 ﻿@model IEnumerable<SAC.Domain.Models.Class>
 
+@{
+    ViewBag.Title = "Index";
+}
+
 <h2>Manage Classes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<style> th{ padding:5px; } </style>
 
 <table class="display" id="tblClasses">
     <thead>

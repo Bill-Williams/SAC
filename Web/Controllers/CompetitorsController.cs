@@ -60,8 +60,9 @@ namespace SAC.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name", competitor.ArcherId);
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code", competitor.ClassId);
+            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name", competitor.Archer);
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code", competitor.Class);
+
             return View(competitor);
         }
 
@@ -77,8 +78,8 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name", competitor.ArcherId);
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code", competitor.ClassId);
+            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name", competitor.Archer);
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code", competitor.Class);
             return View(competitor);
         }
 
@@ -95,8 +96,8 @@ namespace SAC.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name", competitor.ArcherId);
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code", competitor.ClassId);
+            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name", competitor.Archer);
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code", competitor.Class);
             return View(competitor);
         }
 

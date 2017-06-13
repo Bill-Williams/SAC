@@ -32,6 +32,7 @@ namespace SAC.Migrations
 
                 SeedRoles(context);
 
+                SeedGroups(context);
 
                 // Save to get foreign keys
                 context.SaveChanges();
@@ -50,6 +51,39 @@ namespace SAC.Migrations
                 // Save the added roles
                 context.SaveChanges();
             }
+        }
+
+        private void SeedGroups(SacContext context)
+        {
+            int order = 0;
+
+            context.Groups.AddOrUpdate(x => x.Id,
+                new Group()
+                {
+                    Name = "Money",
+                    SortOrder = order++
+                },
+                new Group()
+                {
+                    Name = "Mens",
+                    SortOrder = order++
+                },
+                new Group()
+                {
+                    Name = "Womens",
+                    SortOrder = order++
+                },
+                new Group()
+                {
+                    Name = "Juniors",
+                    SortOrder = order++
+                },
+                new Group()
+                {
+                    Name = "Seniors",
+                    SortOrder = order++
+                }
+            );
         }
 
         private void SeedRoles(SacContext context)
@@ -249,6 +283,7 @@ namespace SAC.Migrations
         private void SeedClasses(SacContext context)
         {
             var colors = context.Colors.ToDictionary(p => p.Name, p => p.Id);
+            var groups = context.Groups.ToDictionary(p => p.Name, p => p.Id);
 
             context.Classes.AddOrUpdate(x => x.Id,
                 new Class()
@@ -259,7 +294,8 @@ namespace SAC.Migrations
                     MaximumYardage = 10,
                     Known = false,
                     Restrictions = "None",
-                    ColorId = colors["Green"]
+                    Group = context.Groups.Find(groups["Juniors"]),
+                    Color = context.Colors.Find(colors["Green"])
                 },
 
                 new Class()
@@ -270,7 +306,8 @@ namespace SAC.Migrations
                     MaximumYardage = 15,
                     Known = false,
                     Restrictions = "280 FPS",
-                    ColorId = colors["Yellow"]
+                    Group = context.Groups.Find(groups["Juniors"]),
+                    Color = context.Colors.Find(colors["Yellow"])
                 },
 
                 new Class()
@@ -281,7 +318,8 @@ namespace SAC.Migrations
                     MaximumYardage = 25,
                     Known = false,
                     Restrictions = "280 FPS",
-                    ColorId = colors["Blue"]
+                    Group = context.Groups.Find(groups["Juniors"]),
+                    Color = context.Colors.Find(colors["Blue"])
                 },
 
                 new Class()
@@ -292,7 +330,8 @@ namespace SAC.Migrations
                     MaximumYardage = 40,
                     Known = false,
                     Restrictions = "280 FPS",
-                    ColorId = colors["Red"]
+                    Group = context.Groups.Find(groups["Juniors"]),
+                    Color = context.Colors.Find(colors["Red"])
                 },
 
                 new Class()
@@ -302,9 +341,9 @@ namespace SAC.Migrations
                     Description = "15-17 years old.",
                     MaximumYardage = 25,
                     Known = false,
-                    Restrictions =
-                        "Recurve or longbow, No sight or sight marks, no release aid, no stabilizers, no overdraw.",
-                    ColorId = colors["Blue"]
+                    Restrictions = "Recurve or longbow, No sight or sight marks, no release aid, no stabilizers, no overdraw.",
+                    Group = context.Groups.Find(groups["Juniors"]),
+                    Color = context.Colors.Find(colors["Blue"])
                 },
 
                 new Class()
@@ -315,7 +354,8 @@ namespace SAC.Migrations
                     MaximumYardage = 30,
                     Known = true,
                     Restrictions = "12 inch stabilizer, 280 FPS.",
-                    ColorId = colors["Purple"]
+                    Group = context.Groups.Find(groups["Mens"]),
+                    Color = context.Colors.Find(colors["Purple"])
                 },
 
                 new Class()
@@ -326,7 +366,8 @@ namespace SAC.Migrations
                     MaximumYardage = 30,
                     Known = true,
                     Restrictions = "12 inch stabilizer, 280 FPS.",
-                    ColorId = colors["Purple"]
+                    Group = context.Groups.Find(groups["Womens"]),
+                    Color = context.Colors.Find(colors["Purple"])
                 },
 
                 new Class()
@@ -337,7 +378,8 @@ namespace SAC.Migrations
                     MaximumYardage = 40,
                     Known = false,
                     Restrictions = "12 inch stabilizer, 280 FPS.",
-                    ColorId = colors["Orange"]
+                    Group = context.Groups.Find(groups["Mens"]),
+                    Color = context.Colors.Find(colors["Orange"])
                 },
 
                 new Class()
@@ -348,7 +390,8 @@ namespace SAC.Migrations
                     MaximumYardage = 40,
                     Known = false,
                     Restrictions = "12 inch stabilizer, 280 FPS.",
-                    ColorId = colors["Orange"]
+                    Group = context.Groups.Find(groups["Womens"]),
+                    Color = context.Colors.Find(colors["Orange"])
                 },
 
                 new Class()
@@ -359,7 +402,8 @@ namespace SAC.Migrations
                     MaximumYardage = 45,
                     Known = false,
                     Restrictions = "280 FPS.",
-                    ColorId = colors["White"]
+                    Group = context.Groups.Find(groups["Mens"]),
+                    Color = context.Colors.Find(colors["White"])
                 },
 
                 new Class()
@@ -370,18 +414,8 @@ namespace SAC.Migrations
                     MaximumYardage = 40,
                     Known = false,
                     Restrictions = "280 FPS.",
-                    ColorId = colors["Red"]
-                },
-
-                new Class()
-                {
-                    Code = "WO",
-                    Name = "Womens Open",
-                    Description = "Womens Open",
-                    MaximumYardage = 40,
-                    Known = false,
-                    Restrictions = "280 FPS.",
-                    ColorId = colors["Red"]
+                    Group = context.Groups.Find(groups["Womens"]),
+                    Color = context.Colors.Find(colors["Red"])
                 },
 
                 new Class()
@@ -392,7 +426,8 @@ namespace SAC.Migrations
                     MaximumYardage = 45,
                     Known = true,
                     Restrictions = "280 FPS.",
-                    ColorId = colors["White"]
+                    Group = context.Groups.Find(groups["Mens"]),
+                    Color = context.Colors.Find(colors["White"])
                 },
 
                 new Class()
@@ -403,7 +438,8 @@ namespace SAC.Migrations
                     MaximumYardage = 40,
                     Known = true,
                     Restrictions = "280 FPS.",
-                    ColorId = colors["Red"]
+                    Group = context.Groups.Find(groups["Womens"]),
+                    Color = context.Colors.Find(colors["Red"])
                 },
 
                 new Class()
@@ -414,7 +450,8 @@ namespace SAC.Migrations
                     MaximumYardage = 45,
                     Known = false,
                     Restrictions = "280 FPS.",
-                    ColorId = colors["White"]
+                    Group = context.Groups.Find(groups["Seniors"]),
+                    Color = context.Colors.Find(colors["White"])
                 },
 
                 new Class()
@@ -425,7 +462,8 @@ namespace SAC.Migrations
                     MaximumYardage = 45,
                     Known = false,
                     Restrictions = "None.",
-                    ColorId = colors["White"]
+                    Group = context.Groups.Find(groups["Money"]),
+                    Color = context.Colors.Find(colors["White"])
                 },
 
                 new Class()
@@ -436,7 +474,8 @@ namespace SAC.Migrations
                     MaximumYardage = 40,
                     Known = false,
                     Restrictions = "None.",
-                    ColorId = colors["Red"]
+                    Group = context.Groups.Find(groups["Money"]),
+                    Color = context.Colors.Find(colors["Red"])
                 },
 
                 new Class()
@@ -447,7 +486,8 @@ namespace SAC.Migrations
                     MaximumYardage = 40,
                     Known = false,
                     Restrictions = "12 inch stabilizer.",
-                    ColorId = colors["Orange"]
+                    Group = context.Groups.Find(groups["Money"]),
+                    Color = context.Colors.Find(colors["Orange"])
                 }
             );
         }

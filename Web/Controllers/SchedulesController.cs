@@ -60,7 +60,7 @@ namespace SAC.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name", schedule.ClubId);
+            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name", schedule.Club);
             return View(schedule);
         }
 
@@ -76,7 +76,7 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name", schedule.ClubId);
+            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name", schedule.Club);
             return View(schedule);
         }
 
@@ -93,7 +93,7 @@ namespace SAC.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name", schedule.ClubId);
+            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name", schedule.Club);
             return View(schedule);
         }
 

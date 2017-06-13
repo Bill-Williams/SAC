@@ -51,20 +51,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Archer.cs" />
-    <Compile Include="Entities\AspNetRole.cs" />
-    <Compile Include="Entities\AspNetUser.cs" />
-    <Compile Include="Entities\AspNetUserClaim.cs" />
-    <Compile Include="Entities\AspNetUserLogin.cs" />
-    <Compile Include="Entities\BaseEntity.cs" />
-    <Compile Include="Entities\Class.cs" />
-    <Compile Include="Entities\Club.cs" />
-    <Compile Include="Entities\Color.cs" />
+    <Compile Include="Models\Archer.cs" />
+    <Compile Include="Models\AspNetRole.cs" />
+    <Compile Include="Models\AspNetUser.cs" />
+    <Compile Include="Models\AspNetUserClaim.cs" />
+    <Compile Include="Models\AspNetUserLogin.cs" />
+    <Compile Include="Models\BaseEntity.cs" />
+    <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\Club.cs" />
+    <Compile Include="Models\Color.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SacContext.cs" />
-    <Compile Include="Entities\Schedule.cs" />
-    <Compile Include="Entities\Competitor.cs" />
-    <Compile Include="Entities\Tournament.cs" />
+    <Compile Include="Models\Schedule.cs" />
+    <Compile Include="Models\Competitor.cs" />
+    <Compile Include="Models\Tournament.cs" />
     <Compile Include="TypeConverters\AspNetRoleTypeConverter.cs" />
     <Compile Include="TypeConverters\ClubTypeConverter.cs" />
   </ItemGroup>
