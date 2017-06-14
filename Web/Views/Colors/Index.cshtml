@@ -1,6 +1,10 @@
 ﻿@model IEnumerable<SAC.Domain.Models.Color>
 
-<h2>ViewBag.Title</h2>
+@{
+    ViewBag.Title = "Manage Colors";
+}
+
+<h2>@ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -8,7 +12,6 @@
 
 <table class="display tbl_pointer" id="tblColors">
     <thead>
-
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)

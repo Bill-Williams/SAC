@@ -4,12 +4,12 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Group</h4>
         <hr />
@@ -34,7 +34,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" /> |
+                @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
             </div>
         </div>
     </div>

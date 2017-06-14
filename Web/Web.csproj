@@ -653,7 +653,6 @@
     <Content Include="Views\Shared\DisplayTemplates\Class.cshtml" />
     <Content Include="Views\Groups\Create.cshtml" />
     <Content Include="Views\Groups\Delete.cshtml" />
-    <Content Include="Views\Groups\Details.cshtml" />
     <Content Include="Views\Groups\Edit.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
   </ItemGroup>

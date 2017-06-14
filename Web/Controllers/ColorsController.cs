@@ -20,7 +20,6 @@ namespace SAC.Web.Controllers
         // GET: Colors
         public ActionResult Index()
         {
-            ViewBag.Title = "Manage Colors";
             return View(db.Colors.ToList());
         }
 

@@ -23,21 +23,6 @@ namespace SAC.Web.Controllers
             return View(db.Groups.ToList());
         }
 
-        // GET: Groups/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Group group = db.Groups.Find(id);
-            if (group == null)
-            {
-                return HttpNotFound();
-            }
-            return View(group);
-        }
-
         // GET: Groups/Create
         public ActionResult Create()
         {
@@ -90,6 +75,7 @@ namespace SAC.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(group);
         }
 
@@ -105,6 +91,7 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(group);
         }
 
