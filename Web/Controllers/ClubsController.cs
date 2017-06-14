@@ -20,7 +20,6 @@ namespace SAC.Web.Controllers
         // GET: Club
         public ActionResult Index()
         {
-            ViewBag.Title = "Clubs";
             return View(db.Clubs.OrderBy(c => c.Name));
         }
 
@@ -38,7 +37,6 @@ namespace SAC.Web.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.Title = club.Name;
             return View(club);
         }
 
@@ -46,7 +44,6 @@ namespace SAC.Web.Controllers
         [Authorize(Roles = "Club Admin, Tech Admin")]
         public ActionResult Admin()
         {
-            ViewBag.Title = "Manage Clubs";
             return View(db.Clubs.OrderBy(c => c.Name));
         }
 
@@ -54,7 +51,6 @@ namespace SAC.Web.Controllers
         [Authorize(Roles = "Club Admin, Tech Admin")]
         public ActionResult Create()
         {
-            ViewBag.Title = "Create New Club";
             return View(new Club());
         }
 
@@ -73,7 +69,6 @@ namespace SAC.Web.Controllers
                 return RedirectToAction("Admin");
             }
 
-            ViewBag.Title = "Create New Club";
             return View(club);
         }
 
@@ -91,7 +86,6 @@ namespace SAC.Web.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.Title = "Edit Club";
             return View(club);
         }
 
@@ -110,7 +104,6 @@ namespace SAC.Web.Controllers
                 return RedirectToAction("Admin");
             }
 
-            ViewBag.Title = "Edit Club";
             return View(club);
         }
 

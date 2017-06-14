@@ -1,6 +1,8 @@
 ﻿@model SAC.Domain.Models.Club
 
 @{
+    ViewBag.Title = Model.Name;
+
     var isIos = false;
 
     var userAgent = HttpContext.Current.Request.UserAgent.ToLower();

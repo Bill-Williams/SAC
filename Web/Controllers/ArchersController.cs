@@ -49,7 +49,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Archer archer)
+        public ActionResult Create(Archer archer)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Archer archer)
+        public ActionResult Edit(Archer archer)
         {
             if (ModelState.IsValid)
             {
@@ -110,7 +110,7 @@ namespace SAC.Web.Controllers
         // POST: Archers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Guid id)
         {
             Archer archer = db.Archers.Find(id);
             db.Archers.Remove(archer);

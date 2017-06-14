@@ -32,13 +32,12 @@ namespace SAC.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-theme.css",
+                      "~/Content/DataTables/css/dataTables.bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/chosen.css",
-                      "~/Context/DataTables/css/jquery.dataTables.css",
                       "~/Content/themes/darkhive/jquery-ui.css",
                       "~/Content/themes/darkhive/jquery-ui.structure.css",
-                      "~/Content/themes/darkhive/jquery-ui.theme.css",
-                      "~/Content/DataTables/css/jquery.dataTables.css"
+                      "~/Content/themes/darkhive/jquery-ui.theme.css"
             ));
         }
     }
