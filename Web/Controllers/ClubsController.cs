@@ -11,7 +11,7 @@ using SAC.Domain.Models;
 
 namespace SAC.Web.Controllers
 {
-    [Authorize(Roles = "Club Admin, Tech Admin")]
+    [Authorize(Roles = "Club Admin,Tech Admin")]
     [RequireHttps]
     public class ClubsController : Controller
     {
@@ -37,14 +37,13 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
-
             return View(club);
         }
 
         // GET: Admin
         public ActionResult Admin()
         {
-            return View(db.Clubs.OrderBy(c => c.Name));
+            return View(db.Clubs);
         }
 
         // GET: Club/Create
@@ -58,7 +57,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Club club)
+        public ActionResult Create([Bind(Include = "Name,ShortName,Address,CityStateZip,Contact,Phone,Email,Website,Directions,IconFileName")] Club club)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +65,6 @@ namespace SAC.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Admin");
             }
-
             return View(club);
         }
 
@@ -82,7 +80,6 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
-
             return View(club);
         }
 
@@ -91,7 +88,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Club club)
+        public ActionResult Edit([Bind(Include = "Id,Name,ShortName,Address,CityStateZip,Contact,Phone,Email,Website,Directions,IconFileName")] Club club)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +96,6 @@ namespace SAC.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Admin");
             }
-
             return View(club);
         }
 
