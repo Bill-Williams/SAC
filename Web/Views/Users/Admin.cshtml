@@ -32,7 +32,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr onclick="location.href = '@(Url.Action("Edit", "Users", new { id = item.Id }))'">
+            <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                 <td>
                     @Html.DisplayFor(modelItem => item.Email) @Html.DisplayFor(modelItem => item.EmailConfirmed, "Confirmed")
                 </td>
