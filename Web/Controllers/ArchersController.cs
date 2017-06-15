@@ -20,7 +20,7 @@ namespace SAC.Web.Controllers
         // GET: Archers
         public ActionResult Admin()
         {
-            return View(db.Archers.ToList());
+            return View(db.Archers.OrderBy(a => a.Name));
         }
 
         // GET: Archers/Create
