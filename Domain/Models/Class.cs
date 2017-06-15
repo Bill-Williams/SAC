@@ -18,6 +18,9 @@ namespace SAC.Domain.Models
         [MaxLength(100)]
         public string Name { get; set; }
 
+        [Required]
+        public Guid GroupId { get; set; }
+
         public Group Group { get; set; }
 
         [Required]
@@ -33,6 +36,9 @@ namespace SAC.Domain.Models
 
         [MaxLength(100)]
         public string Restrictions { get; set; }
+
+        [Required]
+        public Guid ColorId { get; set; }
 
         public virtual Color Color { get; set; }
     }

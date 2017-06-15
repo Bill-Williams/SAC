@@ -1,56 +1,11 @@
 ﻿@model IEnumerable<SAC.Domain.Models.Schedule>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Schedule";
 }
 
-<h2>Index</h2>
+<div class="jumbotron">
+    <h2>Schedule</h2>
+    <p class="lead">TODO: Info</p>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<style>
-    th {
-        padding: 5px;
-    }
-</style>
-
-<table class="display" id="tblSchedules">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Club.Name)
-        </th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Club.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
-
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('#tblSchedules').DataTable();
-        });
-    </script>
-}

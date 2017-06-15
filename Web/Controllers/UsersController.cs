@@ -40,10 +40,7 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
-
-            ViewBag.ClubList = new MultiSelectList(db.Clubs, "Id", "ShortName");
-            ViewBag.RoleList = new MultiSelectList(db.Roles, "Id", "Name");
-
+            this.SetupLists();
             return View(aspNetUser);
         }
 
@@ -117,6 +114,12 @@ namespace SAC.Web.Controllers
             db.Users.Remove(aspNetUser);
             db.SaveChanges();
             return RedirectToAction("Admin");
+        }
+
+        private void SetupLists()
+        {
+            ViewBag.ClubList = new MultiSelectList(db.Clubs.OrderBy(c => c.ShortName), "Id", "ShortName");
+            ViewBag.RoleList = new MultiSelectList(db.Roles.OrderBy(r => r.Name), "Id", "Name");
         }
 
         protected override void Dispose(bool disposing)

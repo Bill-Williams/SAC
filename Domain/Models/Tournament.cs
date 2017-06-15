@@ -20,6 +20,8 @@ namespace SAC.Domain.Models
         public ICollection<Competitor> Competitors { get; set; }
 
         [Required]
+        public Guid ScheduleId { get; set; }
+
         public virtual Schedule Schedule { get; set; }
     }
 }

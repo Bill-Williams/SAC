@@ -10,13 +10,19 @@ namespace SAC.Domain.Models
 {
     public class Schedule : BaseEntity
     {
+        [Required]
+        [Column(Order = 1)]
+        public Guid ClubId { get; set; }
+
         public virtual Club Club { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Column(Order = 2)]
         public DateTime Date { get; set; }
 
-        public virtual Tournament Tournament { get; set; }
+        //[ForeignKey("TournamentId")]
+        //public virtual Tournament Tournament { get; set; }
     }
 }

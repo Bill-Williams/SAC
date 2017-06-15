@@ -12,18 +12,10 @@ namespace SAC.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private SacContext db = new SacContext();
+        //private SacContext db = new SacContext();
 
         public ActionResult Index()
         {
-            ViewBag.Title = "Home";
-            //ViewBag.Message = "Tournament Scores";
-
-            //var tournaments = db.Tournaments
-            //    .Where(t => t.Schedule.Date.Year == DateTime.Now.Year)
-            //    .Include(t => t.Schedule.Club);
-
-            //return View(tournaments.OrderByDescending(t => t.Schedule.Date));
             return View();
         }
 

@@ -67,18 +67,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ColorId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Color, (SelectList)ViewBag.ColorList, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.ColorId, (SelectList)ViewBag.ColorList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ColorId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Group, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.GroupId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Group, (SelectList)ViewBag.GroupList, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Group, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.GroupId, (SelectList)ViewBag.GroupList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
             </div>
         </div>
 

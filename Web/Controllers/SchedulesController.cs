@@ -11,38 +11,29 @@ using SAC.Domain.Models;
 
 namespace SAC.Web.Controllers
 {
+    [Authorize(Roles = "Tech Admin,Scheduler")]
     [RequireHttps]
     public class SchedulesController : Controller
     {
         private SacContext db = new SacContext();
 
         // GET: Schedules
+        [AllowAnonymous]
         public ActionResult Index()
         {
-            var schedules = db.Schedules.Include(s => s.Club);
-            return View(schedules.ToList());
+            return View(db.Schedules.Include(s => s.Club));
         }
 
-        // GET: Schedules/Details/5
-        public ActionResult Details(Guid? id)
+        // GET: Schedules/Admin
+        public ActionResult Admin()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var schedule = db.Schedules.Include(s => s.Club).FirstOrDefault(s => s.Id == id);
-
-            if (schedule == null)
-            {
-                return HttpNotFound();
-            }
-            return View(schedule);
+            return View(db.Schedules.Include(s => s.Club));
         }
 
         // GET: Schedules/Create
         public ActionResult Create()
         {
-            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name");
+            this.SetupLists();
             return View();
         }
 
@@ -57,10 +48,9 @@ namespace SAC.Web.Controllers
             {
                 db.Schedules.Add(schedule);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
-
-            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name", schedule.Club);
+            this.SetupLists();
             return View(schedule);
         }
 
@@ -76,7 +66,7 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name", schedule.Club);
+            this.SetupLists();
             return View(schedule);
         }
 
@@ -91,9 +81,9 @@ namespace SAC.Web.Controllers
             {
                 db.Entry(schedule).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
-            ViewBag.ClubId = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name", schedule.Club);
+            this.SetupLists();
             return View(schedule);
         }
 
@@ -120,7 +110,12 @@ namespace SAC.Web.Controllers
             var schedule = db.Schedules.Include(s => s.Club).FirstOrDefault(s => s.Id == id);
             db.Schedules.Remove(schedule);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Admin");
+        }
+
+        private void SetupLists()
+        {
+            ViewBag.ClubList = new SelectList(db.Clubs.OrderBy(c => c.Name), "Id", "Name");
         }
 
         protected override void Dispose(bool disposing)

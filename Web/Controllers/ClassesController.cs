@@ -39,8 +39,7 @@ namespace SAC.Web.Controllers
         // GET: Classes/Create
         public ActionResult Create()
         {
-            ViewBag.GroupList = new SelectList(db.Groups,"Id", "Name");
-            ViewBag.ColorList = new SelectList(db.Colors, "Id", "Name");
+            this.SetupLists();
             return View();
         }
 
@@ -50,21 +49,15 @@ namespace SAC.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "Code,Name,Description,Known,MaximumYardage,Restrictions")] Class @class,
-            [Bind(Include = "Group")] Guid group,
-            [Bind(Include = "Color")] Guid color
-            )
+            [Bind(Include = "Code,Name,Description,Known,MaximumYardage,Restrictions,GroupId,ColorId")] Class @class)
         {
             if (ModelState.IsValid)
             {
-                @class.Group = db.Groups.Find(group);
-                @class.Color = db.Colors.Find(color);
                 db.Classes.Add(@class);
                 db.SaveChanges();
                 return RedirectToAction("Admin");
             }
-            ViewBag.GroupList = new SelectList(db.Groups, "Id", "Name");
-            ViewBag.ColorList = new SelectList(db.Colors, "Id", "Name");
+            this.SetupLists();
             return View(@class);
         }
 
@@ -80,8 +73,7 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.GroupList = new SelectList(db.Groups, "Id", "Name");
-            ViewBag.ColorList = new SelectList(db.Colors, "Id", "Name");
+            this.SetupLists();
             return View(@class);
         }
 
@@ -90,7 +82,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Code,Name,Description,Known,MaximumYardage,Restrictions")] Class @class)
+        public ActionResult Edit([Bind(Include = "Id,Code,Name,Description,Known,MaximumYardage,Restrictions,GroupId,ColorId")] Class @class)
         {
             if (ModelState.IsValid)
             {
@@ -98,8 +90,7 @@ namespace SAC.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Admin");
             }
-            ViewBag.GroupList = new SelectList(db.Groups, "Id", "Name");
-            ViewBag.ColorList = new SelectList(db.Colors, "Id", "Name");
+            this.SetupLists();
             return View(@class);
         }
 
@@ -127,6 +118,12 @@ namespace SAC.Web.Controllers
             db.Classes.Remove(@class);
             db.SaveChanges();
             return RedirectToAction("Admin");
+        }
+
+        private void SetupLists()
+        {
+            ViewBag.GroupList = new SelectList(db.Groups.OrderBy(g => g.Name), "Id", "Name");
+            ViewBag.ColorList = new SelectList(db.Colors.OrderBy(c => c.Name), "Id", "Name");
         }
 
         protected override void Dispose(bool disposing)
