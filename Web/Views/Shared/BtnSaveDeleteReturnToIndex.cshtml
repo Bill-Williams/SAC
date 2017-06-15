@@ -1,0 +1,7 @@
+﻿@model SAC.Domain.Models.BaseEntity
+
+<div class="btn-group">
+    <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+    <a href="@Url.Action("Index")" class="btn btn-default"><i class="glyphicon glyphicon-menu-hamburger"></i> Back to List</a>
+    <a href="@Url.Action("Delete", new { id = Model.Id })" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+</div>

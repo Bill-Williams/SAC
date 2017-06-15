@@ -654,6 +654,10 @@
     <Content Include="Views\Groups\Edit.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
     <Content Include="Views\Clubs\Edit.cshtml" />
+    <Content Include="Views\Shared\BtnSaveDeleteReturnToIndex.cshtml" />
+    <Content Include="Views\Shared\BtnSaveDeleteReturnToAdmin.cshtml" />
+    <Content Include="Views\Shared\BtnDeleteCancelReturnToIndex.cshtml" />
+    <Content Include="Views\Shared\BtnDeleteCancelReturnToAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

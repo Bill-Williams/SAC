@@ -33,10 +33,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <div class="btn-group">
-                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-                <a href="@Url.Action("Index")" class="btn btn-default"><i class="glyphicon glyphicon-menu-hamburger"></i> Back to List</a>
-            </div>
+            @Html.Partial("BtnDeleteCancelReturnToIndex", Model)
         </div>
     }
 </div>
