@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SAC.Domain;
 using SAC.Domain.Models;
+using SAC.Web.Models;
 
 namespace SAC.Web.Controllers
 {
@@ -21,13 +22,18 @@ namespace SAC.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(db.Classes.Include(c => c.Color));
+            var model = new ClassViewModel()
+            {
+                Classes = db.Classes.Include("Color").Include("Group").ToList(),
+                Groups = db.Groups.OrderBy(g => g.SortOrder).ToList()
+            };
+            return View(model);
         }
 
         // GET: Classes/Admin
         public ActionResult Admin()
         {
-            return View(db.Classes.Include(c => c.Color));
+            return View(db.Classes.Include("Color").Include("Group"));
         }
         
         // GET: Classes/Create

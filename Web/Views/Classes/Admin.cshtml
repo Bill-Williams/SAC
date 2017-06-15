@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Code)
+                @Html.DisplayNameFor(model => model.Group)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -29,10 +29,10 @@
                 @Html.DisplayNameFor(model => model.MaximumYardage)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Restrictions)
+                @Html.DisplayNameFor(model => model.Color)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Color.Name)
+                @Html.DisplayNameFor(model => model.Restrictions)
             </th>
         </tr>
     </thead>
@@ -41,7 +41,7 @@
         {
             <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                 <td>
-                    @Html.DisplayFor(modelItem => item.Code)
+                    @Html.DisplayFor(modelItem => item.Group.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
@@ -56,10 +56,10 @@
                     @Html.DisplayFor(modelItem => item.MaximumYardage)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Restrictions)
+                    @Html.DisplayFor(modelItem => item.Color.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Color.Name)
+                    @Html.DisplayFor(modelItem => item.Restrictions)
                 </td>
             </tr>
         }

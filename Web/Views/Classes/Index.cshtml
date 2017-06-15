@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SAC.Domain.Models.Class>
+﻿@model SAC.Web.Models.ClassViewModel
 
 @{
     ViewBag.Title = "Classes";
@@ -9,59 +9,22 @@
     <p class="lead">TODO: Info</p>
 </div>
 
+@foreach (var group in Model.Groups)
+{
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">@group.Name</h3>
+            </div>
+            <div class="panel-body">
+                @foreach (var item in Model.Classes.Where(c => c.Group.Id == group.Id).OrderBy(c => c.Name))
+                {
+                    <div class="col-lg-4">
+                        @Html.DisplayFor(model => item)
 
-<table class="display" id="tblClasses">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Code)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Known)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaximumYardage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Restrictions)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Color.Name)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Known)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MaximumYardage)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Restrictions)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Color.Name)
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
