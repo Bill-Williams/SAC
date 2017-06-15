@@ -12,13 +12,13 @@
                     || User.IsInRole("Club Admin")
                     || User.IsInRole("Club User"))
                 {
-                    <li>@Html.ActionLink("Archers", "Index", "Archers")</li>
+                    <li>@Html.ActionLink("Archers", "Admin", "Archers")</li>
                 }
                 
                 @if (User.IsInRole("Tech Admin")
                     || User.IsInRole("Club Admin"))
                 {
-                    <li>@Html.ActionLink("Classes", "Index", "Classes")</li>
+                    <li>@Html.ActionLink("Classes", "Admin", "Classes")</li>
                 }
 
                 @if (User.IsInRole("Tech Admin")
@@ -30,14 +30,14 @@
                 @if (User.IsInRole("Tech Admin")
                     || User.IsInRole("Scheduler"))
                 {
-                    <li>@Html.ActionLink("Schedules", "Index", "Schedules")</li>
+                    <li>@Html.ActionLink("Schedules", "Admin", "Schedules")</li>
                 }
                 
                 @if (User.IsInRole("Tech Admin")
                     || User.IsInRole("Club Admin")
                     || User.IsInRole("Scheduler"))
                 {
-                    <li>@Html.ActionLink("Tournaments", "Index", "Tournaments")</li>
+                    <li>@Html.ActionLink("Tournaments", "Admin", "Tournaments")</li>
                 }
             </ul>
         </li>

@@ -17,8 +17,8 @@ namespace SAC.Web.Controllers
     {
         private SacContext db = new SacContext();
 
-        // GET: Users
-        public ActionResult Index()
+        // GET: Users/Admin
+        public ActionResult Admin()
         {
             return View(db.Users.Include("AspNetRoles").Include("Clubs").ToList());
         }
@@ -88,7 +88,7 @@ namespace SAC.Web.Controllers
                 }
                 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
             return HttpNotFound();
         }
@@ -116,7 +116,7 @@ namespace SAC.Web.Controllers
             AspNetUser aspNetUser = db.Users.Find(id);
             db.Users.Remove(aspNetUser);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Admin");
         }
 
         protected override void Dispose(bool disposing)

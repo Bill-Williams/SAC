@@ -17,8 +17,8 @@ namespace SAC.Web.Controllers
     {
         private SacContext db = new SacContext();
 
-        // GET: Colors
-        public ActionResult Index()
+        // GET: Colors/Admin
+        public ActionResult Admin()
         {
             return View(db.Colors.ToList());
         }
@@ -40,7 +40,7 @@ namespace SAC.Web.Controllers
             {
                 db.Colors.Add(color);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
 
             return View(color);
@@ -72,7 +72,7 @@ namespace SAC.Web.Controllers
             {
                 db.Entry(color).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
             return View(color);
         }
@@ -100,7 +100,7 @@ namespace SAC.Web.Controllers
             Color color = db.Colors.Find(id);
             db.Colors.Remove(color);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Admin");
         }
 
         protected override void Dispose(bool disposing)

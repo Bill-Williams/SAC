@@ -605,7 +605,7 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\Admin.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Clubs\Directions.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Club.cshtml" />
@@ -618,7 +618,7 @@
     <Content Include="Views\Colors\Create.cshtml" />
     <Content Include="Views\Colors\Delete.cshtml" />
     <Content Include="Views\Colors\Edit.cshtml" />
-    <Content Include="Views\Colors\Index.cshtml" />
+    <Content Include="Views\Colors\Admin.cshtml" />
     <Content Include="Views\Archers\Create.cshtml" />
     <Content Include="Views\Archers\Delete.cshtml" />
     <Content Include="Views\Archers\Details.cshtml" />
@@ -652,12 +652,11 @@
     <Content Include="Views\Groups\Create.cshtml" />
     <Content Include="Views\Groups\Delete.cshtml" />
     <Content Include="Views\Groups\Edit.cshtml" />
-    <Content Include="Views\Groups\Index.cshtml" />
+    <Content Include="Views\Groups\Admin.cshtml" />
     <Content Include="Views\Clubs\Edit.cshtml" />
-    <Content Include="Views\Shared\BtnSaveDeleteReturnToIndex.cshtml" />
-    <Content Include="Views\Shared\BtnSaveDeleteReturnToAdmin.cshtml" />
-    <Content Include="Views\Shared\BtnDeleteCancelReturnToIndex.cshtml" />
-    <Content Include="Views\Shared\BtnDeleteCancelReturnToAdmin.cshtml" />
+    <Content Include="Views\Shared\BtnSaveDeleteReturn.cshtml" />
+    <Content Include="Views\Shared\BtnDeleteCancelReturn.cshtml" />
+    <Content Include="Views\Shared\BtnCreateCancel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

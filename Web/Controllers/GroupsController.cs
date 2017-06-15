@@ -17,8 +17,8 @@ namespace SAC.Web.Controllers
     {
         private SacContext db = new SacContext();
 
-        // GET: Groups
-        public ActionResult Index()
+        // GET: Groups/Admin
+        public ActionResult Admin()
         {
             return View(db.Groups.ToList());
         }
@@ -41,7 +41,7 @@ namespace SAC.Web.Controllers
                 group.Id = Guid.NewGuid();
                 db.Groups.Add(group);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
 
             return View(group);
@@ -73,7 +73,7 @@ namespace SAC.Web.Controllers
             {
                 db.Entry(group).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
 
             return View(group);
@@ -103,7 +103,7 @@ namespace SAC.Web.Controllers
             Group group = db.Groups.Find(id);
             db.Groups.Remove(group);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Admin");
         }
 
         protected override void Dispose(bool disposing)
