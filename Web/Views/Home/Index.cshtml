@@ -11,26 +11,20 @@
 
     <div class="col-md-4">
         <h3>Latest Scores</h3>
-        
         <p>bla bla bla</p>
-
-        @Html.ActionLink("See scores now", "Index", "Tournaments")
+        <p>@Html.ActionLink("See scores now", "Index", "Tournaments", new { @class = "btn btn-default" })</p>
     </div>
 
     <div class="col-md-4">
         <h3>Upcoming Tournaments</h3>
-
         <p>bla bla bla</p>
-
-        @Html.ActionLink("View schedule", "Index", "Schedules")
+        <p>@Html.ActionLink("View schedule", "Index", "Schedules", new { @class = "btn btn-default" })</p>
     </div>
 
     <div class="col-md-4">
         <h3>Local Clubs</h3>
-
         <p>bla bla bla</p>
-
-        @Html.ActionLink("Club list", "Index", "Clubs")
+        <p>@Html.ActionLink("Club list", "Index", "Clubs", new { @class = "btn btn-default" })</p>
     </div>
 
 </div>
