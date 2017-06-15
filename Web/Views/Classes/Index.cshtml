@@ -17,7 +17,7 @@
                 <h3 class="panel-title">@group.Name</h3>
             </div>
             <div class="panel-body">
-                @foreach (var item in Model.Classes.Where(c => c.Group.Id == group.Id).OrderBy(c => c.Name))
+                @foreach (var item in Model.Classes.Where(c => c.Group.Id == group.Id).OrderByDescending(c => c.MaximumYardage).ThenBy(c => c.Name))
                 {
                     <div class="col-lg-4">
                         @Html.DisplayFor(model => item)

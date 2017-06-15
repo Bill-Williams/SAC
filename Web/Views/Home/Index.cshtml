@@ -1,25 +1,34 @@
-﻿<div class="row">
+﻿@{
+    ViewBag.Title = "Home";
+}
 
-    <div class="col-sm-2">
+<div class="jumbotron">
+    <h2>Southern Archery Circut</h2>
+    <p class="lead">TODO: Info</p>
+</div>
+
+<div class="row">
+
+    <div class="col-md-4">
         <h3>Latest Scores</h3>
         
-        <span>bla bla bla</span><br />
+        <p>bla bla bla</p>
 
         @Html.ActionLink("See scores now", "Index", "Tournaments")
     </div>
 
-    <div class="col-sm-2">
+    <div class="col-md-4">
         <h3>Upcoming Tournaments</h3>
 
-        <span>bla bla bla</span><br />
+        <p>bla bla bla</p>
 
         @Html.ActionLink("View schedule", "Index", "Schedules")
     </div>
 
-    <div class="col-sm-2">
+    <div class="col-md-4">
         <h3>Local Clubs</h3>
 
-        <span>bla bla bla</span><br />
+        <p>bla bla bla</p>
 
         @Html.ActionLink("Club list", "Index", "Clubs")
     </div>
