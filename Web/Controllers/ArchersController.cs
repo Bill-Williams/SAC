@@ -18,24 +18,9 @@ namespace SAC.Web.Controllers
         private SacContext db = new SacContext();
 
         // GET: Archers
-        public ActionResult Index()
+        public ActionResult Admin()
         {
             return View(db.Archers.ToList());
-        }
-
-        // GET: Archers/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Archer archer = db.Archers.Find(id);
-            if (archer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(archer);
         }
 
         // GET: Archers/Create
@@ -55,7 +40,7 @@ namespace SAC.Web.Controllers
             {
                 db.Archers.Add(archer);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
 
             return View(archer);
@@ -87,7 +72,7 @@ namespace SAC.Web.Controllers
             {
                 db.Entry(archer).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
             return View(archer);
         }
@@ -115,7 +100,7 @@ namespace SAC.Web.Controllers
             Archer archer = db.Archers.Find(id);
             db.Archers.Remove(archer);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Admin");
         }
 
         protected override void Dispose(bool disposing)
