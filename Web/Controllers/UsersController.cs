@@ -52,48 +52,44 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AspNetUser user)
+        public ActionResult Edit(
+            [Bind(Include = "Id,UserName,Email,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnabled,LockoutEndDateUtc,AccessFailedCount")] AspNetUser user,
+            [Bind(Include = "AspNetRoles")] Guid[] aspNetRoles,
+            [Bind(Include = "Clubs")] Guid[] clubs)
         {
             if (ModelState.IsValid)
             {
-                //db.Entry(user).State = EntityState.Modified;
                 var _user = db.Users
                                 .Include("AspNetRoles")
                                 .Include("Clubs")
                                 .First(u => u.Id == user.Id);
 
-                // Add or Removed Roles
-                var deletedRoles = _user.AspNetRoles.Except(user.AspNetRoles);
-                var addedRoles = user.AspNetRoles.Except(_user.AspNetRoles);
+                db.Entry(_user).CurrentValues.SetValues(user);
 
-                deletedRoles.ToList().ForEach(r => _user.AspNetRoles.Remove(r));
-
-                foreach(var role in addedRoles)
+                if (true)
                 {
-                    if (db.Entry(role).State == EntityState.Detached)
+                    _user.AspNetRoles.Clear();
+                    if (null != aspNetRoles)
                     {
-                        var addedRole = db.Roles.Find(role.Id);
-                        _user.AspNetRoles.Add(addedRole);
+                        foreach (Guid roleId in aspNetRoles)
+                        {
+                            AspNetRole role = db.Roles.Find(roleId);
+                            _user.AspNetRoles.Add(role);
+                        }
+                    }
+
+                    _user.Clubs.Clear();
+                    if (null != clubs)
+                    {
+                        foreach (Guid clubId in clubs)
+                        {
+                            Club club = db.Clubs.Find(clubId);
+                            _user.Clubs.Add(club);
+                        }
                     }
                 }
-
-                // Add or Removed Clubs
-                var deletedClubs = _user.Clubs.Except(user.Clubs);
-                var addedClubs = user.Clubs.Except(_user.Clubs);
-
-                deletedClubs.ToList().ForEach(c => _user.Clubs.Remove(c));
-
-                foreach (var club in addedClubs)
-                {
-                    if (db.Entry(club).State == EntityState.Detached)
-                    {
-                        var addedClub = db.Clubs.Find(club.Id);
-                        _user.Clubs.Add(addedClub);
-                    }
-                }
-
+                
                 db.SaveChanges();
-
                 return RedirectToAction("Index");
             }
             return HttpNotFound();

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace SAC.Domain.Models
 {
-    [TypeConverter(typeof(ClubTypeConverter))]
     public class Club : BaseEntity
     {
         public Club()

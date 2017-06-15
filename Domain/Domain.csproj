@@ -66,8 +66,6 @@
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\Competitor.cs" />
     <Compile Include="Models\Tournament.cs" />
-    <Compile Include="TypeConverters\AspNetRoleTypeConverter.cs" />
-    <Compile Include="TypeConverters\ClubTypeConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
