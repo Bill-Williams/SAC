@@ -210,6 +210,7 @@
     <Compile Include="Models\ContactViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\TournamentsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -629,7 +630,7 @@
     <Content Include="Views\Schedules\Index.cshtml" />
     <Content Include="Views\Tournaments\Create.cshtml" />
     <Content Include="Views\Tournaments\Delete.cshtml" />
-    <Content Include="Views\Tournaments\Details.cshtml" />
+    <Content Include="Views\Tournaments\Results.cshtml" />
     <Content Include="Views\Tournaments\Edit.cshtml" />
     <Content Include="Views\Tournaments\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Shortdate.cshtml" />
@@ -656,6 +657,7 @@
     <Content Include="Views\Shared\BtnDeleteCancelReturn.cshtml" />
     <Content Include="Views\Shared\BtnCreateCancel.cshtml" />
     <Content Include="Views\Schedules\Admin.cshtml" />
+    <Content Include="Views\Tournaments\Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

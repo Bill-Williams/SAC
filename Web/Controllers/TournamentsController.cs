@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SAC.Domain;
 using SAC.Domain.Models;
+using SAC.Web.Models;
 
 namespace SAC.Web.Controllers
 {
@@ -19,29 +20,43 @@ namespace SAC.Web.Controllers
         // GET: Tournaments
         public ActionResult Index()
         {
-            var tournaments = db.Tournaments.Include(t => t.Schedule);
+            var tournaments = db.Tournaments.Include(t => t.Schedule.Club);
             return View(tournaments.ToList());
         }
 
-        // GET: Tournaments/Details/5
-        public ActionResult Details(Guid? id)
+        // GET: Tournaments/Admin
+        public ActionResult Admin()
+        {
+            var tournaments = db.Tournaments.Include(t => t.Schedule.Club);
+            return View(tournaments.ToList());
+        }
+
+        // GET: Tournaments/Results/5
+        public ActionResult Results(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = db.Tournaments.Include(t => t.Schedule).FirstOrDefault(t => t.Id == id);
+            var tournament = db.Tournaments.Include(t => t.Schedule.Club).FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();
             }
-            return View(tournament);
+
+            TournamentResultViewModel result = new TournamentResultViewModel()
+            {
+                Tournament = tournament,
+                Groups = db.Groups.ToList(),
+                Classes = db.Classes.Include(c => c.Color).ToList()
+            };
+            return View(result);
         }
 
         // GET: Tournaments/Create
         public ActionResult Create()
         {
-            ViewBag.Id = new SelectList(db.Schedules, "Id", "Id");
+            SetupLists();
             return View();
         }
 
@@ -50,16 +65,15 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Completed")] Tournament tournament)
+        public ActionResult Create([Bind(Include = "ScheduleId")] Tournament tournament)
         {
             if (ModelState.IsValid)
             {
                 db.Tournaments.Add(tournament);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
-
-            ViewBag.Id = new SelectList(db.Schedules, "Id", "Id", tournament.Id);
+            SetupLists();
             return View(tournament);
         }
 
@@ -70,12 +84,12 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = db.Tournaments.Include(t => t.Schedule).FirstOrDefault(t => t.Id == id);
+            var tournament = db.Tournaments.Include(t => t.Schedule.Club).FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Id = new SelectList(db.Schedules, "Id", "Id", tournament.Id);
+            SetupLists();
             return View(tournament);
         }
 
@@ -90,9 +104,9 @@ namespace SAC.Web.Controllers
             {
                 db.Entry(tournament).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
-            ViewBag.Id = new SelectList(db.Schedules, "Id", "Id", tournament.Id);
+            SetupLists();
             return View(tournament);
         }
 
@@ -103,7 +117,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tournament tournament = db.Tournaments.Find(id);
+            Tournament tournament = db.Tournaments.Include(t => t.Schedule.Club).FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();
@@ -119,7 +133,12 @@ namespace SAC.Web.Controllers
             Tournament tournament = db.Tournaments.Find(id);
             db.Tournaments.Remove(tournament);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Admin");
+        }
+
+        private void SetupLists()
+        {
+            ViewBag.ScheduleList = new SelectList(db.Schedules.OrderBy(s => s.Date), "Id", "Date");
         }
 
         protected override void Dispose(bool disposing)

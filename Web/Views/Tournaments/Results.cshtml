@@ -1,0 +1,34 @@
+﻿@model SAC.Web.Models.TournamentResultViewModel
+
+@{
+    ViewBag.Title = "Results";
+}
+
+<div class="jumbotron">
+    <h2>Tournament Results</h2>
+    <p>The following results are for the tournament on @Html.DisplayFor(model => model.Tournament.Schedule.Date, "Shortdate") held at @Html.DisplayFor(model => model.Tournament.Schedule.Club.Name).</p>
+</div>
+
+@foreach (var group in Model.Groups)
+{
+    <div class="row">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">@group.Name</h3>
+            </div>
+            <div class="panel-body">
+                @foreach (var item in Model.Classes.Where(c => c.Group.Id == group.Id).OrderByDescending(c => c.MaximumYardage).ThenBy(c => c.Name))
+                {
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><span style="background-color: @item.Color.HexCode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> @item.Name</h3>
+                        </div>
+                        <div class="panel-body">
+                           Comp Names
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
