@@ -612,7 +612,6 @@
     <Content Include="Views\Shared\DisplayTemplates\Phone.cshtml" />
     <Content Include="Views\Classes\Create.cshtml" />
     <Content Include="Views\Classes\Delete.cshtml" />
-    <Content Include="Views\Classes\Details.cshtml" />
     <Content Include="Views\Classes\Edit.cshtml" />
     <Content Include="Views\Classes\Index.cshtml" />
     <Content Include="Views\Colors\Create.cshtml" />

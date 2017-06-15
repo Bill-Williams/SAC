@@ -16,12 +16,6 @@
                 }
                 
                 @if (User.IsInRole("Tech Admin")
-                    || User.IsInRole("Club Admin"))
-                {
-                    <li>@Html.ActionLink("Classes", "Admin", "Classes")</li>
-                }
-
-                @if (User.IsInRole("Tech Admin")
                         || User.IsInRole("Club Admin"))
                 {
                     <li>@Html.ActionLink("Clubs", "Admin", "Clubs")</li>

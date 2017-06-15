@@ -24,25 +24,17 @@ namespace SAC.Web.Controllers
             return View(db.Classes.Include(c => c.Color));
         }
 
-        // GET: Classes/Details/5
-        public ActionResult Details(Guid? id)
+        // GET: Classes/Admin
+        public ActionResult Admin()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Class @class = db.Classes.Include(c => c.Color).FirstOrDefault(c => c.Id == id);
-
-            if (@class == null)
-            {
-                return HttpNotFound();
-            }
-            return View(@class);
+            return View(db.Classes.Include(c => c.Color));
         }
-
+        
         // GET: Classes/Create
         public ActionResult Create()
         {
+            ViewBag.GroupList = new SelectList(db.Groups,"Id", "Name");
+            ViewBag.ColorList = new SelectList(db.Colors, "Id", "Name");
             return View();
         }
 
@@ -51,15 +43,22 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Code,Name,Description,Known,MaximumYardage,Restrictions")] Class @class)
+        public ActionResult Create(
+            [Bind(Include = "Code,Name,Description,Known,MaximumYardage,Restrictions")] Class @class,
+            [Bind(Include = "Group")] Guid group,
+            [Bind(Include = "Color")] Guid color
+            )
         {
             if (ModelState.IsValid)
             {
+                @class.Group = db.Groups.Find(group);
+                @class.Color = db.Colors.Find(color);
                 db.Classes.Add(@class);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
-
+            ViewBag.GroupList = new SelectList(db.Groups, "Id", "Name");
+            ViewBag.ColorList = new SelectList(db.Colors, "Id", "Name");
             return View(@class);
         }
 
@@ -75,6 +74,8 @@ namespace SAC.Web.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.GroupList = new SelectList(db.Groups, "Id", "Name");
+            ViewBag.ColorList = new SelectList(db.Colors, "Id", "Name");
             return View(@class);
         }
 
@@ -89,8 +90,10 @@ namespace SAC.Web.Controllers
             {
                 db.Entry(@class).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
+            ViewBag.GroupList = new SelectList(db.Groups, "Id", "Name");
+            ViewBag.ColorList = new SelectList(db.Colors, "Id", "Name");
             return View(@class);
         }
 
@@ -117,7 +120,7 @@ namespace SAC.Web.Controllers
             Class @class = db.Classes.Find(id);
             db.Classes.Remove(@class);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Admin");
         }
 
         protected override void Dispose(bool disposing)
