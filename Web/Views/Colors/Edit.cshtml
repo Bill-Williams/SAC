@@ -6,6 +6,7 @@
 
 <h2>@ViewBag.Title</h2>
 
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -34,16 +35,15 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" /> |
-                @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-default" })
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                    <a href="@Url.Action("Index")" class="btn btn-default"><i class="glyphicon glyphicon-menu-hamburger"></i> Back to List</a>
+                    <a href="@Url.Action("Delete", new { id = Model.Id })" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+                </div>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

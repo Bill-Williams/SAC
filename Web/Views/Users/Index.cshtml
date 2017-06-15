@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.AspNetRoles)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Clubs)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -44,6 +47,9 @@
                 </td>
                 <td>
                     <span>@string.Join(",", item.AspNetRoles.Select(r => r.Name))</span>
+                </td>
+                <td>
+                    <span>@string.Join(",", item.Clubs.Select(r => r.ShortName))</span>
                 </td>
             </tr>
         }

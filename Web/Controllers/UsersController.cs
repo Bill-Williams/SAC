@@ -20,7 +20,7 @@ namespace SAC.Web.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.Users.Include("AspNetRoles").ToList());
+            return View(db.Users.Include("AspNetRoles").Include("Clubs").ToList());
         }
 
         // GET: Users/Edit/5
@@ -41,8 +41,8 @@ namespace SAC.Web.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.Clubs = new MultiSelectList(db.Clubs, "Id", "Name");
-            ViewBag.Roles = new MultiSelectList(db.Roles, "Id", "Name");
+            ViewBag.ClubList = new MultiSelectList(db.Clubs, "Id", "ShortName");
+            ViewBag.RoleList = new MultiSelectList(db.Roles, "Id", "Name");
 
             return View(aspNetUser);
         }
@@ -64,9 +64,7 @@ namespace SAC.Web.Controllers
                                 .Include("Clubs")
                                 .First(u => u.Id == user.Id);
 
-                db.Entry(_user).CurrentValues.SetValues(user);
-
-                if (true)
+                if (TryUpdateModel(_user, new string[] { "UserName", "Email", "EmailConfirmed", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled", "LockoutEnabled", "LockoutEndDateUtc", "AccessFailedCount" }))
                 {
                     _user.AspNetRoles.Clear();
                     if (null != aspNetRoles)
