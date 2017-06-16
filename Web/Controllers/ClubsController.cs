@@ -25,6 +25,7 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Club/Directions/5
+        [AllowAnonymous]
         public ActionResult Directions(Guid? id)
         {
 
