@@ -55,8 +55,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.MaximumYardage)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Color.Name)
+                <td nowrap>
+                    <div class="classDot" style="background: @item.Color.HexCode"></div>&nbsp;@Html.DisplayFor(modelItem => item.Color.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Restrictions)

@@ -29,7 +29,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.HexCode)
+                    <div class="classDot" style="background: @item.HexCode"></div>&nbsp;@Html.DisplayFor(modelItem => item.HexCode)
                 </td>
             </tr>
         }
