@@ -20,9 +20,7 @@
                 @foreach (var item in Model.Classes.Where(c => c.Group.Id == group.Id).OrderByDescending(c => c.MaximumYardage).ThenBy(c => c.Name))
                 {
                     <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><span style="background-color: @item.Color.HexCode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> @item.Name</h3>
-                        </div>
+                        <div class="panel-heading"><div class="classDot" style="background: @item.Color.HexCode"></div>&nbsp;@item.Name</div>
                         <div class="panel-body">
                             1 Comp Names<br />
                             2 Comp Names<br />

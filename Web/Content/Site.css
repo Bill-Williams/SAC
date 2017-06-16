@@ -26,3 +26,11 @@ textarea {
 .tbl_pointer tbody {
     cursor: pointer;
 }
+
+.classDot {
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    border: 1px solid black;
+    float: left;
+}
