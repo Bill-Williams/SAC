@@ -18,6 +18,9 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Club)
             </th>
         </tr>
@@ -28,6 +31,9 @@
             <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                 <td>
                     @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Club.Name)

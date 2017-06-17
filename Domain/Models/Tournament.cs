@@ -13,15 +13,13 @@ namespace SAC.Domain.Models
         public Tournament()
         {
             Competitors = new HashSet<Competitor>();
+            Schedules = new HashSet<Schedule>();
         }
 
         public bool Completed { get; set; }
 
         public ICollection<Competitor> Competitors { get; set; }
-
-        [Required]
-        public Guid ScheduleId { get; set; }
-
-        public virtual Schedule Schedule { get; set; }
+        
+        public virtual ICollection<Schedule> Schedules { get; set; }
     }
 }

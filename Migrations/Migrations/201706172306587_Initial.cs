@@ -151,12 +151,16 @@ namespace SAC.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false, identity: true),
-                        ClubId = c.Guid(nullable: false),
                         Date = c.DateTime(nullable: false),
+                        Description = c.String(maxLength: 100),
+                        ClubId = c.Guid(nullable: false),
+                        TournamentId = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Clubs", t => t.ClubId, cascadeDelete: true)
-                .Index(t => t.ClubId);
+                .ForeignKey("dbo.Tournaments", t => t.TournamentId)
+                .Index(t => t.ClubId)
+                .Index(t => t.TournamentId);
             
             CreateTable(
                 "dbo.Tournaments",
@@ -164,11 +168,8 @@ namespace SAC.Migrations
                     {
                         Id = c.Guid(nullable: false, identity: true),
                         Completed = c.Boolean(nullable: false),
-                        ScheduleId = c.Guid(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Schedules", t => t.ScheduleId, cascadeDelete: true)
-                .Index(t => t.ScheduleId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetUserRoles",
@@ -200,7 +201,7 @@ namespace SAC.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Tournaments", "ScheduleId", "dbo.Schedules");
+            DropForeignKey("dbo.Schedules", "TournamentId", "dbo.Tournaments");
             DropForeignKey("dbo.Competitors", "Tournament_Id", "dbo.Tournaments");
             DropForeignKey("dbo.Schedules", "ClubId", "dbo.Clubs");
             DropForeignKey("dbo.Competitors", "Class_Id", "dbo.Classes");
@@ -217,7 +218,7 @@ namespace SAC.Migrations
             DropIndex("dbo.AspNetUserClubs", new[] { "UserId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
-            DropIndex("dbo.Tournaments", new[] { "ScheduleId" });
+            DropIndex("dbo.Schedules", new[] { "TournamentId" });
             DropIndex("dbo.Schedules", new[] { "ClubId" });
             DropIndex("dbo.Competitors", new[] { "Tournament_Id" });
             DropIndex("dbo.Competitors", new[] { "Class_Id" });

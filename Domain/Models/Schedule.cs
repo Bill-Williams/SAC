@@ -11,18 +11,31 @@ namespace SAC.Domain.Models
     public class Schedule : BaseEntity
     {
         [Required]
-        [Column(Order = 1)]
-        public Guid ClubId { get; set; }
-
-        public virtual Club Club { get; set; }
-
-        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Column(Order = 2)]
+        [Column(Order = 1)]
         public DateTime Date { get; set; }
 
-        //[ForeignKey("TournamentId")]
-        //public virtual Tournament Tournament { get; set; }
+        [Column(Order = 2)]
+        [MaxLength(100)]
+        public string Description { get; set; }
+
+        [Required]
+        [Column(Order = 3)]
+        public Guid ClubId { get; set; }
+        public virtual Club Club { get; set; }
+
+        [Column(Order = 4)]
+        public Guid? TournamentId { get; set; }
+
+        public virtual Tournament Tournament { get; set; }
+
+        public virtual string ShortDate
+        {
+            get
+            {
+                return this.Date.ToShortDateString();
+            }
+        }
     }
 }

@@ -15,10 +15,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Schedule)
+                @Html.DisplayNameFor(model => model.Schedules)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Schedule.Club)
+                @Html.DisplayNameFor(model => model.Schedules.First().Club)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Completed)
@@ -30,10 +30,10 @@
         {
             <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                 <td>
-                    @Html.DisplayFor(modelItem => item.Schedule.Date)
+                    @string.Join(",", item.Schedules.Select(s => s.Date))
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Schedule.Club.Name)
+                    @string.Join(",", item.Schedules.Select(s => s.Club.Name).Distinct())
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Completed)

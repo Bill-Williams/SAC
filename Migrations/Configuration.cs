@@ -48,6 +48,8 @@ namespace SAC.Migrations
 
                 SeedUserRoles(context);
 
+                SeedSchedules(context);
+
                 // Save the added roles
                 context.SaveChanges();
             }
@@ -488,6 +490,56 @@ namespace SAC.Migrations
                     Restrictions = "12 inch stabilizer.",
                     Group = context.Groups.Find(groups["Money"]),
                     Color = context.Colors.Find(colors["Orange"])
+                }
+            );
+        }
+
+        private void SeedSchedules(SacContext context)
+        {
+            context.Schedules.AddOrUpdate(
+                new Schedule()
+                {
+                    Date = DateTime.Parse("06/04/2017"),
+                    Club = context.Clubs.FirstOrDefault(c => c.ShortName == "Greenway")
+                },
+                new Schedule()
+                {
+                    Date = DateTime.Parse("06/11/2017"),
+                    Club = context.Clubs.FirstOrDefault(c => c.ShortName == "FortMill")
+                },
+                new Schedule()
+                {
+                    Date = DateTime.Parse("06/24/2017"),
+                    Description = "Coon Shoot Saturday Night",
+                    Club = context.Clubs.FirstOrDefault(c => c.ShortName == "IndianTrail")
+                },
+                new Schedule()
+                {
+                    Date = DateTime.Parse("06/25/2017"),
+                    Club = context.Clubs.FirstOrDefault(c => c.ShortName == "IndianTrail")
+                },
+                new Schedule()
+                {
+                    Date = DateTime.Parse("07/08/2017"),
+                    Description = "ASA SC Championship",
+                    Club = context.Clubs.FirstOrDefault(c => c.ShortName == "RobinHood")
+                },
+                new Schedule()
+                {
+                    Date = DateTime.Parse("07/09/2017"),
+                    Description = "ASA SC Championship & SAC",
+                    Club = context.Clubs.FirstOrDefault(c => c.ShortName == "RobinHood")
+                },
+                new Schedule()
+                {
+                    Date = DateTime.Parse("07/16/2017"),
+                    Club = context.Clubs.FirstOrDefault(c => c.ShortName == "Mecklenburg")
+                },
+                new Schedule()
+                {
+                    Date = DateTime.Parse("01/14/2018"),
+                    Description = "Polar Bear Shoot",
+                    Club = context.Clubs.FirstOrDefault(c => c.ShortName == "CRPC")
                 }
             );
         }

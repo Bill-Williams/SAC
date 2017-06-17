@@ -12,19 +12,19 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Schedule.Date)
+            @Html.DisplayNameFor(model => model.Schedules)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Schedule.Date, "Shortdate")
+            @string.Join(",", Model.Schedules.Select(s => s.ShortDate))
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Schedule.Club)
+            @Html.DisplayNameFor(model => model.Schedules.First().Club)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Schedule.Club.Name)
+            @string.Join(",", Model.Schedules.Select(s => s.Club.Name).Distinct())
         </dd>
 
         <dt>
