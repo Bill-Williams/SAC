@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<SAC.Domain.Models.Tournament>
+@Scripts.Render("~/Content/datatables")
 
 @{
     ViewBag.Title = "Manage Tournaments";
@@ -42,6 +43,7 @@
     </tbody>
 </table>
 @section Scripts {
+    @Scripts.Render("~/bundles/datatables")
     <script>
         $(document).ready(function () {
             $('#tblTournaments').DataTable();

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<SAC.Domain.Models.Group>
+@Scripts.Render("~/Content/datatables")
 
 @{ 
     ViewBag.Title = "Manage Groups";
@@ -36,6 +37,7 @@
 </table>
 
 @section Scripts {
+    @Scripts.Render("~/bundles/datatables")
     <script>
         $(document).ready(function () {
             $('#tblGroups').DataTable();
