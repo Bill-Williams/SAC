@@ -9,7 +9,7 @@
     <p>The following results are for the tournament on @Html.DisplayFor(model => model.Tournament.Schedule.Date, "Shortdate") held at @Html.DisplayFor(model => model.Tournament.Schedule.Club.Name).</p>
 </div>
 
-@foreach (var group in Model.Groups)
+@foreach (var group in Model.Groups.OrderBy(g => g.SortOrder))
 {
     <div class="row">
         <div class="panel">
