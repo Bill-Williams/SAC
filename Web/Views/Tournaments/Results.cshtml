@@ -6,7 +6,7 @@
 
 <div class="jumbotron">
     <h2>Tournament Results</h2>
-    <p>The following results are for the tournament on @Html.DisplayFor(model => model.Tournament.Schedule.Date, "Shortdate") held at @Html.DisplayFor(model => model.Tournament.Schedule.Club.Name).</p>
+    <p>The following results are for the tournament on @string.Join(",", Model.Tournament.Schedules.Select(s => s.ShortDate)) held at @string.Join(",", Model.Tournament.Schedules.Select(s => s.Club.Name).Distinct()).</p>
 </div>
 
 @foreach (var group in Model.Groups.OrderBy(g => g.SortOrder))

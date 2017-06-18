@@ -30,7 +30,7 @@
         {
             <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                 <td>
-                    @string.Join(",", item.Schedules.Select(s => s.Date))
+                    @string.Join(",", item.Schedules.Select(s => s.ShortDate))
                 </td>
                 <td>
                     @string.Join(",", item.Schedules.Select(s => s.Club.Name).Distinct())
