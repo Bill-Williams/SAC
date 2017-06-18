@@ -380,6 +380,9 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\Images\carousel1.jpg" />
+    <Content Include="Content\Images\carousel2.jpg" />
+    <Content Include="Content\Images\carousel3.jpg" />
     <Content Include="Content\Images\CRPC.jpg" />
     <Content Include="Content\Images\facebook.png" />
     <Content Include="Content\Images\FortMill.png" />
