@@ -47,7 +47,9 @@
     @Scripts.Render("~/bundles/datatables")
     <script>
         $(document).ready(function () {
-            $('#tblSchedules').DataTable();
+            $('#tblSchedules').DataTable({
+                "order": [[ 0, "desc" ]]
+            });
         });
     </script>
 }
