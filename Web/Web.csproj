@@ -597,6 +597,7 @@
     <Content Include="Views\Shared\BtnCreateCancel.cshtml" />
     <Content Include="Views\Schedules\Admin.cshtml" />
     <Content Include="Views\Tournaments\Admin.cshtml" />
+    <Content Include="Views\Shared\Disqus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
