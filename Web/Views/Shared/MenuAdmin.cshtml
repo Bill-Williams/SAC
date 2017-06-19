@@ -2,6 +2,7 @@
 {
     if (User.IsInRole("Tech Admin")
         || User.IsInRole("Club Admin")
+        || User.IsInRole("Club User")
         || User.IsInRole("Scheduler"))
     {
         <li class="divider"></li>
@@ -16,7 +17,7 @@
                 }
                 
                 @if (User.IsInRole("Tech Admin")
-                        || User.IsInRole("Club Admin"))
+                    || User.IsInRole("Club Admin"))
                 {
                     <li>@Html.ActionLink("Clubs", "Admin", "Clubs")</li>
                 }
@@ -28,8 +29,7 @@
                 }
                 
                 @if (User.IsInRole("Tech Admin")
-                    || User.IsInRole("Club Admin")
-                    || User.IsInRole("Scheduler"))
+                    || User.IsInRole("Club Admin"))
                 {
                     <li>@Html.ActionLink("Tournaments", "Admin", "Tournaments")</li>
                 }

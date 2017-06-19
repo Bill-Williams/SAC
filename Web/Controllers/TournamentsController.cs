@@ -14,6 +14,7 @@ using SAC.Web.Models;
 namespace SAC.Web.Controllers
 {
     [RequireHttps]
+    [Authorize(Roles = "Club Admin,Tech Admin")]
     public class TournamentsController : Controller
     {
         private SacContext db = new SacContext();
@@ -50,7 +51,6 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Tournaments/Admin
-        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Admin()
         {
             IEnumerable<Tournament> tournaments;
@@ -67,7 +67,6 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Tournaments/Create
-        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Create()
         {
             SetupLists();
@@ -79,7 +78,6 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Create(
             [Bind(Include = "Schedules")] Guid[] schedules)
         {
@@ -100,7 +98,6 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Tournaments/Edit/5
-        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -127,7 +124,6 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Edit([Bind(Include = "Id,Completed")] Tournament tournament)
         {
             if (ModelState.IsValid)
@@ -141,7 +137,6 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Tournaments/Delete/5
-        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -163,7 +158,6 @@ namespace SAC.Web.Controllers
         }
 
         // POST: Tournaments/Delete/5
-        [Authorize(Roles = "Club Admin,Tech Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
