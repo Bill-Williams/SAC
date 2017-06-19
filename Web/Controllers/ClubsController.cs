@@ -8,10 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using SAC.Domain;
 using SAC.Domain.Models;
+using SAC.Web.Extensions;
 
 namespace SAC.Web.Controllers
 {
-    [Authorize(Roles = "Club Admin,Tech Admin")]
     [RequireHttps]
     public class ClubsController : Controller
     {
@@ -42,12 +42,21 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Admin
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Admin()
         {
-            return View(db.Clubs);
+            if (User.IsInRole("Tech Admin"))
+            {
+                return View(db.Clubs);
+            }
+            else //if not Tech Admin return list of assigned clubs
+            {
+                return View(User.Identity.GetClubs(db));
+            }
         }
-
+    
         // GET: Club/Create
+        [Authorize(Roles = "Tech Admin")]
         public ActionResult Create()
         {
             return View(new Club());
@@ -56,6 +65,7 @@ namespace SAC.Web.Controllers
         // POST: Club/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Tech Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Name,ShortName,Address,CityStateZip,Contact,Phone,Email,Website,Directions,IconFileName")] Club club)
@@ -70,13 +80,22 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Club/Edit/5
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Club club = db.Clubs.Find(id);
+            Club club;
+            if (User.IsInRole("Tech Admin"))
+            {
+                club = db.Clubs.Find(id);
+            }
+            else //if not Tech Admin, check access and return null if not enabled
+            {
+                club = User.Identity.GetClubs(db).First(c => c.Id == id);
+            }
             if (club == null)
             {
                 return HttpNotFound();
@@ -89,6 +108,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Edit([Bind(Include = "Id,Name,ShortName,Address,CityStateZip,Contact,Phone,Email,Website,Directions,IconFileName")] Club club)
         {
             if (ModelState.IsValid)
@@ -101,6 +121,7 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Club/Delete/5
+        [Authorize(Roles = "Tech Admin")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -116,6 +137,7 @@ namespace SAC.Web.Controllers
         }
 
         // POST: Club/Delete/5
+        [Authorize(Roles = "Tech Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)

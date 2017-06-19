@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SAC.Domain;
 using SAC.Domain.Models;
+using SAC.Web.Extensions;
 using SAC.Web.Models;
 
 namespace SAC.Web.Controllers
@@ -18,20 +19,15 @@ namespace SAC.Web.Controllers
         private SacContext db = new SacContext();
 
         // GET: Tournaments
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var tournaments = db.Tournaments.Include("Schedules.Club");
             return View(tournaments.ToList());
         }
 
-        // GET: Tournaments/Admin
-        public ActionResult Admin()
-        {
-            var tournaments = db.Tournaments.Include("Schedules.Club");
-            return View(tournaments.ToList());
-        }
-
         // GET: Tournaments/Results/5
+        [AllowAnonymous]
         public ActionResult Results(Guid? id)
         {
             if (id == null)
@@ -53,7 +49,25 @@ namespace SAC.Web.Controllers
             return View(result);
         }
 
+        // GET: Tournaments/Admin
+        [Authorize(Roles = "Club Admin,Tech Admin")]
+        public ActionResult Admin()
+        {
+            IEnumerable<Tournament> tournaments;
+            if (User.IsInRole("Tech Admin"))
+            {
+                tournaments = db.Tournaments.Include("Schedules.Club");
+            }
+            else
+            {
+                var clubs = User.Identity.GetClubs(db).Select(c => c.Id);
+                tournaments = db.Tournaments.Include("Schedules.Club").Where(t => t.Schedules.Select(s => s.Club.Id).Intersect(clubs).Count() > 0);
+            }
+            return View(tournaments);
+        }
+
         // GET: Tournaments/Create
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Create()
         {
             SetupLists();
@@ -65,6 +79,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Create(
             [Bind(Include = "Schedules")] Guid[] schedules)
         {
@@ -85,6 +100,7 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Tournaments/Edit/5
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -93,6 +109,12 @@ namespace SAC.Web.Controllers
             }
             var tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id);
             if (tournament == null)
+            {
+                return HttpNotFound();
+            }
+            if (!User.IsInRole("Tech Admin")
+                // User has rights to a Club associated to this tournament
+                && tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() == 0)
             {
                 return HttpNotFound();
             }
@@ -105,6 +127,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Edit([Bind(Include = "Id,Completed")] Tournament tournament)
         {
             if (ModelState.IsValid)
@@ -118,14 +141,21 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Tournaments/Delete/5
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tournament tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id);
+            Tournament tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id); ;
             if (tournament == null)
+            {
+                return HttpNotFound();
+            }
+            if (!User.IsInRole("Tech Admin")
+                // User has rights to a Club associated to this tournament
+                && tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() == 0)
             {
                 return HttpNotFound();
             }
@@ -133,20 +163,35 @@ namespace SAC.Web.Controllers
         }
 
         // POST: Tournaments/Delete/5
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
             Tournament tournament = db.Tournaments.Include(t => t.Schedules).FirstOrDefault(t => t.Id == id);
-            tournament.Schedules.Clear();
-            db.Tournaments.Remove(tournament);
-            db.SaveChanges();
-            return RedirectToAction("Admin");
+            if(User.IsInRole("Tech Admin")
+                // User has rights to a Club associated to this tournament
+                || tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() > 0)
+            {
+                tournament.Schedules.Clear();
+                db.Tournaments.Remove(tournament);
+                db.SaveChanges();
+                return RedirectToAction("Admin");
+            }
+            return View(tournament);
         }
 
         private void SetupLists()
         {
-            ViewBag.ScheduleList = new MultiSelectList(db.Schedules.Where(s => null == s.Tournament).OrderBy(s => s.Date), "Id", "ShortDate");
+            if(User.IsInRole("Tech Admin"))
+            {
+                ViewBag.ScheduleList = new MultiSelectList(db.Schedules.Where(s => null == s.Tournament).OrderBy(s => s.Date), "Id", "ShortDate");
+            }
+            else
+            {
+                var clubs = User.Identity.GetClubs(db).Select(c => c.Id);
+                ViewBag.ScheduleList = new MultiSelectList(db.Schedules.Where(s => null == s.Tournament && clubs.Contains(s.Club.Id)).OrderBy(s => s.Date), "Id", "ShortDate");
+            }
         }
 
         protected override void Dispose(bool disposing)
