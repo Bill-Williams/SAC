@@ -6,5 +6,25 @@
 
 <div class="jumbotron">
     <h2>Schedule</h2>
-    <p class="lead">TODO: Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+    <p class="lead">Upcoming tournaments and special events.</p>
+</div>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+    <div class="col-md-3 col-sm-6">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">@item.Date.ToLongDateString()</h3>
+            </div>
+            <div class="panel-body">
+                <p>@item.Club.Name</p>
+                <p>@Html.ActionLink("Get Directions", "Directions", "Clubs", new { id = item.Club.Id }, htmlAttributes: new { @class = "btn btn-default" })</p>
+                <p>@item.BasicDescription</p>
+            </div>
+        </div>
+
+    </div>
+    }
 </div>

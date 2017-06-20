@@ -21,7 +21,12 @@ namespace SAC.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(db.Schedules.Include(s => s.Club));
+            var model = from s in db.Schedules.Include(s => s.Club)
+                        where s.Date >= DateTime.Today
+                        orderby s.Date
+                        select s;
+                        
+            return View(model.Take(8));
         }
 
         // GET: Schedules/Admin

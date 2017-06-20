@@ -37,5 +37,13 @@ namespace SAC.Domain.Models
                 return this.Date.ToShortDateString();
             }
         }
+
+        public virtual string BasicDescription
+        {
+            get
+            {
+                return this.Description ?? "Standard SAC Tournament";
+            }
+        }
     }
 }
