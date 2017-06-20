@@ -21,12 +21,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.Action("Index", "Tournaments")"><i class="glyphicon glyphicon-tree-conifer"></i> Tournaments</a></li>
+                    <li><a href="@Url.Action("Index", "Tournaments")"><i class="glyphicon glyphicon-bullhorn"></i> Tournaments</a></li>
                     <li><a href="@Url.Action("Index", "Schedules")"><i class="glyphicon glyphicon-calendar"></i> Schedules</a></li>
                     <li><a href="@Url.Action("Index", "Clubs")"><i class="glyphicon glyphicon-globe"></i> Clubs</a></li>
                     <li><a href="@Url.Action("Index", "Classes")"><i class="glyphicon glyphicon-list-alt"></i> Classes</a></li>
                     @Html.Partial("MenuAdmin")
-                    @Html.Partial("MenuTechAdmin")
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

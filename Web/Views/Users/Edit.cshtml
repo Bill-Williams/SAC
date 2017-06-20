@@ -1,5 +1,4 @@
 ﻿@model SAC.Domain.Models.AspNetUser
-@Scripts.Render("~/Content/chosen")
 
 @{
     ViewBag.Title = "Edit";
@@ -126,9 +125,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/chosen")
     <script>
-        $(document).ready(function () {
-            $("#AspNetRoles").chosen();
-            $("#Clubs").chosen();
-        });
+        $("#AspNetRoles").chosen();
+        $("#Clubs").chosen();
     </script>
 }

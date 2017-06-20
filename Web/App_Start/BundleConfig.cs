@@ -34,12 +34,6 @@ namespace SAC.Web
                       "~/Content/DataTables/css/dataTables.bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/chosen.css"));
-
-            bundles.Add(new StyleBundle("~/Content/chosen").Include(
-                      "~/Content/chosen.css"));
-
-            bundles.Add(new StyleBundle("~/Content/datatables").Include(
-                      "~/Content/DataTables/css/dataTables.bootstrap.css"));
         }
     }
 }

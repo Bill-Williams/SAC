@@ -34,3 +34,8 @@ textarea {
     border: 1px solid black;
     float: left;
 }
+
+.big-icon {
+    font-size: xx-large;
+    text-align:center;
+}
