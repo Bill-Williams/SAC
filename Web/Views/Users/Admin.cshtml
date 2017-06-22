@@ -34,10 +34,10 @@
         {
             <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email) @Html.DisplayFor(modelItem => item.EmailConfirmed, "Confirmed")
+                    @Html.DisplayFor(modelItem => item.Email) @Html.DisplayFor(modelItem => item.EmailConfirmed, "boolConfirmed")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber) @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed, "Confirmed")
+                    @Html.DisplayFor(modelItem => item.PhoneNumber) @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed, "boolConfirmed")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)

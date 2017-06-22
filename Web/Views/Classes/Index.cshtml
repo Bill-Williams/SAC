@@ -6,22 +6,30 @@
 
 <div class="jumbotron">
     <h2>Shooting Classes</h2>
-    <p class="lead">TODO: Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+    <p class="lead">Find the class that is right for you.</p>
 </div>
 
 @foreach (var group in Model.Groups)
 {
+    int i = 0;
+
     <div class="row">
         <div class="panel">
             <div class="panel-heading">
                 <h3 class="panel-title">@group.Name</h3>
             </div>
             <div class="panel-body">
-                @foreach (var item in Model.Classes.Where(c => c.Group.Id == group.Id).OrderByDescending(c => c.MaximumYardage).ThenBy(c => c.Name))
+                @foreach (var item in Model.Classes.Where(c => c.Group.Id == group.Id).OrderByDescending(c => c.MaximumYardage).ThenBy(c => c.Known.ToString()).ThenBy(c => c.Name))
                 {
-                    <div class="col-lg-4">
+                    <div class="col-md-4">
                         @Html.DisplayFor(model => item)
                     </div>
+
+                    i++;
+                    if ((i % 3) == 0)
+                    {
+                        <div class="clearfix"></div>
+                    }
                 }
             </div>
         </div>

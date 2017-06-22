@@ -3,39 +3,12 @@
 <div class="panel panel-default">
     <div class="panel-heading"><div class="classDot" style="background: @Model.Color.HexCode"></div>&nbsp;@Model.Name</div>
     <div class="panel-body">
-
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-
-            <dt>
-                @Html.LabelFor(model => model.Known, htmlAttributes: new { @class = "control-label col-md-2" })
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Known)
-            </dd>
-
-            <dt>
-                @Html.LabelFor(model => model.MaximumYardage, htmlAttributes: new { @class = "control-label col-md-2" })
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.MaximumYardage)
-            </dd>
-
-            <dt>
-
-            </dt>
-                @Html.LabelFor(model => model.Restrictions, htmlAttributes: new { @class = "control-label col-md-2" })
-            <dd>
-                @Html.DisplayFor(model => model.Restrictions)
-            </dd>
-        </dl>
+        @Html.DisplayFor(model => model.Known, "boolKnown")
+        <p>@Html.DisplayFor(model => model.Description)</p>
+        <p>Maximum distance of @Html.DisplayFor(model => model.MaximumYardage) yards.</p>
+        @if (Model.Restrictions.Length > 0)
+        {
+            <p>Restrictions:&nbsp;<span class="text-danger">@Html.DisplayFor(model => model.Restrictions)</span></p>
+        }
     </div>
 </div>

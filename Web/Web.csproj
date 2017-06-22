@@ -578,7 +578,7 @@
     <Content Include="Views\Tournaments\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Shortdate.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TournamentMenu.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Confirmed.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\boolConfirmed.cshtml" />
     <Content Include="Views\Competitors\Create.cshtml" />
     <Content Include="Views\Competitors\Delete.cshtml" />
     <Content Include="Views\Competitors\Details.cshtml" />
@@ -601,6 +601,7 @@
     <Content Include="Views\Schedules\Admin.cshtml" />
     <Content Include="Views\Tournaments\Admin.cshtml" />
     <Content Include="Views\Shared\Disqus.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\boolKnown.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
