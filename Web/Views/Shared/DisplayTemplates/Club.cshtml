@@ -1,14 +1,24 @@
 ﻿@model SAC.Domain.Models.Club
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">@Model.Name</h3>
-    </div>
+<div class="panel panel-default">
+    @*<div class="panel-heading">*@
+
+    @*</div>*@
     <div class="panel-body">
-        
+
+        <div class="row">
+            <div class="col-xs-5">
+                <div class="roundThumbnail" style="background-image:url(Content/Images/@Model.IconFileName)"></div>
+            </div>
+            <div class="col-xs-7">
+                <h3>@Model.Name</h3>
+                @Html.ActionLink("Get Directions", "Directions", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
+            </div>
+        </div>
+        <hr />
         <div class="row">
             <div class="col-md-10">
-                @Html.ActionLink("Get Directions", "Directions", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
+                
             </div>
         </div>
 

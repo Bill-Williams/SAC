@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Clubs";
+    int i = 0;
 }
 
 <div class="jumbotron">
@@ -12,8 +13,18 @@
 <div class="row">
     @foreach (var item in Model)
     {
-        <div class="col-lg-4">
+        <div class="col-sm-6 col-md-4">
             @Html.DisplayFor(model => item)
         </div>
+
+        i++;
+        if (i % 2 == 0)
+        {
+            <div class="clearfix visible-sm"></div>
+        }
+        else if (i % 3 == 0)
+        {
+            <div class="clearfix visible-md visible-lg"></div>
+        }
     }
 </div>
