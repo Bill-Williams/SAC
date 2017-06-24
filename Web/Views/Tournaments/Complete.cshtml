@@ -1,0 +1,59 @@
+﻿@model SAC.Domain.Models.Tournament
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Complete</h2>
+
+<h3>All done?</h3>
+<div>
+    <h4>Tournament</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Schedules)
+        </dt>
+
+        <dd>
+            @string.Join(",", Model.Schedules.Select(s => s.ShortDate))
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Schedules.First().Club)
+        </dt>
+
+        <dd>
+            @string.Join(",", Model.Schedules.Select(s => s.Club.Name).Distinct())
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Competitors)
+        </dt>
+
+        <dd>
+            @Model.Competitors.Count().ToString()
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Completed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Completed)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <div class="btn-group">
+                <a href="@Url.Action("Edit", new { Id = Model.Id })" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                <a href="@Url.Action("Admin")" class="btn btn-default"><i class="glyphicon glyphicon-menu-hamburger"></i> Back to List</a>
+                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-check"></i> Complete</button>
+            </div>
+        </div>
+    }
+</div>

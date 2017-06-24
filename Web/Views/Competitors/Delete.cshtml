@@ -12,19 +12,19 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Archer.Name)
+            @Html.DisplayNameFor(model => model.Archer)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Archer.Name)
+            @Html.DisplayFor(model => model.Archer)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Class.Code)
+            @Html.DisplayNameFor(model => model.Class)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Class.Code)
+            @Html.DisplayFor(model => model.Class.Name)
         </dd>
 
         <dt>
@@ -49,8 +49,11 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <div class="btn-group">
+                <a href="@Url.Action("Edit", new { Id = Model.Id })" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                <a href="@Url.Action("Edit", "Tournaments", new { id = Model.TournamentId })" class="btn btn-default"><i class="glyphicon glyphicon-menu-hamburger"></i> Back to List</a>
+                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+            </div>
         </div>
     }
 </div>

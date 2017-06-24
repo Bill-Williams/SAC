@@ -10,12 +10,22 @@ namespace SAC.Domain.Models
 {
     public class Competitor : BaseEntity
     {
-        public virtual Archer Archer { get; set; }
-
-        public virtual Class Class { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string Archer { get; set; }
 
         public int Score { get; set; }
 
         public int Bonus { get; set; }
+
+        [Required]
+        public Guid TournamentId { get; set; }
+
+        public virtual Tournament Tournament { get; set; }
+
+        [Required]
+        public Guid ClassId { get; set; }
+
+        public virtual Class Class { get; set; }
     }
 }

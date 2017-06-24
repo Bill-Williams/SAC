@@ -10,13 +10,6 @@
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage&nbsp;<span class="caret"></span></a>
             <ul class="dropdown-menu">
                 @if (User.IsInRole("Tech Admin")
-                    || User.IsInRole("Club Admin")
-                    || User.IsInRole("Club User"))
-                {
-                    <li>@Html.ActionLink("Archers", "Admin", "Archers")</li>
-                }
-                
-                @if (User.IsInRole("Tech Admin")
                     || User.IsInRole("Club Admin"))
                 {
                     <li>@Html.ActionLink("Clubs", "Admin", "Clubs")</li>

@@ -27,7 +27,6 @@ namespace SAC.Domain
         public DbSet<Color> Colors { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Class> Classes { get; set; }
-        public DbSet<Archer> Archers { get; set; }
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Competitor> Competitors { get; set; }
         public DbSet<Schedule> Schedules { get; set; }

@@ -129,7 +129,6 @@ namespace SAC.Migrations
                     AccessFailedCount = 0,
                     UserName = "george.prado@outlook.com",
                 },
-
                 new AspNetUser()
                 {
                     Email = "bill@billwilliams.biz",
@@ -141,6 +140,30 @@ namespace SAC.Migrations
                     LockoutEnabled = true,
                     AccessFailedCount = 0,
                     UserName = "bill@billwilliams.biz",
+                },
+                new AspNetUser()
+                {
+                    Email = "1@net.net",
+                    EmailConfirmed = true,
+                    PasswordHash = "ACLDEprUm/L+8S1X7FA0DXpULGiu8ihd0JUJ9bLTUgQNSSHmo96L3VanKmiXqk5MAA==",
+                    SecurityStamp = "b816c11c-b2ae-4081-80ba-67d41f845472",
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = true,
+                    AccessFailedCount = 0,
+                    UserName = "1@net.net",
+                },
+                new AspNetUser()
+                {
+                    Email = "2@net.net",
+                    EmailConfirmed = true,
+                    PasswordHash = "AJpWas39byc9sh2RRhaZmJKpbgw8s4E4kp1Vcjgd1vgM0qSQ7LJq7WW0oM0DC3g3cw==",
+                    SecurityStamp = "54355204-f9b8-4039-9816-6331247e86b4",
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = true,
+                    AccessFailedCount = 0,
+                    UserName = "2@net.net",
                 }
             );
         }
@@ -164,7 +187,7 @@ namespace SAC.Migrations
                     Phone = "(803) 329-6639",
                     Email = "ken@huntintheworld.com",
                     Website = "https://www.facebook.com/pages/MECKLENBURG-BOWHUNTERS/132290430122624?ref=hl",
-                    IconFileName = "RobinHood.png",
+                    IconFileName = "RobinHood.jpg",
                     ShortName = "RobinHood"
                 },
 
@@ -177,7 +200,7 @@ namespace SAC.Migrations
                     Phone = "(704) 906-7651",
                     //Email = "",
                     Website = "https://www.facebook.com/pages/MECKLENBURG-BOWHUNTERS/132290430122624?ref=hl",
-                    IconFileName = "Mecklenburg.png",
+                    IconFileName = "Mecklenburg.jpg",
                     ShortName = "Mecklenburg"
                 },
 
@@ -190,7 +213,7 @@ namespace SAC.Migrations
                     Phone = "(803) 548-7252",
                     Email = "BillSteele@LeroySprings.com",
                     Website = "http://www.ascgreenway.org",
-                    IconFileName = "Greenway.png",
+                    IconFileName = "Greenway.jpg",
                     ShortName = "Greenway"
                 },
 
@@ -216,7 +239,7 @@ namespace SAC.Migrations
                     Phone = "(704) 779-7253",
                     //Email = "",
                     Website = "http://www.indiantrailbowclub.com",
-                    IconFileName = "IndianTrail.png",
+                    IconFileName = "IndianTrail.jpg",
                     ShortName = "IndianTrail"
                 },
 
@@ -229,7 +252,7 @@ namespace SAC.Migrations
                     Phone = "(704) 930-8818",
                     Email = "Archery@CRPCPrograms.org",
                     Website = "http://crpc.clubexpress.com/",
-                    IconFileName = "CRPC.png",
+                    IconFileName = "CRPC.jpg",
                     ShortName = "CRPC"
                 }
             );

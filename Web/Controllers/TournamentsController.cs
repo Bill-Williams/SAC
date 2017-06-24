@@ -104,7 +104,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id);
+            var tournament = db.Tournaments.Include("Schedules.Club").Include("Competitors.Class.Group").FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();
@@ -143,7 +143,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tournament tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id); ;
+            Tournament tournament = db.Tournaments.Include("Schedules.Club").Include("Competitors").FirstOrDefault(t => t.Id == id); ;
             if (tournament == null)
             {
                 return HttpNotFound();
@@ -162,13 +162,52 @@ namespace SAC.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Tournament tournament = db.Tournaments.Include(t => t.Schedules).FirstOrDefault(t => t.Id == id);
+            Tournament tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id);
             if(User.IsInRole("Tech Admin")
                 // User has rights to a Club associated to this tournament
                 || tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() > 0)
             {
                 tournament.Schedules.Clear();
                 db.Tournaments.Remove(tournament);
+                db.SaveChanges();
+                return RedirectToAction("Admin");
+            }
+            return View(tournament);
+        }
+
+        // GET: Tournaments/Complete/5
+        public ActionResult Complete(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tournament tournament = db.Tournaments.Include("Schedules.Club").Include("Competitors").FirstOrDefault(t => t.Id == id); ;
+            if (tournament == null)
+            {
+                return HttpNotFound();
+            }
+            if (!User.IsInRole("Tech Admin")
+                // User has rights to a Club associated to this tournament
+                && tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() == 0)
+            {
+                return HttpNotFound();
+            }
+            return View(tournament);
+        }
+
+        // POST: Tournaments/Complete/5
+        [HttpPost, ActionName("Complete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult CompleteConfirmed(Guid id)
+        {
+            Tournament tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id);
+            if (User.IsInRole("Tech Admin")
+                // User has rights to a Club associated to this tournament
+                || tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() > 0)
+            {
+                tournament.Completed = true;
+                //TODO: Send out e-mail tournament is done
                 db.SaveChanges();
                 return RedirectToAction("Admin");
             }

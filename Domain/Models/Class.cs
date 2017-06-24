@@ -41,5 +41,10 @@ namespace SAC.Domain.Models
         public Guid ColorId { get; set; }
 
         public virtual Color Color { get; set; }
+
+        public virtual string GroupName
+        {
+            get { return Group.Name; }
+        }
     }
 }

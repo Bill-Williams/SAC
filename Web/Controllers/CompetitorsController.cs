@@ -11,39 +11,27 @@ using SAC.Domain.Models;
 
 namespace SAC.Web.Controllers
 {
+
     [RequireHttps]
+    [Authorize(Roles = "Club Admin,Tech Admin")]
     public class CompetitorsController : Controller
     {
         private SacContext db = new SacContext();
 
-        // GET: Competitors
-        public ActionResult Index()
-        {
-            var competitors = db.Competitors.Include(c => c.Archer).Include(c => c.Class);
-            return View(competitors.ToList());
-        }
-
-        // GET: Competitors/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var competitor = db.Competitors.Include(c => c.Archer).Include(c => c.Class).FirstOrDefault(c => c.Id == id);
-            if (competitor == null)
-            {
-                return HttpNotFound();
-            }
-            return View(competitor);
-        }
-
         // GET: Competitors/Create
-        public ActionResult Create()
+        public ActionResult Create(Guid? id)
         {
-            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name");
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code");
-            return View();
+            if(ModelState.IsValid && id.HasValue)
+            {
+                var competitor = new Competitor()
+                {
+                    TournamentId = id.Value
+                };
+                SetupLists();
+                return View(competitor);
+            }
+
+            return HttpNotFound();
         }
 
         // POST: Competitors/Create
@@ -51,18 +39,16 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ArcherId,ClassId,Score,Bonus")] Competitor competitor)
+        public ActionResult Create([Bind(Include = "TournamentId,Archer,ClassId,Score,Bonus")] Competitor competitor)
         {
             if (ModelState.IsValid)
             {
                 db.Competitors.Add(competitor);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "Tournaments", new { id = competitor.TournamentId });
             }
 
-            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name", competitor.Archer);
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code", competitor.Class);
-
+            SetupLists();
             return View(competitor);
         }
 
@@ -73,13 +59,12 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var competitor = db.Competitors.Include(c => c.Archer).Include(c => c.Class).FirstOrDefault(c => c.Id == id);
+            var competitor = db.Competitors.Include(c => c.Class).FirstOrDefault(c => c.Id == id);
             if (competitor == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name", competitor.Archer);
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code", competitor.Class);
+            SetupLists();
             return View(competitor);
         }
 
@@ -88,16 +73,15 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ArcherId,ClassId,Score,Bonus")] Competitor competitor)
+        public ActionResult Edit([Bind(Include = "Id,Archer,TournamentId,ClassId,Score,Bonus")] Competitor competitor)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(competitor).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "Tournaments", new { id = competitor.TournamentId });
             }
-            ViewBag.ArcherId = new SelectList(db.Archers, "Id", "Name", competitor.Archer);
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Code", competitor.Class);
+            SetupLists();
             return View(competitor);
         }
 
@@ -108,7 +92,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Competitor competitor = db.Competitors.Find(id);
+            Competitor competitor = db.Competitors.Include(c => c.Class).FirstOrDefault(c => c.Id == id);
             if (competitor == null)
             {
                 return HttpNotFound();
@@ -124,7 +108,12 @@ namespace SAC.Web.Controllers
             Competitor competitor = db.Competitors.Find(id);
             db.Competitors.Remove(competitor);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit", "Tournaments", new { id = competitor.TournamentId });
+        }
+
+        private void SetupLists()
+        {
+            ViewBag.ClassId = new SelectList(db.Classes.Include(c => c.Group).OrderBy(c => c.Group.SortOrder).ThenBy(c => c.Name), "Id", "Name", "GroupName", new object());
         }
 
         protected override void Dispose(bool disposing)
