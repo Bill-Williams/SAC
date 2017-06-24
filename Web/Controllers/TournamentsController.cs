@@ -209,9 +209,46 @@ namespace SAC.Web.Controllers
                 tournament.Completed = true;
                 //TODO: Send out e-mail tournament is done
                 db.SaveChanges();
-                return RedirectToAction("Admin");
+                return RedirectToAction("Results", new { id = tournament.Id });
             }
             return View(tournament);
+        }
+
+        // GET: Tournaments/Correction/5
+        public ActionResult Correction(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tournament tournament = db.Tournaments.Include("Schedules.Club").Include("Competitors").FirstOrDefault(t => t.Id == id); ;
+            if (tournament == null)
+            {
+                return HttpNotFound();
+            }
+            if (!User.IsInRole("Tech Admin")
+                // User has rights to a Club associated to this tournament
+                && tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() == 0)
+            {
+                return new HttpStatusCodeResult(403);
+            }
+            return View(tournament);
+        }
+
+        // POST: Tournaments/Correction/5
+        [HttpPost, ActionName("Correction")]
+        [ValidateAntiForgeryToken]
+        public ActionResult CorrectioneConfirmed(Guid id)
+        {
+            Tournament tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id);
+            if (User.IsInRole("Tech Admin")
+                // User has rights to a Club associated to this tournament
+                || tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() > 0)
+            {
+                //TODO: Send out e-mail tournament is corrected
+                return RedirectToAction("Admin");
+            }
+            return new HttpStatusCodeResult(403);
         }
 
         private void SetupLists()
@@ -220,7 +257,7 @@ namespace SAC.Web.Controllers
             {
                 ViewBag.ScheduleList = new MultiSelectList(db.Schedules.Where(s => null == s.Tournament).OrderBy(s => s.Date), "Id", "ShortDate");
             }
-            else
+            else // Get Schedules for Clubs you have an association to your user
             {
                 var clubs = User.Identity.GetClubs(db).Select(c => c.Id);
                 ViewBag.ScheduleList = new MultiSelectList(db.Schedules.Where(s => null == s.Tournament && clubs.Contains(s.Club.Id)).OrderBy(s => s.Date), "Id", "ShortDate");

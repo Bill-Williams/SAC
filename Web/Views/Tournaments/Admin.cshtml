@@ -27,8 +27,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            var action = item.Completed ? "Results" : "Edit";
-            <tr onclick="location.href = '@(Url.Action(action, new { id = item.Id }))'">
+            <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                 <td>
                     @string.Join(",", item.Schedules.Select(s => s.ShortDate))
                 </td>

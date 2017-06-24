@@ -71,7 +71,8 @@
                 <div class="btn-group">
                     <a href="@Url.Action("Delete", new { id = Model.Id })" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i> Delete</a>
                     <a href="@Url.Action("Admin")" class="btn btn-default"><i class="glyphicon glyphicon-menu-hamburger"></i> Back to List</a>
-                    <a href="@Url.Action("Complete", new { id = Model.Id })" class="btn btn-default"><i class="glyphicon glyphicon-check"></i> Complete</a>
+                    <a href="@Url.Action("Complete", new { id = Model.Id })" id="btnComplete" class="btn btn-default" style="display: none;"><i class="glyphicon glyphicon-check"></i> Complete</a>
+                    <a href="@Url.Action("Correction", new { id = Model.Id })" id="btnCorrection" class="btn btn-default" style="display: none;"><i class="glyphicon glyphicon-check"></i> Correction</a>
                 </div>
             </div>
         </div>
@@ -82,6 +83,18 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/datatables")
     <script>
+        // Set correct functionality for action
+        $(function () {
+            if (@Model.Completed.ToString().ToLower())
+            {
+                $('#btnCorrection').show();
+            }
+            else
+            {
+                $('#btnComplete').show();
+            }
+        });
+
         $(document).ready(function () {
             $('#tblCompetitors').DataTable();
         });
