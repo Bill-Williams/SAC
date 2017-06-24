@@ -14,9 +14,9 @@ namespace SAC.Domain.Models
         [MaxLength(100)]
         public string Archer { get; set; }
 
-        public int Score { get; set; }
+        public int? Score { get; set; }
 
-        public int Bonus { get; set; }
+        public int? Bonus { get; set; }
 
         [Required]
         public Guid TournamentId { get; set; }

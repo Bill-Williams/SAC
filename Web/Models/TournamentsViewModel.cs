@@ -13,5 +13,14 @@ namespace SAC.Web.Models
         public IEnumerable<Group> Groups { get; set; }
 
         public IEnumerable<Class> Classes { get; set; }
+
+        public IEnumerable<RankedCompetitor> Competitors { get; set; }
+    }
+
+    public class RankedCompetitor
+    {
+        public int Rank { get; set; }
+
+        public Competitor Competitor { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id);
+            var tournament = db.Tournaments.Include("Schedules.Club").Include("Competitors.Class.Group").Include("Competitors.Class.Color").FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();
@@ -46,9 +46,11 @@ namespace SAC.Web.Controllers
             TournamentResultViewModel result = new TournamentResultViewModel()
             {
                 Tournament = tournament,
-                Groups = db.Groups.ToList(),
-                Classes = db.Classes.Include(c => c.Color).ToList()
-            };
+                Groups = tournament.Competitors.Select(c => c.Class.Group).Distinct().OrderBy(o => o.SortOrder).ToList(),
+                Classes = tournament.Competitors.Select(c => c.Class).Distinct().OrderByDescending(c => c.MaximumYardage).ThenBy(c => c.Known.ToString()).ThenBy(c => c.Name).ToList(),
+                Competitors = tournament.Competitors.OrderByDescending(c => c.Score).ThenByDescending(c => c.Bonus).GroupBy(c => c.ClassId).SelectMany(g => g.Select((c, i) => new RankedCompetitor() { Competitor = c, Rank = i + 1 })).ToList()
+        };
+
             return View(result);
         }
 
