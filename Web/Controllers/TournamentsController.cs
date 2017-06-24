@@ -10,6 +10,8 @@ using SAC.Domain;
 using SAC.Domain.Models;
 using SAC.Web.Extensions;
 using SAC.Web.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace SAC.Web.Controllers
 {
@@ -199,21 +201,26 @@ namespace SAC.Web.Controllers
         // POST: Tournaments/Complete/5
         [HttpPost, ActionName("Complete")]
         [ValidateAntiForgeryToken]
-        public ActionResult CompleteConfirmed(Guid id)
+        public async Task<ActionResult> CompleteConfirmed(Guid id)
         {
             Tournament tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id);
             if (User.IsInRole("Tech Admin")
                 // User has rights to a Club associated to this tournament
                 || tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() > 0)
             {
+                // Update completed flag and save
                 tournament.Completed = true;
-                //TODO: Send out e-mail tournament is done
                 db.SaveChanges();
+
+                // Send out e-mail that tournament is complete
+                await SendCompleteBlast(tournament.Id);
+
+                // Send to results view when done
                 return RedirectToAction("Results", new { id = tournament.Id });
             }
-            return View(tournament);
+            return new HttpStatusCodeResult(403);
         }
-
+        
         // GET: Tournaments/Correction/5
         public ActionResult Correction(Guid? id)
         {
@@ -238,14 +245,16 @@ namespace SAC.Web.Controllers
         // POST: Tournaments/Correction/5
         [HttpPost, ActionName("Correction")]
         [ValidateAntiForgeryToken]
-        public ActionResult CorrectioneConfirmed(Guid id)
+        public async Task<ActionResult> CorrectioneConfirmed(Guid id)
         {
             Tournament tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id);
             if (User.IsInRole("Tech Admin")
                 // User has rights to a Club associated to this tournament
                 || tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() > 0)
             {
-                //TODO: Send out e-mail tournament is corrected
+                // Send out e-mail that tournament is complete
+                await SendCompleteBlast(id);
+
                 return RedirectToAction("Admin");
             }
             return new HttpStatusCodeResult(403);
@@ -262,6 +271,13 @@ namespace SAC.Web.Controllers
                 var clubs = User.Identity.GetClubs(db).Select(c => c.Id);
                 ViewBag.ScheduleList = new MultiSelectList(db.Schedules.Where(s => null == s.Tournament && clubs.Contains(s.Club.Id)).OrderBy(s => s.Date), "Id", "ShortDate");
             }
+        }
+
+        private async Task SendCompleteBlast(Guid tournamentId)
+        {
+            var emailService = new EmailService();
+            var callbackUrl = Url.Action("Results", "Tournaments", new { id = tournamentId }, protocol: Request.Url.Scheme);
+            await emailService.SendCompleteBlastAsync(callbackUrl);
         }
 
         protected override void Dispose(bool disposing)
