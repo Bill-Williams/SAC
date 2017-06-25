@@ -12,6 +12,10 @@ namespace SAC.Web
     {
         protected void Application_Start()
         {
+            System.Diagnostics.Trace.TraceInformation("Information");
+            System.Diagnostics.Trace.TraceWarning("Warning");
+            System.Diagnostics.Trace.TraceError("Error");
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
