@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<SAC.Domain.Models.Tournament>
 
 @{
-    ViewBag.Title = "View Tournament Results";
+    ViewBag.Title = "Tournaments";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="jumbotron">
+    <h2>@ViewBag.Title</h2>
+    <p>Find information about recent tournaments and view their results.</p>
+</div>
 
 <table class="table table-striped table-hover tbl_pointer" id="tblTournaments">
     <thead>
@@ -14,9 +17,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Schedules.First().Club)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Completed)
             </th>
         </tr>
     </thead>
@@ -30,13 +30,11 @@
                 <td>
                     @string.Join(",", item.Schedules.Select(s => s.Club.Name).Distinct())
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Completed)
-                </td>
             </tr>
         }
     </tbody>
 </table>
+
 @section Scripts {
     @Scripts.Render("~/bundles/datatables")
     <script>

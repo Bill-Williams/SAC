@@ -111,9 +111,46 @@ namespace SAC.Web.Controllers
             return RedirectToAction("Edit", "Tournaments", new { id = competitor.TournamentId });
         }
 
+        // GET: Competitors/Search/5
+        public ActionResult Search(string id)
+        {
+            IQueryable<Competitor> results = db.Competitors;
+
+            if (id != null)
+            {
+                results = results.Where(c => c.Archer.Contains(id));
+            }
+
+            return Json(
+                results
+                .OrderBy(c => c.Archer)
+                .Select(c => new { Archer = c.Archer })
+                .ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
         private void SetupLists()
         {
-            ViewBag.ClassId = new SelectList(db.Classes.Include(c => c.Group).OrderBy(c => c.Group.SortOrder).ThenBy(c => c.Name), "Id", "Name", "GroupName", new object());
+            var classes = new HashSet<SelectListItem>();
+            var groups = db.Groups.ToDictionary(k => k.Name, v => new SelectListGroup() { Name = v.Name });
+
+            classes.Add(new SelectListItem()
+            {
+                Disabled = true,
+                Group = null,
+                Selected = true,
+                Text = null,
+                Value = "0"
+            });
+
+            db.Classes.Include(c => c.Group).OrderBy(c => c.Group.SortOrder).ThenBy(c => c.Name).ToList()
+                .ForEach(c => classes.Add(new SelectListItem()
+                {
+                    Group = groups[c.Group.Name],
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                }));
+
+            ViewBag.ClassId = classes;
         }
 
         protected override void Dispose(bool disposing)

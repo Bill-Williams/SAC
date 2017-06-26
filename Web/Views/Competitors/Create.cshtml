@@ -19,7 +19,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Archer, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Archer, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Archer, new { htmlAttributes = new { @class = "form-control typeahead" } })
                 @Html.ValidationMessageFor(model => model.Archer, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -61,4 +61,29 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/typeahead")
+    @Scripts.Render("~/bundles/chosen")
+    <script>
+        $(function () {
+            // Hide default blank item
+            $("#ClassId option[value=0]").hide();
+
+            // Enable autocomplete on Archer fields
+            var competitors = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: '@Url.Action("Search")/',
+                remote: {
+                    url: '@Url.Action("Search")/%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('.typeahead').typeahead(null, {
+                name: 'Archer',
+                display: 'Archer',
+                source: competitors
+            });
+        });
+    </script>
 }

@@ -401,6 +401,7 @@
     <Content Include="Content\Images\RobinHood.jpg" />
     <Content Include="Content\Images\SAC.PNG" />
     <Content Include="Content\Images\SAC2.jpg" />
+    <Content Include="Content\typeahead.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -422,6 +423,8 @@
     <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="Connected Services\Application Insights\ConnectedService.json" />
     <Content Include="robots.txt" />
+    <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chosen.jquery.js" />
@@ -521,6 +524,10 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\typeahead.bundle.min.js" />
+    <Content Include="Scripts\typeahead.jquery.js" />
+    <Content Include="Scripts\typeahead.jquery.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

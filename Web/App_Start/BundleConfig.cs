@@ -14,6 +14,10 @@ namespace SAC.Web
                       "~/Scripts/DataTables/jquery.dataTables.js",
                       "~/Scripts/DataTables/dataTables.bootstrap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/typeahead").Include(
+                      "~/Scripts/typeahead.jquery.js",
+                      "~/Scripts/bloodhound.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -33,6 +37,7 @@ namespace SAC.Web
                       "~/Content/bootstrap-theme.css",
                       "~/Content/DataTables/css/dataTables.bootstrap.css",
                       "~/Content/site.css",
+                      "~/Content/typeahead.css",
                       "~/Content/chosen.css"));
         }
     }
