@@ -28,7 +28,7 @@ namespace SAC.Web
         {
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("azure_7569176bdd96be4db440d7fc26d127c8@azure.com","Southern Archery Circut"),
+                From = new EmailAddress("azure_7569176bdd96be4db440d7fc26d127c8@azure.com","Southern Archery Circuit"),
                 Subject = message.Subject,
                 PlainTextContent = message.Body,
                 HtmlContent = message.Body
@@ -41,7 +41,7 @@ namespace SAC.Web
         {
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("azure_7569176bdd96be4db440d7fc26d127c8@azure.com", "Southern Archery Circut"),
+                From = new EmailAddress("azure_7569176bdd96be4db440d7fc26d127c8@azure.com", "Southern Archery Circuit"),
                 Subject = "SAC Tournament Results",
                 PlainTextContent = string.Format("Results for today's tournament are in.  Please go to <a href='{0}'>here</a> to see the results", callbackUrl),
                 HtmlContent = string.Format("Results for today's tournament are in.  Please go to <a href='{0}'>here</a> to see the results", callbackUrl),
