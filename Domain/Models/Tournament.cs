@@ -18,7 +18,7 @@ namespace SAC.Domain.Models
 
         public bool Completed { get; set; }
 
-        public ICollection<Competitor> Competitors { get; set; }
+        public virtual ICollection<Competitor> Competitors { get; set; }
         
         public virtual ICollection<Schedule> Schedules { get; set; }
     }

@@ -124,8 +124,8 @@ namespace SAC.Migrations
                     {
                         Id = c.Guid(nullable: false, identity: true),
                         Archer = c.String(nullable: false, maxLength: 100),
-                        Score = c.Int(nullable: true),
-                        Bonus = c.Int(nullable: true),
+                        Score = c.Int(),
+                        Bonus = c.Int(),
                         TournamentId = c.Guid(nullable: false),
                         ClassId = c.Guid(nullable: false),
                     })

@@ -48,10 +48,21 @@ namespace SAC.Migrations
 
                 SeedUserRoles(context);
 
-                SeedSchedules(context);
-
                 // Save the added roles
                 context.SaveChanges();
+
+                const bool testData = true;
+                if (testData)
+                {
+                    SeedSchedules(context);
+                    context.SaveChanges();
+
+                    SeedTournaments(context);
+                    context.SaveChanges();
+
+                    SeedCompetitors(context);
+                    context.SaveChanges();
+                }
             }
         }
 
@@ -566,5 +577,77 @@ namespace SAC.Migrations
                 }
             );
         }
+
+        private void SeedTournaments(SacContext context)
+        {
+            var schedule = context.Schedules.FirstOrDefault();
+
+            context.Tournaments.AddOrUpdate(
+                new Tournament()
+                {
+                    Completed = true,
+                    Schedules = {schedule}
+                }
+            );
+        }
+
+        private void SeedCompetitors(SacContext context)
+        {
+            var tournament = context.Tournaments.FirstOrDefault();
+            var classes = context.Classes.ToDictionary(p => p.Name, p => p.Id);
+
+            if (tournament != null)
+                context.Competitors.AddOrUpdate(
+                    new Competitor()
+                    {
+                        Archer = "Rosie",
+                        Bonus = 0,
+                        ClassId = classes["Cub"],
+                        Score = 76,
+                        TournamentId = tournament.Id
+                    },
+                    new Competitor()
+                    {
+                        Archer = "Penny",
+                        Bonus = 1,
+                        ClassId = classes["Cub"],
+                        Score = 110,
+                        TournamentId = tournament.Id,
+                    },
+                    new Competitor()
+                    {
+                        Archer = "Bill",
+                        Bonus = 3,
+                        ClassId = classes["Mens Known"],
+                        Score = 179,
+                        TournamentId = tournament.Id,
+                    },
+                    new Competitor()
+                    {
+                        Archer = "George",
+                        Bonus = 4,
+                        ClassId = classes["Mens Known"],
+                        Score = 179,
+                        TournamentId = tournament.Id,
+                    },
+                    new Competitor()
+                    {
+                        Archer = "Abigail",
+                        Bonus = 1,
+                        ClassId = classes["Womens Novice Hunter"],
+                        Score = 155,
+                        TournamentId = tournament.Id,
+                    },
+                    new Competitor()
+                    {
+                        Archer = "Denise",
+                        Bonus = 0,
+                        ClassId = classes["Womens Novice Hunter"],
+                        Score = 0,
+                        TournamentId = tournament.Id,
+                    }
+                );
+        }
+
     }
 }

@@ -5,13 +5,6 @@ namespace SAC.Domain
 {
     public class SacContext : DbContext
     {
-        private static SacContext _current { get; set; }
-
-        static SacContext()
-        {
-            Database.SetInitializer<SacContext>(null);
-        }
-
         public SacContext()
             : base("SacConn")
         {
