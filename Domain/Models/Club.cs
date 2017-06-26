@@ -13,6 +13,7 @@ namespace SAC.Domain.Models
         public Club()
         {
             Users = new HashSet<AspNetUser>();
+            Contacts = new HashSet<Contact>();
         }
 
         [Required]
@@ -33,19 +34,6 @@ namespace SAC.Domain.Models
 
         public string CityStateZip { get; set; }
 
-        [MaxLength(250)]
-        public string Contact { get; set; }
-
-        [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Please enter a valid Phone number")]
-        [DisplayFormat(ApplyFormatInEditMode = true, ConvertEmptyStringToNull = true)]
-        public string Phone { get; set; }
-
-        [DataType(DataType.EmailAddress)]
-        [EmailAddress]
-        [DisplayFormat(ApplyFormatInEditMode = true, ConvertEmptyStringToNull = true)]
-        public string Email { get; set; }
-
         [DataType(DataType.Url)]
         [Url(ErrorMessage = "Please enter a valid URL")]
         [DisplayFormat(ApplyFormatInEditMode = true, ConvertEmptyStringToNull = true)]
@@ -56,6 +44,10 @@ namespace SAC.Domain.Models
 
         public string IconFileName { get; set; }
 
+        public string GeoLocation { get; set; }
+
         public virtual ICollection<AspNetUser> Users { get; set; }
+
+        public virtual ICollection<Contact> Contacts { get; set; }
     }
 }
