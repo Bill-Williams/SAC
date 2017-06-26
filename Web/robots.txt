@@ -1,0 +1,5 @@
+﻿User-agent: *
+Disallow: /Content/
+Disallow: /fonts/
+Disallow: /Scripts/
+Disallow: /bin/
