@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Home" controller="Home" action="Index">
+    <mvcSiteMapNode title="Privacy" controller="Home" action="Privacy"/>
+    <mvcSiteMapNode title="TermsOfService" controller="Home" action="TermsOfService"/>
+    <mvcSiteMapNode title="Classes" controller="Classes" action="Index" />
+    <mvcSiteMapNode title="Clubs" controller="Clubs" action="Index">
+      <mvcSiteMapNode title="Directions" controller="Clubs" action="Directions" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Schedules" controller="Schedules" action="Index" />
+    <mvcSiteMapNode title="Tournaments" controller="Tournaments" action="Index">
+      <mvcSiteMapNode title="Results" controller="Tournaments" action="Results" />
+    </mvcSiteMapNode>
+  </mvcSiteMapNode>
+</mvcSiteMap>
