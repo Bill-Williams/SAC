@@ -56,14 +56,26 @@ namespace SAC.Migrations
                         ShortName = c.String(nullable: false, maxLength: 15),
                         Address = c.String(maxLength: 100),
                         CityStateZip = c.String(maxLength: 100),
-                        Contact = c.String(maxLength: 250),
-                        Phone = c.String(),
-                        Email = c.String(),
                         Website = c.String(),
                         Directions = c.String(maxLength: 2000),
                         IconFileName = c.String(),
+                        GeoLocation = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Contacts",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        Name = c.String(maxLength: 250),
+                        Phone = c.String(),
+                        Email = c.String(),
+                        Club_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Clubs", t => t.Club_Id)
+                .Index(t => t.Club_Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -200,6 +212,7 @@ namespace SAC.Migrations
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Contacts", "Club_Id", "dbo.Clubs");
             DropForeignKey("dbo.Classes", "GroupId", "dbo.Groups");
             DropForeignKey("dbo.Classes", "ColorId", "dbo.Colors");
             DropIndex("dbo.AspNetUserClubs", new[] { "ClubId" });
@@ -212,6 +225,7 @@ namespace SAC.Migrations
             DropIndex("dbo.Competitors", new[] { "TournamentId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
+            DropIndex("dbo.Contacts", new[] { "Club_Id" });
             DropIndex("dbo.Classes", new[] { "ColorId" });
             DropIndex("dbo.Classes", new[] { "GroupId" });
             DropTable("dbo.AspNetUserClubs");
@@ -223,6 +237,7 @@ namespace SAC.Migrations
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.Contacts");
             DropTable("dbo.Clubs");
             DropTable("dbo.Groups");
             DropTable("dbo.Colors");

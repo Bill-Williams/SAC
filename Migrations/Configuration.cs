@@ -39,6 +39,9 @@ namespace SAC.Migrations
 
                 SeedUsers(context);
 
+                SeedContacts(context);
+                context.SaveChanges();
+
                 SeedClubs(context);
 
                 SeedClasses(context);
@@ -186,20 +189,68 @@ namespace SAC.Migrations
             context.Users.ToList().ForEach(u => u.AspNetRoles.Add(admin));
         }
 
+        private void SeedContacts(SacContext context)
+        {
+            context.Contacts.AddOrUpdate(x => x.Id,
+                new Contact()
+                {
+                    Name = "Kenny Cobb",
+                    Phone = "(803) 329-6639",
+                    Email = "ken@huntintheworld.com",
+                },
+            new Contact()
+                {
+                    Name = "Steven Walters",
+                    Phone = "(704) 906-7651",
+                    //Email = "",
+                },
+                new Contact()
+                {
+                    Name = "Bill Steele",
+                    Phone = "(803) 548-7252",
+                    Email = "BillSteele@LeroySprings.com",
+                },
+                new Contact()
+                {
+                    Name = "Billy Evans",
+                    Phone = "(803) 412-1528",
+                    Email = "kitchensthatworkinc@gmail.com",
+                },
+                new Contact()
+                {
+                    Name = "Adam McAnulty",
+                    Phone = "(803) 242-3149",
+                    Email = "kitchensthatworkinc@gmail.com",
+                },
+                new Contact()
+                {
+                    Name = "Shane Kaylor",
+                    Phone = "(704) 779-7253",
+                    //Email = "",
+                },
+                new Contact()
+                {
+                    Name = "Vance Tiller",
+                    Phone = "(704) 930-8818",
+                    Email = "Archery@CRPCPrograms.org",
+                }
+            );
+        }
+
         private void SeedClubs(SacContext context)
         {
+            var contacts = context.Contacts;
+
             context.Clubs.AddOrUpdate(x => x.Id,
                 new Club()
                 {
                     Name = "Robin Hood Archery Club",
                     Address = "3870 Homestead Rd",
                     CityStateZip = "Rock Hill, SC",
-                    Contact = "Kenny Cobb",
-                    Phone = "(803) 329-6639",
-                    Email = "ken@huntintheworld.com",
                     Website = "https://www.facebook.com/pages/MECKLENBURG-BOWHUNTERS/132290430122624?ref=hl",
                     IconFileName = "RobinHood.jpg",
-                    ShortName = "RobinHood"
+                    ShortName = "RobinHood",
+                    Contacts = {contacts.FirstOrDefault(c => c.Name == "Kenny Cobb") }
                 },
 
                 new Club()
@@ -207,12 +258,10 @@ namespace SAC.Migrations
                     Name = "Mecklenburg Wildlife Club",
                     Address = "2301 Wildlife Rd",
                     CityStateZip = "Charlotte, NC",
-                    Contact = "Steven Walters",
-                    Phone = "(704) 906-7651",
-                    //Email = "",
                     Website = "https://www.facebook.com/pages/MECKLENBURG-BOWHUNTERS/132290430122624?ref=hl",
                     IconFileName = "Mecklenburg.jpg",
-                    ShortName = "Mecklenburg"
+                    ShortName = "Mecklenburg",
+                    Contacts = { contacts.FirstOrDefault(c => c.Name == "Steven Walters") }
                 },
 
                 new Club()
@@ -220,12 +269,10 @@ namespace SAC.Migrations
                     Name = "Greenway Archery Club",
                     Address = "1300 Hwy. 21 By-pass",
                     CityStateZip = "Fort Mill, SC",
-                    Contact = "Bill Steele",
-                    Phone = "(803) 548-7252",
-                    Email = "BillSteele@LeroySprings.com",
                     Website = "http://www.ascgreenway.org",
                     IconFileName = "Greenway.jpg",
-                    ShortName = "Greenway"
+                    ShortName = "Greenway",
+                    Contacts = { contacts.FirstOrDefault(c => c.Name == "Bill Steele") }
                 },
 
                 new Club()
@@ -233,12 +280,10 @@ namespace SAC.Migrations
                     Name = "Fort Mill Bowhunters",
                     Address = "1400 Williams Rd",
                     CityStateZip = "Fort Mill, SC",
-                    Contact = "Adam McAnulty 803-242-3149  or  Billy Evans 803-412-1528",
-                    Phone = "(803) 242-3149",
-                    Email = "kitchensthatworkinc@gmail.com",
                     Website = "https://www.facebook.com/pages/Fort-Mill-Bowhunters/361416573871861?fref=ts",
                     IconFileName = "FortMill.png",
-                    ShortName = "FortMill"
+                    ShortName = "FortMill",
+                    Contacts = { contacts.FirstOrDefault(c => c.Name == "Billy Evans"), contacts.FirstOrDefault(c => c.Name == "Adam McAnulty") }
                 },
 
                 new Club()
@@ -246,12 +291,10 @@ namespace SAC.Migrations
                     Name = "Indian Trail Bow Club",
                     Address = "",
                     CityStateZip = "Indian Trail, NC",
-                    Contact = "Shane Kaylor",
-                    Phone = "(704) 779-7253",
-                    //Email = "",
                     Website = "http://www.indiantrailbowclub.com",
                     IconFileName = "IndianTrail.jpg",
-                    ShortName = "IndianTrail"
+                    ShortName = "IndianTrail",
+                    Contacts = { contacts.FirstOrDefault(c => c.Name == "Shane Kaylor") }
                 },
 
                 new Club()
@@ -259,12 +302,10 @@ namespace SAC.Migrations
                     Name = "Charlotte Rifle & Pistol Club",
                     Address = "9130 Kensington Dr.",
                     CityStateZip = "Waxhaw, NC 28173",
-                    Contact = "Vance Tiller",
-                    Phone = "(704) 930-8818",
-                    Email = "Archery@CRPCPrograms.org",
                     Website = "http://crpc.clubexpress.com/",
                     IconFileName = "CRPC.jpg",
-                    ShortName = "CRPC"
+                    ShortName = "CRPC",
+                    Contacts = { contacts.FirstOrDefault(c => c.Name == "Vance Tiller") }
                 }
             );
         }

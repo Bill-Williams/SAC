@@ -13,7 +13,7 @@ namespace SAC.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201706251418214_Initial"; }
+            get { return "201706270011570_Initial"; }
         }
         
         string IMigrationMetadata.Source
