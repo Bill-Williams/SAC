@@ -22,6 +22,7 @@ namespace SAC.Domain
         public DbSet<Class> Classes { get; set; }
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Competitor> Competitors { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Tournament> Tournaments { get; set; }
         public DbSet<AspNetRole> Roles { get; set; }
