@@ -20,13 +20,7 @@
                 @Html.DisplayNameFor(model => model.Address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Contact)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.Contacts)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Website)
@@ -45,13 +39,7 @@
                     @Html.DisplayFor(modelItem => item.CityStateZip)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Contact)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Phone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    <span>@string.Join(",", item.Contacts.Select(r => r.Name))</span>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Website)

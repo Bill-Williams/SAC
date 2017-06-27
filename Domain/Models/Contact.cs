@@ -22,5 +22,10 @@ namespace SAC.Domain.Models
         [DisplayFormat(ApplyFormatInEditMode = true, ConvertEmptyStringToNull = true)]
         public string Email { get; set; }
 
+        [Required]
+        public Guid ClubId { get; set; }
+
+        public virtual Club Club { get; set; }
+
     }
 }

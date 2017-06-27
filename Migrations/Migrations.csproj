@@ -52,6 +52,10 @@
     <Compile Include="Migrations\201706270011570_Initial.Designer.cs">
       <DependentUpon>201706270011570_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706270124576_ContactClubLink.cs" />
+    <Compile Include="Migrations\201706270124576_ContactClubLink.Designer.cs">
+      <DependentUpon>201706270124576_ContactClubLink.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +79,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201706270011570_Initial.resx">
       <DependentUpon>201706270011570_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706270124576_ContactClubLink.resx">
+      <DependentUpon>201706270124576_ContactClubLink.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

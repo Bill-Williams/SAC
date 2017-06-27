@@ -47,7 +47,7 @@ namespace SAC.Web.Controllers
         {
             if (User.IsInRole("Tech Admin"))
             {
-                return View(db.Clubs);
+                return View(db.Clubs.Include(c => c.Contacts).ToList());
             }
             else //if not Tech Admin return list of assigned clubs
             {
@@ -83,14 +83,14 @@ namespace SAC.Web.Controllers
         [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Edit(Guid? id)
         {
-            if (id == null)
+            if (id == null || !id.HasValue)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Club club;
             if (User.IsInRole("Tech Admin"))
             {
-                club = db.Clubs.Find(id);
+                club = db.Clubs.Include(c => c.Contacts).First(c => c.Id == id.Value);
             }
             else //if not Tech Admin, check access and return null if not enabled
             {
@@ -109,7 +109,7 @@ namespace SAC.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Tech Admin")]
-        public ActionResult Edit([Bind(Include = "Id,Name,ShortName,Address,CityStateZip,Contact,Phone,Email,Website,Directions,IconFileName")] Club club)
+        public ActionResult Edit([Bind(Include = "Id,Name,ShortName,Address,CityStateZip,Website,Directions,IconFileName")] Club club)
         {
             if (ModelState.IsValid)
             {
@@ -124,7 +124,7 @@ namespace SAC.Web.Controllers
         [Authorize(Roles = "Tech Admin")]
         public ActionResult Delete(Guid? id)
         {
-            if (id == null)
+            if (id == null || !id.HasValue)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

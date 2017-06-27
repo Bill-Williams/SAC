@@ -18,7 +18,7 @@ namespace SAC.Web.Extensions
         public static IEnumerable<Club> GetClubs(this IIdentity identity, SacContext context)
         {
             var id = Guid.Parse(identity.GetUserId());
-            return context.Users.Include("Clubs").First(u => u.Id == id).Clubs;
+            return context.Users.Include("Clubs.Contacts").First(u => u.Id == id).Clubs;
         }
     }
 }

@@ -47,6 +47,11 @@
         @RenderBody()
         <hr />
 
+        <div class="row">
+            <div style="text-align:center">
+                <span>&copy;@DateTime.Now.Year - Southern Archery Circuit</span> | @Html.ActionLink("Privacy", "Privacy", "Home") | @Html.ActionLink("Terms", "TermsOfService", "Home")
+            </div>
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
