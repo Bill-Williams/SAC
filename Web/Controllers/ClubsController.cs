@@ -21,7 +21,7 @@ namespace SAC.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(db.Clubs.OrderBy(c => c.Name));
+            return View(db.Clubs.OrderBy(c => c.Name).Include(c => c.Contacts).ToList());
         }
 
         // GET: Club/Directions/5

@@ -29,19 +29,21 @@
             </div>
         </div>
 
-        <div class="row">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <a href="mailto:@Model.Email?Subject=Infromation about @Model.Name">@Model.Contact</a>
+        @foreach (var contact in Model.Contacts)
+        {
+            <div class="row">
+                @Html.LabelFor(model => contact.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <a href="mailto:@contact.Email?Subject=Infromation about @Model.Name">@contact.Name</a>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.Phone, "Phone")
+            <div class="row">
+                @Html.LabelFor(model => contact.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => contact.Phone, "Phone")
+                </div>
             </div>
-        </div>
-
+        }
     </div>
 </div>
