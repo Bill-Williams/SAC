@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SAC.Domain;
 using SAC.Domain.Models;
+using System.Threading.Tasks;
 
 namespace SAC.Web.Controllers
 {
@@ -128,6 +129,12 @@ namespace SAC.Web.Controllers
                 .ToArray(), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult GetClass(Guid id)
+        {
+            return PartialView("ClassSideBar", db.Classes.Include("Color").Include("Group").First(c => c.Id == id));
+        }
+
         private void SetupLists()
         {
             var classes = new HashSet<SelectListItem>();
@@ -147,7 +154,7 @@ namespace SAC.Web.Controllers
                 {
                     Group = groups[c.Group.Name],
                     Value = c.Id.ToString(),
-                    Text = c.Name
+                    Text = $"{c.Name} ({c.MaximumYardage})"
                 }));
 
             ViewBag.ClassId = classes;

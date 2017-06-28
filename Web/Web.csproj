@@ -647,6 +647,7 @@
     <Content Include="Views\Contacts\Create.cshtml" />
     <Content Include="Views\Contacts\Delete.cshtml" />
     <Content Include="Views\Contacts\Edit.cshtml" />
+    <Content Include="Views\Shared\ClassSideBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -693,6 +694,8 @@
           <DevelopmentServerPort>50451</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://localhost:44382/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>https://localhost:44382/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
