@@ -4,7 +4,9 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<div class="well">
+    <h2>Edit</h2>
+</div>
 
 @using (Html.BeginForm())
 {
@@ -17,9 +19,7 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <a href="@Url.Action("Create", "Competitors", new { Id = Model.Id })" class="btn btn-default"><i class="glyphicon glyphicon-user"></i> Add Competitor</a>
-            </div>
+                <a href="@Url.Action("Create", "Competitors", new { Id = Model.Id })" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-user"></i> Add Competitor</a>
         </div>
 
         <table class="table table-striped table-hover tbl_pointer" id="tblCompetitors">
