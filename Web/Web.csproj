@@ -26,7 +26,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <ApplicationInsightsResourceId>/subscriptions/99ff8d55-9315-4349-867d-ae1624d64880/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/Web</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/99ff8d55-9315-4349-867d-ae1624d64880/resourcegroups/SAC/providers/microsoft.insights/components/Southern Archery Insights</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/99ff8d55-9315-4349-867d-ae1624d64880/resourceGroups/SAC/providers/microsoft.insights/components/Southern Archery Insights</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
