@@ -11,7 +11,7 @@ using SAC.Domain.Models;
 using SAC.Web.Extensions;
 using SAC.Web.Models;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.Owin;
+using SAC.Web.Services;
 
 namespace SAC.Web.Controllers
 {
