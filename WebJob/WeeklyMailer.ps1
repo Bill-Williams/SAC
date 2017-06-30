@@ -1,1 +1,3 @@
-Invoke-Request https://www.southernarcherycircuit.org/api/WeeklyMailer
+$progressPreference = "silentlyContinue"
+
+Invoke-WebRequest -UseBasicParsing -URI https://southernarchery.azurewebsites.net/api/WeeklyMailer
