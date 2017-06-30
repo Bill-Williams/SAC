@@ -4,7 +4,9 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<div class="well">
+    <h2>@ViewBag.Title</h2>
+</div>
 
 @using (Html.BeginForm()) 
 {
@@ -42,12 +44,11 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <div class="btn-group">
+                    <a href="@Url.Action("Edit", "Clubs", new { id = Model.ClubId })" class="btn btn-default"><i class="glyphicon glyphicon-remove-circle"></i> Cancel</a>
+                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i> Create</button>
+                </div>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

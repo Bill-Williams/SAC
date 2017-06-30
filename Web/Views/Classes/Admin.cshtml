@@ -4,68 +4,72 @@
     ViewBag.Title = "Manage Classes";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="well">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default", style = "float:right" })
+    <h2>
+        @ViewBag.Title
+    </h2>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-<table class="table table-striped table-hover tbl_pointer" id="tblClasses">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Group)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Known)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaximumYardage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Color)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Restrictions)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
-                <td>
-                    @Html.DisplayFor(modelItem => item.Group.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Known)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MaximumYardage)
-                </td>
-                <td nowrap>
-                    <div class="classDot" style="background: @item.Color.HexCode"></div>&nbsp;@Html.DisplayFor(modelItem => item.Color.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Restrictions)
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
+<div class="panel">
+    <div class="panel-body">
+        <table class="table table-striped table-hover tbl_pointer" id="tblClasses">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Group)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Known)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MaximumYardage)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Color)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Restrictions)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Group.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Known)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaximumYardage)
+                        </td>
+                        <td nowrap>
+                            <div class="classDot" style="background: @item.Color.HexCode"></div>&nbsp;@Html.DisplayFor(modelItem => item.Color.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Restrictions)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/datatables")
     <script>
