@@ -1,0 +1,1 @@
+Invoke-Request https://www.southernarcherycircuit.org/api/WeeklyMailer
