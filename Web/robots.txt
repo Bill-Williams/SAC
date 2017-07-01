@@ -1,7 +1,5 @@
 ﻿# Generic crawler settings
 User-agent: *
 Allow: /
-Disallow: /fonts/
-Disallow: /Scripts/
 Disallow: /bin/
 SITEMAP: https://www.southernarcherycircuit.org/sitemap.xml
