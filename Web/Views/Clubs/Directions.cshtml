@@ -13,23 +13,21 @@
     }
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="well well-sm">
+    @if (isIos)
+    {
+        <a href="http://maps.apple.com/maps?q=@Model.GeoLocation" class="btn btn-default" style="float:right">@Model.Address, @Model.CityStateZip</a>
+    }
+    else
+    {
+        <a href="http://maps.google.com/maps?q=@Model.GeoLocation" class="btn btn-default" style="float:right">@Model.Address, @Model.CityStateZip</a>
+    }
+    <h4>@ViewBag.Title</h4>
+</div>
 
 <div class="row">
     <div id="myMap" style='position:relative;width:100%;height:400px;'></div>
 </div>
-
-<h3>
-    @if (isIos)
-    {
-        <a href="http://maps.apple.com/maps?q=@Model.Address+@Model.CityStateZip">@Model.Address<br />@Model.CityStateZip</a>
-    }
-    else
-    {
-        <a href="http://maps.google.com/maps?q=@Model.Address+@Model.CityStateZip">@Model.Address<br />@Model.CityStateZip</a>
-    }
-
-</h3>
 
 @section Scripts {
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetDirections' async defer></script>
@@ -44,10 +42,11 @@
             Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
                 var searchManager = new Microsoft.Maps.Search.SearchManager(map);
                 var requestOptions = {
-                    where: '@Model.Address,@Model.CityStateZip',
+                    where: '@Model.GeoLocation',
                     callback: function (answer, userData) {
-                        map.setView({ bounds: answer.results[0].bestView });
                         map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location));
+                        map.setView({ bounds: answer.results[0].bestView });
+
                         }
                     };
                 searchManager.geocode(requestOptions);

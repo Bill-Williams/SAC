@@ -39,10 +39,10 @@ namespace SAC.Migrations
 
                 SeedUsers(context);
 
-                SeedContacts(context);
+                SeedClubs(context);
                 context.SaveChanges();
 
-                SeedClubs(context);
+                SeedContacts(context);
 
                 SeedClasses(context);
 
@@ -189,54 +189,6 @@ namespace SAC.Migrations
             context.Users.ToList().ForEach(u => u.AspNetRoles.Add(admin));
         }
 
-        private void SeedContacts(SacContext context)
-        {
-            context.Contacts.AddOrUpdate(x => x.Id,
-                new Contact()
-                {
-                    Name = "Kenny Cobb",
-                    Phone = "(803) 329-6639",
-                    Email = "ken@huntintheworld.com",
-                },
-            new Contact()
-                {
-                    Name = "Steven Walters",
-                    Phone = "(704) 906-7651",
-                    //Email = "",
-                },
-                new Contact()
-                {
-                    Name = "Bill Steele",
-                    Phone = "(803) 548-7252",
-                    Email = "BillSteele@LeroySprings.com",
-                },
-                new Contact()
-                {
-                    Name = "Billy Evans",
-                    Phone = "(803) 412-1528",
-                    Email = "kitchensthatworkinc@gmail.com",
-                },
-                new Contact()
-                {
-                    Name = "Adam McAnulty",
-                    Phone = "(803) 242-3149",
-                    Email = "kitchensthatworkinc@gmail.com",
-                },
-                new Contact()
-                {
-                    Name = "Shane Kaylor",
-                    Phone = "(704) 779-7253",
-                    //Email = "",
-                },
-                new Contact()
-                {
-                    Name = "Vance Tiller",
-                    Phone = "(704) 930-8818",
-                    Email = "Archery@CRPCPrograms.org",
-                }
-            );
-        }
-
         private void SeedClubs(SacContext context)
         {
             var contacts = context.Contacts;
@@ -250,7 +202,7 @@ namespace SAC.Migrations
                     Website = "https://www.facebook.com/pages/MECKLENBURG-BOWHUNTERS/132290430122624?ref=hl",
                     IconFileName = "RobinHood.jpg",
                     ShortName = "RobinHood",
-                    Contacts = {contacts.FirstOrDefault(c => c.Name == "Kenny Cobb") }
+                    GeoLocation = "34.996278, -81.053472",
                 },
 
                 new Club()
@@ -261,7 +213,7 @@ namespace SAC.Migrations
                     Website = "https://www.facebook.com/pages/MECKLENBURG-BOWHUNTERS/132290430122624?ref=hl",
                     IconFileName = "Mecklenburg.jpg",
                     ShortName = "Mecklenburg",
-                    Contacts = { contacts.FirstOrDefault(c => c.Name == "Steven Walters") }
+                    GeoLocation = "35.264250, -80.962083",
                 },
 
                 new Club()
@@ -272,7 +224,7 @@ namespace SAC.Migrations
                     Website = "http://www.ascgreenway.org",
                     IconFileName = "Greenway.jpg",
                     ShortName = "Greenway",
-                    Contacts = { contacts.FirstOrDefault(c => c.Name == "Bill Steele") }
+                    GeoLocation = "35.043361, -80.918861",
                 },
 
                 new Club()
@@ -283,7 +235,7 @@ namespace SAC.Migrations
                     Website = "https://www.facebook.com/pages/Fort-Mill-Bowhunters/361416573871861?fref=ts",
                     IconFileName = "FortMill.png",
                     ShortName = "FortMill",
-                    Contacts = { contacts.FirstOrDefault(c => c.Name == "Billy Evans"), contacts.FirstOrDefault(c => c.Name == "Adam McAnulty") }
+                    GeoLocation = "34.991583, -80.912861",
                 },
 
                 new Club()
@@ -294,7 +246,7 @@ namespace SAC.Migrations
                     Website = "http://www.indiantrailbowclub.com",
                     IconFileName = "IndianTrail.jpg",
                     ShortName = "IndianTrail",
-                    Contacts = { contacts.FirstOrDefault(c => c.Name == "Shane Kaylor") }
+                    GeoLocation = "35.108917, -80.614056",
                 },
 
                 new Club()
@@ -305,7 +257,64 @@ namespace SAC.Migrations
                     Website = "http://crpc.clubexpress.com/",
                     IconFileName = "CRPC.jpg",
                     ShortName = "CRPC",
-                    Contacts = { contacts.FirstOrDefault(c => c.Name == "Vance Tiller") }
+                    GeoLocation = "34.946250, -80.788056",
+                }
+            );
+        }
+
+        private void SeedContacts(SacContext context)
+        {
+            var clubs = context.Clubs.ToDictionary(p => p.ShortName, p => p.Id);
+
+            context.Contacts.AddOrUpdate(x => x.Id,
+                new Contact()
+                {
+                    Name = "Kenny Cobb",
+                    Phone = "(803) 329-6639",
+                    Email = "ken@huntintheworld.com",
+                    ClubId = clubs["RobinHood"],
+                },
+                new Contact()
+                {
+                    Name = "Steven Walters",
+                    Phone = "(704) 906-7651",
+                    //Email = "",
+                    ClubId = clubs["Mecklenburg"],
+                },
+                new Contact()
+                {
+                    Name = "Bill Steele",
+                    Phone = "(803) 548-7252",
+                    Email = "BillSteele@LeroySprings.com",
+                    ClubId = clubs["Greenway"],
+                },
+                new Contact()
+                {
+                    Name = "Billy Evans",
+                    Phone = "(803) 412-1528",
+                    Email = "kitchensthatworkinc@gmail.com",
+                    ClubId = clubs["FortMill"],
+                },
+                new Contact()
+                {
+                    Name = "Adam McAnulty",
+                    Phone = "(803) 242-3149",
+                    Email = "kitchensthatworkinc@gmail.com",
+                    ClubId = clubs["FortMill"],
+                },
+                new Contact()
+                {
+                    Name = "Shane Kaylor",
+                    Phone = "(704) 779-7253",
+                    //Email = "",
+                    ClubId = clubs["IndianTrail"],
+                },
+                new Contact()
+                {
+                    Name = "Vance Tiller",
+                    Phone = "(704) 930-8818",
+                    Email = "Archery@CRPCPrograms.org",
+                    ClubId = clubs["CRPC"],
                 }
             );
         }

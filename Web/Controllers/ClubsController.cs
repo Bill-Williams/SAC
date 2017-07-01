@@ -68,7 +68,7 @@ namespace SAC.Web.Controllers
         [Authorize(Roles = "Tech Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,ShortName,Address,CityStateZip,Contact,Phone,Email,Website,Directions,IconFileName")] Club club)
+        public ActionResult Create([Bind(Include = "Name,ShortName,Address,CityStateZip,Contact,Phone,Email,Website,Directions,GeoLocation,IconFileName")] Club club)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +109,7 @@ namespace SAC.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Tech Admin")]
-        public ActionResult Edit([Bind(Include = "Id,Name,ShortName,Address,CityStateZip,Website,Directions,IconFileName")] Club club)
+        public ActionResult Edit([Bind(Include = "Id,Name,ShortName,Address,CityStateZip,Website,Directions,GeoLocation,IconFileName")] Club club)
         {
             if (ModelState.IsValid)
             {
