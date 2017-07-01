@@ -45,14 +45,7 @@ namespace SAC.Web.Controllers
         [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Admin()
         {
-            if (User.IsInRole("Tech Admin"))
-            {
-                return View(db.Clubs.Include(c => c.Contacts).ToList());
-            }
-            else //if not Tech Admin return list of assigned clubs
-            {
-                return View(User.Identity.GetClubs(db));
-            }
+            return View(User.GetClubs(db));
         }
     
         // GET: Club/Create
@@ -87,15 +80,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Club club;
-            if (User.IsInRole("Tech Admin"))
-            {
-                club = db.Clubs.Include(c => c.Contacts).First(c => c.Id == id.Value);
-            }
-            else //if not Tech Admin, check access and return null if not enabled
-            {
-                club = User.Identity.GetClubs(db).First(c => c.Id == id);
-            }
+            Club club = User.GetClubs(db).First(c => c.Id == id);
             if (club == null)
             {
                 return HttpNotFound();
@@ -111,7 +96,8 @@ namespace SAC.Web.Controllers
         [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Edit([Bind(Include = "Id,Name,ShortName,Address,CityStateZip,Website,Directions,GeoLocation,IconFileName")] Club club)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid 
+                && User.GetClubs(db).Any(c => c.Id == club.Id))
             {
                 db.Entry(club).State = EntityState.Modified;
                 db.SaveChanges();

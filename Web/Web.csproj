@@ -221,7 +221,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DbContexts\ApplicationDbContext.cs" />
     <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
-    <Compile Include="Extensions\IdentityExtensions.cs" />
+    <Compile Include="Extensions\IPrincipalExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
