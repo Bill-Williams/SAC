@@ -129,6 +129,7 @@ namespace SAC.Web.Controllers
                 results
                 .OrderBy(c => c.Archer)
                 .Select(c => new { Archer = c.Archer })
+                .Distinct()
                 .ToArray(), JsonRequestBehavior.AllowGet);
         }
 
