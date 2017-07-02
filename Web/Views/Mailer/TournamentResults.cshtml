@@ -1,0 +1,21 @@
+﻿@model SAC.Domain.Models.Tournament
+
+@{
+    Layout = "~/Views/Mailer/_Layout.cshtml";
+}
+
+<div class="row"></div>
+<div class="panel panel-primary">
+    <div class="panel-heading"><h3 class="panel-title">Tournament Results</h3></div>
+    <div class="panel-body">
+        <h3>
+            @Model.Schedules.First().BasicDescription at @Model.Schedules.First().Club.Name
+        </h3>
+        <p>
+            Results for today's tournament are now posted.
+        </p>
+        <p>
+            <a href="@Url.Action("Results", "Tournaments", new { id = Model.Id }, protocol: Request.Url.Scheme)" class="btn btn-warning btn-lg">View Results</a>
+        </p>
+    </div>
+</div>

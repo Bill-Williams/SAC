@@ -39,6 +39,31 @@ namespace SAC.Web.Services
             return client.SendEmailAsync(message);
         }
 
+        public async Task SendBlastAsync(string subject, string htmlBody)
+        {
+            using (var db = new SacContext())
+            {
+                var userEmails = from u in db.Users
+                                 where u.EmailConfirmed
+                                 select new EmailAddress() { Email = u.Email };
+
+                foreach (var email in userEmails)
+                {
+                    var msg = new SendGridMessage()
+                    {
+                        From = new EmailAddress("no.reply@email.southernarcherycircuit.org", "Southern Archery Circuit"),
+                        Subject = subject,
+                        PlainTextContent = htmlBody,
+                        HtmlContent = htmlBody,
+                    };
+
+                    msg.AddTo(email);
+                    
+                    await client.SendEmailAsync(msg);
+                }
+            }
+        }
+
         public Task SendCompleteBlastAsync(string callbackUrl)
         {
             var msg = new SendGridMessage()

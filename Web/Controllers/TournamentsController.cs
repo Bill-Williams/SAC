@@ -186,7 +186,7 @@ namespace SAC.Web.Controllers
             db.SaveChanges();
 
             // Send out e-mail that tournament is complete
-            await SendCompleteBlast(tournament.Id);
+            await SendCompleteBlast(tournament, "SAC Tournament Results");
 
             // Send to results view when done
             return RedirectToAction("Results", new { id = tournament.Id });
@@ -219,8 +219,12 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            await SendCompleteBlast(id);
-            return RedirectToAction("Admin");
+
+            // Send out e-mail that tournament is complete
+            await SendCompleteBlast(tournament, "CORRECTION: SAC Tournament Results");
+
+            // Send to results view when done
+            return RedirectToAction("Results", new { id = tournament.Id });
         }
 
         private void SetupLists()
@@ -228,11 +232,11 @@ namespace SAC.Web.Controllers
             ViewBag.ScheduleList = new MultiSelectList(User.GetSchedules(db).Where(s => null == s.Tournament).OrderBy(s => s.Date).ToArray(), "Id", "ShortDate");
         }
 
-        private async Task SendCompleteBlast(Guid tournamentId)
+        private async Task SendCompleteBlast(Tournament tournament, string subject)
         {
-            var emailService = new EmailService();
-            var callbackUrl = Url.Action("Results", "Tournaments", new { id = tournamentId }, protocol: Request.Url.Scheme);
-            await emailService.SendCompleteBlastAsync(callbackUrl);
+            var body = this.RenderPartialViewToEmailString("~/Views/Mailer/TournamentResults.cshtml", tournament);
+            var email = new EmailService();
+            await email.SendBlastAsync(subject, body);
         }
 
         protected override void Dispose(bool disposing)
