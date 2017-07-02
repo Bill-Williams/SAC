@@ -24,7 +24,7 @@ namespace SAC.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            var tournaments = db.Tournaments.Include("Schedules.Club");
+            var tournaments = db.Tournaments.Include("Schedules.Club").Where(t => t.Completed);
             return View(tournaments.ToList());
         }
 
@@ -99,7 +99,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = User.GetTournaments(db).FirstOrDefault(t => t.Id == id);
+            var tournament = User.GetTournaments(db).Include("Competitors.Class.Group").FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();
@@ -134,7 +134,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = User.GetTournaments(db).FirstOrDefault(t => t.Id == id);
+            var tournament = User.GetTournaments(db).Include("Competitors.Class.Group").FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();
@@ -163,7 +163,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = User.GetTournaments(db).FirstOrDefault(t => t.Id == id);
+            var tournament = User.GetTournaments(db).Include("Competitors.Class.Group").FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();
@@ -200,7 +200,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = User.GetTournaments(db).FirstOrDefault(t => t.Id == id);
+            var tournament = User.GetTournaments(db).Include("Competitors.Class.Group").FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();

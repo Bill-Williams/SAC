@@ -80,7 +80,7 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Club club = User.GetClubs(db).First(c => c.Id == id);
+            Club club = User.GetClubs(db).Include("Contacts").First(c => c.Id == id);
             if (club == null)
             {
                 return HttpNotFound();

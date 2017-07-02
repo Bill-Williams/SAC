@@ -19,12 +19,12 @@ namespace SAC.Web.Extensions
         {
             if(principal.IsInRole("Tech Admin"))
             {
-                return context.Clubs.Include("Contacts");
+                return context.Clubs.AsQueryable(); // .Include("Contacts");
             }
             else
             {
                 var id = Guid.Parse(principal.Identity.GetUserId());
-                return context.Clubs.Include("Users").Include("Contacts").Where(c => c.Users.Any(u => u.Id == id));
+                return context.Clubs.Include("Users").Where(c => c.Users.Any(u => u.Id == id));
             }
         }
 
@@ -32,12 +32,12 @@ namespace SAC.Web.Extensions
         {
             if (principal.IsInRole("Tech Admin"))
             {
-                return context.Tournaments.Include("Schedules.Club").Include("Competitors.Class.Group");
+                return context.Tournaments.Include("Schedules.Club"); //.Include("Competitors.Class.Group");
             }
             else
             {
                 var clubIds = principal.GetClubs(context).Select(c => c.Id);
-                return context.Tournaments.Include("Schedules.Club").Include("Competitors.Class.Group").Where(t => t.Schedules.Select(s => s.Club.Id).Intersect(clubIds).Count() > 0);
+                return context.Tournaments.Include("Schedules.Club").Where(t => t.Schedules.Select(s => s.Club.Id).Intersect(clubIds).Count() > 0);
             }
         }
 
@@ -49,7 +49,7 @@ namespace SAC.Web.Extensions
             }
             else
             {
-                var clubIds = principal.GetClubs(context).Select(c => c.Id).ToArray();
+                var clubIds = principal.GetClubs(context).Select(c => c.Id);
                 return context.Schedules.Include("Club").Where(s => clubIds.Contains(s.Club.Id));
             }
         }
