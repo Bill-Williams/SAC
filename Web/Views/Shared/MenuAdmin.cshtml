@@ -22,7 +22,8 @@
                 }
                 
                 @if (User.IsInRole("Tech Admin")
-                    || User.IsInRole("Club Admin"))
+                    || User.IsInRole("Club Admin")
+                    || User.IsInRole("Club User"))
                 {
                     <li>@Html.ActionLink("Tournaments", "Admin", "Tournaments")</li>
                 }

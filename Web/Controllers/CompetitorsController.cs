@@ -14,7 +14,7 @@ namespace SAC.Web.Controllers
 {
 
     [RequireHttps]
-    [Authorize(Roles = "Club Admin,Tech Admin")]
+    [Authorize(Roles = "Club Admin,Tech Admin,Club User")]
     public class CompetitorsController : Controller
     {
         private SacContext db = new SacContext();

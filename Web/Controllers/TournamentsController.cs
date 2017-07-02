@@ -16,7 +16,6 @@ using SAC.Web.Services;
 namespace SAC.Web.Controllers
 {
     [RequireHttps]
-    [Authorize(Roles = "Club Admin,Tech Admin")]
     public class TournamentsController : Controller
     {
         private SacContext db = new SacContext();
@@ -55,22 +54,14 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Tournaments/Admin
+        [Authorize(Roles = "Club Admin,Tech Admin,Club User")]
         public ActionResult Admin()
         {
-            IEnumerable<Tournament> tournaments;
-            if (User.IsInRole("Tech Admin"))
-            {
-                tournaments = db.Tournaments.Include("Schedules.Club");
-            }
-            else
-            {
-                var clubs = User.Identity.GetClubs(db).Select(c => c.Id);
-                tournaments = db.Tournaments.Include("Schedules.Club").Where(t => t.Schedules.Select(s => s.Club.Id).Intersect(clubs).Count() > 0);
-            }
-            return View(tournaments);
+            return View(User.GetTournaments(db));
         }
 
         // GET: Tournaments/Create
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Create()
         {
             SetupLists();
@@ -82,8 +73,8 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(
-            [Bind(Include = "Schedules")] Guid[] schedules)
+        [Authorize(Roles = "Club Admin,Tech Admin")]
+        public ActionResult Create([Bind(Include = "Schedules")] Guid[] schedules)
         {
             Tournament tournament = new Tournament();
             foreach (Guid id in schedules)
@@ -92,7 +83,6 @@ namespace SAC.Web.Controllers
             }
             if (ModelState.IsValid)
             {
-                
                 db.Tournaments.Add(tournament);
                 db.SaveChanges();
                 return RedirectToAction("Admin");
@@ -102,20 +92,15 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Tournaments/Edit/5
+        [Authorize(Roles = "Club Admin,Tech Admin,Club User")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = db.Tournaments.Include("Schedules.Club").Include("Competitors.Class.Group").FirstOrDefault(t => t.Id == id);
+            var tournament = User.GetTournaments(db).FirstOrDefault(t => t.Id == id);
             if (tournament == null)
-            {
-                return HttpNotFound();
-            }
-            if (!User.IsInRole("Tech Admin")
-                // User has rights to a Club associated to this tournament
-                && tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() == 0)
             {
                 return HttpNotFound();
             }
@@ -128,9 +113,10 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Club Admin,Tech Admin,Club User")]
         public ActionResult Edit([Bind(Include = "Id,Completed")] Tournament tournament)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && User.GetTournaments(db).Any(t => t.Id == tournament.Id))
             {
                 db.Entry(tournament).State = EntityState.Modified;
                 db.SaveChanges();
@@ -141,20 +127,15 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Tournaments/Delete/5
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tournament tournament = db.Tournaments.Include("Schedules.Club").Include("Competitors").FirstOrDefault(t => t.Id == id); ;
+            var tournament = User.GetTournaments(db).FirstOrDefault(t => t.Id == id);
             if (tournament == null)
-            {
-                return HttpNotFound();
-            }
-            if (!User.IsInRole("Tech Admin")
-                // User has rights to a Club associated to this tournament
-                && tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() == 0)
             {
                 return HttpNotFound();
             }
@@ -164,36 +145,26 @@ namespace SAC.Web.Controllers
         // POST: Tournaments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Tournament tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id);
-            if(User.IsInRole("Tech Admin")
-                // User has rights to a Club associated to this tournament
-                || tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() > 0)
-            {
-                tournament.Schedules.Clear();
-                db.Tournaments.Remove(tournament);
-                db.SaveChanges();
-                return RedirectToAction("Admin");
-            }
-            return View(tournament);
+            var tournament = User.GetTournaments(db).First(t => t.Id == id);
+            tournament.Schedules.Clear();
+            db.Tournaments.Remove(tournament);
+            db.SaveChanges();
+            return RedirectToAction("Admin");
         }
 
         // GET: Tournaments/Complete/5
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Complete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tournament tournament = db.Tournaments.Include("Schedules.Club").Include("Competitors").FirstOrDefault(t => t.Id == id); ;
+            var tournament = User.GetTournaments(db).FirstOrDefault(t => t.Id == id);
             if (tournament == null)
-            {
-                return HttpNotFound();
-            }
-            if (!User.IsInRole("Tech Admin")
-                // User has rights to a Club associated to this tournament
-                && tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() == 0)
             {
                 return HttpNotFound();
             }
@@ -203,43 +174,36 @@ namespace SAC.Web.Controllers
         // POST: Tournaments/Complete/5
         [HttpPost, ActionName("Complete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public async Task<ActionResult> CompleteConfirmed(Guid id)
         {
-            Tournament tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id);
-            if (User.IsInRole("Tech Admin")
-                // User has rights to a Club associated to this tournament
-                || tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() > 0)
+            var tournament = User.GetTournaments(db).FirstOrDefault(t => t.Id == id);
+            if (tournament == null)
             {
-                // Update completed flag and save
-                tournament.Completed = true;
-                db.SaveChanges();
-
-                // Send out e-mail that tournament is complete
-                await SendCompleteBlast(tournament.Id);
-
-                // Send to results view when done
-                return RedirectToAction("Results", new { id = tournament.Id });
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return new HttpStatusCodeResult(403);
+            tournament.Completed = true;
+            db.SaveChanges();
+
+            // Send out e-mail that tournament is complete
+            await SendCompleteBlast(tournament.Id);
+
+            // Send to results view when done
+            return RedirectToAction("Results", new { id = tournament.Id });
         }
         
         // GET: Tournaments/Correction/5
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public ActionResult Correction(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tournament tournament = db.Tournaments.Include("Schedules.Club").Include("Competitors").FirstOrDefault(t => t.Id == id); ;
+            var tournament = User.GetTournaments(db).FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();
-            }
-            if (!User.IsInRole("Tech Admin")
-                // User has rights to a Club associated to this tournament
-                && tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() == 0)
-            {
-                return new HttpStatusCodeResult(403);
             }
             return View(tournament);
         }
@@ -247,32 +211,21 @@ namespace SAC.Web.Controllers
         // POST: Tournaments/Correction/5
         [HttpPost, ActionName("Correction")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Club Admin,Tech Admin")]
         public async Task<ActionResult> CorrectioneConfirmed(Guid id)
         {
-            Tournament tournament = db.Tournaments.Include("Schedules.Club").FirstOrDefault(t => t.Id == id);
-            if (User.IsInRole("Tech Admin")
-                // User has rights to a Club associated to this tournament
-                || tournament.Schedules.Select(s => s.Club).Intersect(User.Identity.GetClubs(db)).Count() > 0)
+            var tournament = User.GetTournaments(db).FirstOrDefault(t => t.Id == id);
+            if (tournament == null)
             {
-                // Send out e-mail that tournament is complete
-                await SendCompleteBlast(id);
-
-                return RedirectToAction("Admin");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return new HttpStatusCodeResult(403);
+            await SendCompleteBlast(id);
+            return RedirectToAction("Admin");
         }
 
         private void SetupLists()
         {
-            if(User.IsInRole("Tech Admin"))
-            {
-                ViewBag.ScheduleList = new MultiSelectList(db.Schedules.Where(s => null == s.Tournament).OrderBy(s => s.Date), "Id", "ShortDate");
-            }
-            else // Get Schedules for Clubs you have an association to your user
-            {
-                var clubs = User.Identity.GetClubs(db).Select(c => c.Id);
-                ViewBag.ScheduleList = new MultiSelectList(db.Schedules.Where(s => null == s.Tournament && clubs.Contains(s.Club.Id)).OrderBy(s => s.Date), "Id", "ShortDate");
-            }
+            ViewBag.ScheduleList = new MultiSelectList(User.GetSchedules(db).Where(s => null == s.Tournament).OrderBy(s => s.Date).ToArray(), "Id", "ShortDate");
         }
 
         private async Task SendCompleteBlast(Guid tournamentId)
