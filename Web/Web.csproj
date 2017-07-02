@@ -414,6 +414,7 @@
     <Content Include="Content\Images\RobinHood.jpg" />
     <Content Include="Content\Images\SAC.PNG" />
     <Content Include="Content\Images\SAC2.jpg" />
+    <Content Include="Content\timeline.css" />
     <Content Include="Content\typeahead.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

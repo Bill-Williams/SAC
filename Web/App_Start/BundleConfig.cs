@@ -38,6 +38,7 @@ namespace SAC.Web
                       "~/Content/DataTables/css/dataTables.bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/typeahead.css",
+                      "~/Content/timeline.css",
                       "~/Content/chosen.css"));
         }
     }
