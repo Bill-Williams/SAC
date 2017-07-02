@@ -649,6 +649,7 @@
     <Content Include="Views\Contacts\Delete.cshtml" />
     <Content Include="Views\Contacts\Edit.cshtml" />
     <Content Include="Views\Shared\ClassSideBar.cshtml" />
+    <Content Include="Views\Shared\BtnCreateCancelReturn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

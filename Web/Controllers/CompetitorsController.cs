@@ -28,7 +28,10 @@ namespace SAC.Web.Controllers
                 {
                     TournamentId = id.Value
                 };
+
                 SetupLists();
+                SetupExistingCompetitorList(id.Value);
+
                 return View(competitor);
             }
 
@@ -46,7 +49,7 @@ namespace SAC.Web.Controllers
             {
                 db.Competitors.Add(competitor);
                 db.SaveChanges();
-                return RedirectToAction("Edit", "Tournaments", new { id = competitor.TournamentId });
+                return RedirectToAction("Create", "Competitors", new { id = competitor.TournamentId });
             }
 
             SetupLists();
@@ -135,8 +138,18 @@ namespace SAC.Web.Controllers
             return PartialView("ClassSideBar", db.Classes.Include("Color").Include("Group").First(c => c.Id == id));
         }
 
+        private void SetupExistingCompetitorList(Guid id)
+        {
+            ViewBag.CompetitorList = db.Competitors
+                .Include(c => c.Tournament)
+                .Where(c => c.TournamentId == id)
+                .Select(c => c.Archer)
+                .ToList();
+
+        }
         private void SetupLists()
         {
+
             var classes = new HashSet<SelectListItem>();
             var groups = db.Groups.ToDictionary(k => k.Name, v => new SelectListGroup() { Name = v.Name });
 
