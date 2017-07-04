@@ -27,5 +27,7 @@ namespace SAC.Domain.Models
         public Guid ClassId { get; set; }
 
         public virtual Class Class { get; set; }
+
+        public DateTime CreatedDate { get; set; }
     }
 }

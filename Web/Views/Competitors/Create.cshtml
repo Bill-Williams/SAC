@@ -1,4 +1,5 @@
-﻿@model SAC.Domain.Models.Competitor
+﻿@using SAC.Web.Models
+@model SAC.Domain.Models.Competitor
 
 @{
     ViewBag.Title = "Create";
@@ -68,18 +69,24 @@
             <div class="col-md-4" id="dvCompetitorList">
                 <table class="table table-striped table-hover tbl_pointer" id="tblCompetitorList">
                     <thead>
-                    <tr>
-                        <th>
-                            @Html.Label("Existing Archers")
-                        </th>
-                    </tr>
+                        <tr>
+                            <th>
+                                @Html.Label("Archers")
+                            </th>
+                            <th>
+                                @Html.Label("Entry Order")
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach (var item in @ViewBag.CompetitorList)
+                    @foreach (var item in (IList<CompetitorListItemViewModel>)@ViewBag.CompetitorList)
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(model => item)
+                                @Html.DisplayFor(model => item.Archer)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.EntryOrder)
                             </td>
                         </tr>
                     }
@@ -130,10 +137,11 @@
 
         $(document).ready(function () {
             $('#tblCompetitorList').DataTable({
-                "sDom": '<"top">rt<"bottom"><"clear">'
-                }
-            );
-        });
+                "sDom": '<"top"i>rt<"bottom"lp>',
+                "order": [[1]],
+                stateSave: true
+            } );
+        } );
 
     </script>
 }

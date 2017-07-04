@@ -73,7 +73,7 @@ namespace SAC.Migrations
         {
             int order = 0;
 
-            context.Groups.AddOrUpdate(x => x.Id,
+            context.Groups.AddOrUpdate(x => x.Name,
                 new Group()
                 {
                     Name = "Money",
@@ -105,7 +105,7 @@ namespace SAC.Migrations
         private void SeedRoles(SacContext context)
         {
 
-            context.Roles.AddOrUpdate(x => x.Id,
+            context.Roles.AddOrUpdate(x => x.Name,
                 new AspNetRole()
                 {
                     Name = "Tech Admin"
@@ -130,7 +130,7 @@ namespace SAC.Migrations
 
         private void SeedUsers(SacContext context)
         {
-            context.Users.AddOrUpdate(x => x.Id,
+            context.Users.AddOrUpdate(x => x.Email,
                 new AspNetUser()
                 {
                     Email = "george.prado@outlook.com",
@@ -193,7 +193,7 @@ namespace SAC.Migrations
         {
             var contacts = context.Contacts;
 
-            context.Clubs.AddOrUpdate(x => x.Id,
+            context.Clubs.AddOrUpdate(x => x.Name,
                 new Club()
                 {
                     Name = "Robin Hood Archery Club",
@@ -266,7 +266,7 @@ namespace SAC.Migrations
         {
             var clubs = context.Clubs.ToDictionary(p => p.ShortName, p => p.Id);
 
-            context.Contacts.AddOrUpdate(x => x.Id,
+            context.Contacts.AddOrUpdate(x => x.Name,
                 new Contact()
                 {
                     Name = "Kenny Cobb",
@@ -321,7 +321,7 @@ namespace SAC.Migrations
 
         private void SeedColors(SacContext context)
         {
-            context.Colors.AddOrUpdate(x => x.Id,
+            context.Colors.AddOrUpdate(x => x.Name,
                 new Color()
                 {
                     Name = "Green",
@@ -371,7 +371,7 @@ namespace SAC.Migrations
             var colors = context.Colors.ToDictionary(p => p.Name, p => p.Id);
             var groups = context.Groups.ToDictionary(p => p.Name, p => p.Id);
 
-            context.Classes.AddOrUpdate(x => x.Id,
+            context.Classes.AddOrUpdate(x => x.Name,
                 new Class()
                 {
                     Code = "PW",
@@ -580,7 +580,7 @@ namespace SAC.Migrations
 
         private void SeedSchedules(SacContext context)
         {
-            context.Schedules.AddOrUpdate(
+            context.Schedules.AddOrUpdate(s => s.Date,
                 new Schedule()
                 {
                     Date = DateTime.Parse("06/04/2017"),
@@ -645,16 +645,19 @@ namespace SAC.Migrations
         {
             var tournament = context.Tournaments.FirstOrDefault();
             var classes = context.Classes.ToDictionary(p => p.Name, p => p.Id);
+            var currentDate = DateTime.Now;
+            var seconds = 10;
 
             if (tournament != null)
-                context.Competitors.AddOrUpdate(
+                context.Competitors.AddOrUpdate(c => c.Archer,
                     new Competitor()
                     {
                         Archer = "Rosie",
                         Bonus = 0,
                         ClassId = classes["Cub"],
                         Score = 76,
-                        TournamentId = tournament.Id
+                        TournamentId = tournament.Id,
+                        CreatedDate = currentDate.AddSeconds(1)
                     },
                     new Competitor()
                     {
@@ -663,6 +666,7 @@ namespace SAC.Migrations
                         ClassId = classes["Cub"],
                         Score = 110,
                         TournamentId = tournament.Id,
+                        CreatedDate = currentDate.AddSeconds(2)
                     },
                     new Competitor()
                     {
@@ -671,6 +675,7 @@ namespace SAC.Migrations
                         ClassId = classes["Mens Known"],
                         Score = 179,
                         TournamentId = tournament.Id,
+                        CreatedDate = currentDate.AddSeconds(3)
                     },
                     new Competitor()
                     {
@@ -679,6 +684,7 @@ namespace SAC.Migrations
                         ClassId = classes["Mens Known"],
                         Score = 179,
                         TournamentId = tournament.Id,
+                        CreatedDate = currentDate.AddSeconds(4)
                     },
                     new Competitor()
                     {
@@ -687,6 +693,7 @@ namespace SAC.Migrations
                         ClassId = classes["Womens Novice Hunter"],
                         Score = 155,
                         TournamentId = tournament.Id,
+                        CreatedDate = currentDate.AddSeconds(5)
                     },
                     new Competitor()
                     {
@@ -695,9 +702,9 @@ namespace SAC.Migrations
                         ClassId = classes["Womens Novice Hunter"],
                         Score = 0,
                         TournamentId = tournament.Id,
+                        CreatedDate = currentDate.AddSeconds(6)
                     }
                 );
         }
-
     }
 }

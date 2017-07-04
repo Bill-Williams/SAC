@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using SAC.Domain;
 using SAC.Domain.Models;
 using System.Threading.Tasks;
+using SAC.Web.Models;
 
 namespace SAC.Web.Controllers
 {
@@ -43,10 +44,11 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TournamentId,Archer,ClassId,Score,Bonus")] Competitor competitor)
+        public ActionResult Create(Competitor competitor)
         {
             if (ModelState.IsValid)
             {
+                competitor.CreatedDate = DateTime.Now;
                 db.Competitors.Add(competitor);
                 db.SaveChanges();
                 return RedirectToAction("Create", "Competitors", new { id = competitor.TournamentId });
@@ -57,7 +59,7 @@ namespace SAC.Web.Controllers
         }
 
         // GET: Competitors/Edit/5
-        public ActionResult Edit(Guid? id)
+        public ActionResult Edit([Bind(Include = "Id,Description,CreatedDate,LastModifiedDate")] Guid? id)
         {
             if (id == null)
             {
@@ -77,11 +79,13 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Archer,TournamentId,ClassId,Score,Bonus")] Competitor competitor)
+        public ActionResult Edit([Bind(Include = "Id,Archer,TournamentId,ClassId,Score,Bonus,CreatedDate")] Competitor competitor)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(competitor).State = EntityState.Modified;
+                db.Entry(competitor).Property("CreatedDate").IsModified = false;
+                db.Entry(competitor).Property("TournamentId").IsModified = false;
                 db.SaveChanges();
                 return RedirectToAction("Edit", "Tournaments", new { id = competitor.TournamentId });
             }
@@ -141,12 +145,20 @@ namespace SAC.Web.Controllers
 
         private void SetupExistingCompetitorList(Guid id)
         {
-            ViewBag.CompetitorList = db.Competitors
+            var competitors = db.Competitors
                 .Include(c => c.Tournament)
                 .Where(c => c.TournamentId == id)
-                .Select(c => c.Archer)
+                .Select(c => new {c.Archer, c.CreatedDate})
+                .OrderBy(c => c.CreatedDate)
                 .ToList();
 
+            var list = new List<CompetitorListItemViewModel>();
+            for (int i = 0; i < competitors.Count; i++)
+            {
+                list.Add(new CompetitorListItemViewModel() { Archer = competitors[i].Archer, EntryOrder = i+1 });
+            }
+
+            ViewBag.CompetitorList = list;
         }
         private void SetupLists()
         {
