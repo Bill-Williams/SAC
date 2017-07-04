@@ -1,0 +1,36 @@
+﻿@model IEnumerable<SAC.Domain.Models.Schedule>
+
+@{
+    Layout = "~/Views/Mailer/_Layout.cshtml";
+}
+
+<p>
+    Take a look at the events we have planned out for the next week.  We hope you can make it and look forward to seeing you!
+</p>
+
+@foreach (var item in Model)
+{
+    <div class="row"></div>
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h3 class="panel-title">@item.Date.ToLongDateString()</h3></div>
+        <div class="panel-body">
+            <h3>
+                @item.Club.Name
+            </h3>
+            <p>
+                @item.BasicDescription
+            </p>
+            <p>
+                <a href="@Url.Action("Directions", "Clubs", new { id = item.ClubId }, protocol: Request.Url.Scheme)" class="btn btn-primary">Get Directions</a>
+            </p>
+        </div>
+    </div>
+}
+
+<p>
+    Click below to view the full schedule on our site.
+</p>
+
+<p>
+    <a href="@Url.Action("Index", "Schedules", null, protocol: Request.Url.Scheme)" class="btn btn-default">View Full Schedule</a>
+</p>

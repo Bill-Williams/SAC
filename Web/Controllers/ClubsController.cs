@@ -134,6 +134,38 @@ namespace SAC.Web.Controllers
             return RedirectToAction("Admin");
         }
 
+        [Authorize(Roles = "Club Admin,Tech Admin")]
+        public ActionResult UploadImage(Guid id)
+        {
+            var club = User.GetClubs(db).First(c => c.Id == id);
+            return View(club);
+        }
+
+        [Authorize(Roles = "Club Admin,Tech Admin")]
+        [HttpPost, ActionName("UploadImage")]
+        [ValidateAntiForgeryToken]
+        public ActionResult UploadImageConfirmed(Guid id)
+        {
+            var image = Request.Files["image"];
+            var club = User.GetClubs(db).First(c => c.Id == id);
+
+            if (image == null)
+            {
+                ViewBag.UploadMessage = "Failed to upload image";
+            }
+            else
+            {
+
+                ViewBag.UploadMessage = String.Format("Got image {0} of type {1} and size {2}",
+                    image.FileName, image.ContentType, image.ContentLength);
+                // TODO: actually save the image to Azure blob storage
+
+                //return RedirectToAction("Edit", new { id = id });
+            }
+
+            return View(club);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

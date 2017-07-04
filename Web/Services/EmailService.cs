@@ -63,28 +63,5 @@ namespace SAC.Web.Services
                 }
             }
         }
-
-        public Task SendCompleteBlastAsync(string callbackUrl)
-        {
-            var msg = new SendGridMessage()
-            {
-                From = new EmailAddress("no.reply@email.southernarcherycircuit.org", "Southern Archery Circuit"),
-                Subject = "SAC Tournament Results",
-                PlainTextContent = string.Format("Results for today's tournament are in.  Please go to <a href='{0}'>here</a> to see the results", callbackUrl),
-                HtmlContent = string.Format("Results for today's tournament are in.  Please go to <a href='{0}'>here</a> to see the results", callbackUrl),
-            };
-
-            using (var db = new SacContext())
-            {
-                var userEmails = from u in db.Users
-                                 where u.EmailConfirmed
-                                 select new EmailAddress() { Email = u.Email };
-
-                var emailList = userEmails.ToList();
-
-                msg.AddTos(emailList);
-            }
-            return client.SendEmailAsync(msg);
-        }
     }
 }

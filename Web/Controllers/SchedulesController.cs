@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using SAC.Domain;
 using SAC.Domain.Models;
+using System.Threading.Tasks;
+using SAC.Web.Extensions;
+using SAC.Web.Services;
 
 namespace SAC.Web.Controllers
 {
@@ -116,6 +119,30 @@ namespace SAC.Web.Controllers
             db.Schedules.Remove(schedule);
             db.SaveChanges();
             return RedirectToAction("Admin");
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> WeeklyMailer(string id)
+        {
+            if(Environment.GetEnvironmentVariable("siteApiKey") == id)
+            {
+                var toDate = DateTime.Today.AddDays(7);
+                var schedules = from s in db.Schedules.Include("Club")
+                                where s.Date >= DateTime.Today
+                                    && s.Date < toDate
+                                orderby s.Date, s.Club.Name
+                                select s;
+
+                if(schedules.Any())
+                {
+                    var body = this.RenderPartialViewToEmailString("~/Views/Mailer/WeeklyMailer.cshtml", schedules);
+                    var email = new EmailService();
+                    await email.SendBlastAsync("Events - Southern Archery Circuit", body);
+                }
+            }
+
+            // Always return ok even if code doesn't match
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         private void SetupLists()
