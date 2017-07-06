@@ -60,6 +60,10 @@
     <Compile Include="Migrations\201707041934132_CreatedDate.Designer.cs">
       <DependentUpon>201707041934132_CreatedDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707042100437_ScheduleToDate.cs" />
+    <Compile Include="Migrations\201707042100437_ScheduleToDate.Designer.cs">
+      <DependentUpon>201707042100437_ScheduleToDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707041934132_CreatedDate.resx">
       <DependentUpon>201707041934132_CreatedDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707042100437_ScheduleToDate.resx">
+      <DependentUpon>201707042100437_ScheduleToDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -580,48 +580,56 @@ namespace SAC.Migrations
 
         private void SeedSchedules(SacContext context)
         {
-            context.Schedules.AddOrUpdate(s => s.Date,
+            context.Schedules.AddOrUpdate(s => s.FromDate,
                 new Schedule()
                 {
-                    Date = DateTime.Parse("06/04/2017"),
+                    FromDate = DateTime.Parse("06/04/2017"),
+                    ToDate = DateTime.Parse("06/04/2017"),
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "Greenway")
                 },
                 new Schedule()
                 {
-                    Date = DateTime.Parse("06/11/2017"),
+                    FromDate = DateTime.Parse("06/11/2017"),
+                    ToDate = DateTime.Parse("06/04/2017"),
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "FortMill")
                 },
                 new Schedule()
                 {
-                    Date = DateTime.Parse("06/24/2017"),
+                    FromDate = DateTime.Parse("06/24/2017"),
+                    ToDate = DateTime.Parse("06/04/2017"),
                     Description = "Coon Shoot Saturday Night",
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "IndianTrail")
                 },
                 new Schedule()
                 {
-                    Date = DateTime.Parse("06/25/2017"),
+                    FromDate = DateTime.Parse("06/25/2017"),
+                    ToDate = DateTime.Parse("06/04/2017"),
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "IndianTrail")
                 },
                 new Schedule()
                 {
-                    Date = DateTime.Parse("07/08/2017"),
+                    FromDate = DateTime.Parse("07/08/2017"),
+                    ToDate = DateTime.Parse("06/04/2017"),
                     Description = "ASA SC Championship",
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "RobinHood")
                 },
                 new Schedule()
                 {
-                    Date = DateTime.Parse("07/09/2017"),
+                    FromDate = DateTime.Parse("07/09/2017"),
+                    ToDate = DateTime.Parse("06/04/2017"),
                     Description = "ASA SC Championship & SAC",
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "RobinHood")
                 },
                 new Schedule()
                 {
-                    Date = DateTime.Parse("07/16/2017"),
+                    FromDate = DateTime.Parse("07/16/2017"),
+                    ToDate = DateTime.Parse("06/04/2017"),
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "Mecklenburg")
                 },
                 new Schedule()
                 {
-                    Date = DateTime.Parse("01/14/2018"),
+                    FromDate = DateTime.Parse("01/14/2018"),
+                    ToDate = DateTime.Parse("06/04/2017"),
                     Description = "Polar Bear Shoot",
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "CRPC")
                 }
@@ -646,7 +654,6 @@ namespace SAC.Migrations
             var tournament = context.Tournaments.FirstOrDefault();
             var classes = context.Classes.ToDictionary(p => p.Name, p => p.Id);
             var currentDate = DateTime.Now;
-            var seconds = 10;
 
             if (tournament != null)
                 context.Competitors.AddOrUpdate(c => c.Archer,

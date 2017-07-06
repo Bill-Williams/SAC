@@ -25,8 +25,8 @@ namespace SAC.Web.Controllers
         public ActionResult Index()
         {
             var model = from s in db.Schedules.Include(s => s.Club)
-                        where s.Date >= DateTime.Today
-                        orderby s.Date
+                        where s.FromDate >= DateTime.Today
+                        orderby s.FromDate
                         select s;
                         
             return View(model.Take(8));
@@ -50,7 +50,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ClubId,Date")] Schedule schedule)
+        public ActionResult Create([Bind(Include = "Id,ClubId,FromDate, ToDate")] Schedule schedule)
         {
             if (ModelState.IsValid)
             {
@@ -128,9 +128,9 @@ namespace SAC.Web.Controllers
             {
                 var toDate = DateTime.Today.AddDays(7);
                 var schedules = from s in db.Schedules.Include("Club")
-                                where s.Date >= DateTime.Today
-                                    && s.Date < toDate
-                                orderby s.Date, s.Club.Name
+                                where s.FromDate >= DateTime.Today
+                                    && s.FromDate < toDate
+                                orderby s.FromDate, s.Club.Name
                                 select s;
 
                 if(schedules.Any())

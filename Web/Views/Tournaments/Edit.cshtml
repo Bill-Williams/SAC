@@ -28,13 +28,13 @@
                     <thead>
                         <tr>
                             <th>
+                                @Html.LabelFor(model => model.Competitors.First().Archer)
+                            </th>
+                            <th>
                                 @Html.LabelFor(model => model.Competitors.First().Class.Group)
                             </th>
                             <th>
                                 @Html.LabelFor(model => model.Competitors.First().Class)
-                            </th>
-                            <th>
-                                @Html.LabelFor(model => model.Competitors.First().Archer)
                             </th>
                             <th>
                                 @Html.LabelFor(model => model.Competitors.First().Score)
@@ -49,13 +49,13 @@
                         {
                             <tr onclick="location.href = '@(Url.Action("Edit", "Competitors", new { id = item.Id }))'">
                                 <td>
+                                    @Html.DisplayFor(model => item.Archer)
+                                </td>
+                                <td>
                                     @Html.DisplayFor(model => item.Class.Group.Name)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(model => item.Class.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.Archer)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(model => item.Score)

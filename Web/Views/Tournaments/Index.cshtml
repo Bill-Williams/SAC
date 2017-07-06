@@ -16,19 +16,19 @@
         <div class="timeline timeline-line-dotted">
             @foreach (var item in Model)
             {
-                if (y != item.Schedules.First().Date.Year)
+                if (y != item.Schedules.First().FromDate.Year)
                 {
-                    y = item.Schedules.First().Date.Year;
+                    y = item.Schedules.First().FromDate.Year;
                     <span class="timeline-label">
-                        <span class="label label-primary">@item.Schedules.First().Date.ToString("yyyy")</span>
+                        <span class="label label-primary">@item.Schedules.First().FromDate.ToString("yyyy")</span>
                     </span>
                 }
 
-                if (m != item.Schedules.First().Date.Month)
+                if (m != item.Schedules.First().FromDate.Month)
                 {
-                    m = item.Schedules.First().Date.Month;
+                    m = item.Schedules.First().FromDate.Month;
                     <span class="timeline-label">
-                        <span class="label label-primary">@item.Schedules.First().Date.ToString("MMMM")</span>
+                        <span class="label label-primary">@item.Schedules.First().FromDate.ToString("MMMM")</span>
                     </span>
                 }
 
@@ -44,7 +44,7 @@
                             <a href="@Url.Action("Results", new { id = item.Id })" class="btn btn-warning">See results</a>
                         </div>
                         <div class="timeline-footer">
-                            <p class="text-right">@item.Schedules.First().ShortDate</p>
+                            <p class="text-right">@item.Schedules.First().FromShortDate</p>
                         </div>
                     </div>
                 </div>

@@ -17,7 +17,10 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Date)
+                        @Html.DisplayNameFor(model => model.FromDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ToDate)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Description)
@@ -32,8 +35,12 @@
             {
                     <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                         <td>
-                            @Html.DisplayFor(modelItem => item.Date)
+                            @Html.DisplayFor(modelItem => item.FromDate)
                         </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ToDate)
+                        </td>
+
                         <td>
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
