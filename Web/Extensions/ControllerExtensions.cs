@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Web.Mvc;
+using SAC.Web.App_Start;
 
 namespace SAC.Web.Extensions
 {
@@ -23,7 +24,7 @@ namespace SAC.Web.Extensions
 
                 var htmlSource = sw.GetStringBuilder().ToString();
 
-                var pm = new PreMailer.Net.PreMailer(htmlSource, new Uri("https://www.southernarcherycircuit.org/"));
+                var pm = new PreMailer.Net.PreMailer(htmlSource, new Uri($"{Application.WebUrl}/"));
 
                 var result = pm.MoveCssInline();
 

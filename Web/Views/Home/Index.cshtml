@@ -1,4 +1,5 @@
-﻿@{
+﻿@using SAC.Web.App_Start
+@{
     ViewBag.Title = "Home";
 }
 
@@ -16,7 +17,7 @@
             <img class="first-slide" src="@Url.Content("~/Content/Images/carousel1.jpg")" alt="First slide">
             <div class="container">
                 <div class="carousel-caption">
-                    <h2>Southern Archery Circuit</h2>
+                    <h2>@Application.OrganizationName</h2>
                     <p>@Html.ActionLink("Join Today", "Login", "Account", null, new { @class = "btn btn-sm btn-info" })</p>
                 </div>
             </div>

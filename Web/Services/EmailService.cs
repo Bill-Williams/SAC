@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using SAC.Web.App_Start;
 
 namespace SAC.Web.Services
 {
@@ -35,7 +36,7 @@ namespace SAC.Web.Services
 
         public Task SendAsync(SendGridMessage message)
         {
-            message.From = new EmailAddress("no.reply@email.southernarcherycircuit.org", "Southern Archery Circuit");
+            message.From = new EmailAddress($"no.reply@{Application.OrganizationEmail}", Application.OrganizationName);
             return client.SendEmailAsync(message);
         }
 
@@ -51,7 +52,7 @@ namespace SAC.Web.Services
                 {
                     var msg = new SendGridMessage()
                     {
-                        From = new EmailAddress("no.reply@email.southernarcherycircuit.org", "Southern Archery Circuit"),
+                        From = new EmailAddress($"no.reply@{Application.OrganizationEmail}", Application.OrganizationName),
                         Subject = subject,
                         PlainTextContent = htmlBody,
                         HtmlContent = htmlBody,

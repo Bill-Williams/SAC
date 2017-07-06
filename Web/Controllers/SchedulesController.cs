@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using SAC.Domain;
 using SAC.Domain.Models;
 using System.Threading.Tasks;
+using SAC.Web.App_Start;
 using SAC.Web.Extensions;
 using SAC.Web.Services;
 
@@ -137,7 +138,7 @@ namespace SAC.Web.Controllers
                 {
                     var body = this.RenderPartialViewToEmailString("~/Views/Mailer/WeeklyMailer.cshtml", schedules);
                     var email = new EmailService();
-                    await email.SendBlastAsync("Events - Southern Archery Circuit", body);
+                    await email.SendBlastAsync($"Events - {Application.OrganizationName}", body);
                 }
             }
 
