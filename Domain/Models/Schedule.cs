@@ -38,19 +38,27 @@ namespace SAC.Domain.Models
 
         public virtual Tournament Tournament { get; set; }
 
-        public virtual string FromShortDate
+        public virtual string DisplayShortDate
         {
             get
             {
-                return this.FromDate.ToShortDateString();
+                if(this.FromDate == this.ToDate)
+                {
+                    return this.FromDate.ToShortDateString();
+                }
+                return $"{this.FromDate.ToShortDateString()} - {this.ToDate.ToShortDateString()}";
             }
         }
 
-        public virtual string ToShortDate
+        public virtual string DisplayClubWithShortDate
         {
             get
             {
-                return this.ToDate.ToShortDateString();
+                if (this.FromDate == this.ToDate)
+                {
+                    return $"{this.Club.ShortName} ({this.FromDate.ToShortDateString()})";
+                }
+                return $"{this.Club.ShortName} ({this.FromDate.ToShortDateString()} - {this.ToDate.ToShortDateString()})";
             }
         }
 

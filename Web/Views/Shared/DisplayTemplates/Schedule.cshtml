@@ -1,0 +1,19 @@
+﻿@model SAC.Domain.Models.Schedule
+
+@{ 
+    var title = @Model.FromDate.ToShortDateString();
+
+    if (Model.FromDate != Model.ToDate)
+        title += $" - {Model.ToDate.ToShortDateString()}";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">@title</h3>
+    </div>
+    <div class="panel-body">
+        <p>@Model.Club.Name</p>
+        <p>@Html.ActionLink("Get Directions", "Directions", "Clubs", new { id = Model.Club.Id }, htmlAttributes: new { @class = "btn btn-default" })</p>
+        <p>@Model.BasicDescription</p>
+    </div>
+</div>
