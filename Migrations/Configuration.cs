@@ -200,7 +200,6 @@ namespace SAC.Migrations
                     Address = "3870 Homestead Rd",
                     CityStateZip = "Rock Hill, SC",
                     Website = "https://www.facebook.com/pages/MECKLENBURG-BOWHUNTERS/132290430122624?ref=hl",
-                    IconFileName = "RobinHood.jpg",
                     ShortName = "RobinHood",
                     GeoLocation = "34.996278, -81.053472",
                 },
@@ -211,7 +210,6 @@ namespace SAC.Migrations
                     Address = "2301 Wildlife Rd",
                     CityStateZip = "Charlotte, NC",
                     Website = "https://www.facebook.com/pages/MECKLENBURG-BOWHUNTERS/132290430122624?ref=hl",
-                    IconFileName = "Mecklenburg.jpg",
                     ShortName = "Mecklenburg",
                     GeoLocation = "35.264250, -80.962083",
                 },
@@ -222,7 +220,6 @@ namespace SAC.Migrations
                     Address = "1300 Hwy. 21 By-pass",
                     CityStateZip = "Fort Mill, SC",
                     Website = "http://www.ascgreenway.org",
-                    IconFileName = "Greenway.jpg",
                     ShortName = "Greenway",
                     GeoLocation = "35.043361, -80.918861",
                 },
@@ -233,7 +230,6 @@ namespace SAC.Migrations
                     Address = "1400 Williams Rd",
                     CityStateZip = "Fort Mill, SC",
                     Website = "https://www.facebook.com/pages/Fort-Mill-Bowhunters/361416573871861?fref=ts",
-                    IconFileName = "FortMill.png",
                     ShortName = "FortMill",
                     GeoLocation = "34.991583, -80.912861",
                 },
@@ -244,7 +240,6 @@ namespace SAC.Migrations
                     Address = "",
                     CityStateZip = "Indian Trail, NC",
                     Website = "http://www.indiantrailbowclub.com",
-                    IconFileName = "IndianTrail.jpg",
                     ShortName = "IndianTrail",
                     GeoLocation = "35.108917, -80.614056",
                 },
@@ -255,9 +250,18 @@ namespace SAC.Migrations
                     Address = "9130 Kensington Dr.",
                     CityStateZip = "Waxhaw, NC 28173",
                     Website = "http://crpc.clubexpress.com/",
-                    IconFileName = "CRPC.jpg",
                     ShortName = "CRPC",
                     GeoLocation = "34.946250, -80.788056",
+                },
+
+                new Club()
+                {
+                    Name = "Lakeview Archery",
+                    Address = "Chester State Park Hwy 72",
+                    CityStateZip = "Chester SC 29706",
+                    Website = "http://www.lakeviewarchery.org",
+                    ShortName = "Lakeview",
+                    GeoLocation = "34.683413,-81.248845",
                 }
             );
         }
@@ -590,46 +594,45 @@ namespace SAC.Migrations
                 new Schedule()
                 {
                     FromDate = DateTime.Parse("06/11/2017"),
-                    ToDate = DateTime.Parse("06/04/2017"),
+                    ToDate = DateTime.Parse("06/11/2017"),
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "FortMill")
                 },
                 new Schedule()
                 {
                     FromDate = DateTime.Parse("06/24/2017"),
-                    ToDate = DateTime.Parse("06/04/2017"),
+                    ToDate = DateTime.Parse("06/24/2017"),
                     Description = "Coon Shoot Saturday Night",
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "IndianTrail")
                 },
                 new Schedule()
                 {
                     FromDate = DateTime.Parse("06/25/2017"),
-                    ToDate = DateTime.Parse("06/04/2017"),
+                    ToDate = DateTime.Parse("06/25/2017"),
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "IndianTrail")
                 },
                 new Schedule()
                 {
                     FromDate = DateTime.Parse("07/08/2017"),
-                    ToDate = DateTime.Parse("06/04/2017"),
+                    ToDate = DateTime.Parse("07/09/2017"),
                     Description = "ASA SC Championship",
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "RobinHood")
                 },
                 new Schedule()
                 {
                     FromDate = DateTime.Parse("07/09/2017"),
-                    ToDate = DateTime.Parse("06/04/2017"),
-                    Description = "ASA SC Championship & SAC",
+                    ToDate = DateTime.Parse("07/09/2017"),
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "RobinHood")
                 },
                 new Schedule()
                 {
                     FromDate = DateTime.Parse("07/16/2017"),
-                    ToDate = DateTime.Parse("06/04/2017"),
+                    ToDate = DateTime.Parse("07/16/2017"),
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "Mecklenburg")
                 },
                 new Schedule()
                 {
                     FromDate = DateTime.Parse("01/14/2018"),
-                    ToDate = DateTime.Parse("06/04/2017"),
+                    ToDate = DateTime.Parse("01/14/2018"),
                     Description = "Polar Bear Shoot",
                     Club = context.Clubs.FirstOrDefault(c => c.ShortName == "CRPC")
                 }

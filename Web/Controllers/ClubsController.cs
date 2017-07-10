@@ -9,6 +9,10 @@ using System.Web.Mvc;
 using SAC.Domain;
 using SAC.Domain.Models;
 using SAC.Web.Extensions;
+using Microsoft.WindowsAzure.Storage;
+using System.Configuration;
+using Microsoft.WindowsAzure.Storage.Blob;
+using System.IO;
 
 namespace SAC.Web.Controllers
 {
@@ -99,6 +103,27 @@ namespace SAC.Web.Controllers
             if (ModelState.IsValid 
                 && User.GetClubs(db).Any(c => c.Id == club.Id))
             {
+                var image = Request.Files["image"];
+
+                if(null != image)
+                {
+                    string storageConn = ConfigurationManager.ConnectionStrings["AzureStorageConn"].ConnectionString;
+
+                    var storageAccount = CloudStorageAccount.Parse(storageConn);
+
+                    var blobStorage = storageAccount.CreateCloudBlobClient();
+
+                    CloudBlobContainer container = blobStorage.GetContainerReference("clubimages");
+
+                    var blob = container.GetBlockBlobReference(club.Id.ToString());
+
+                    blob.Properties.ContentType = image.ContentType;
+
+                    blob.UploadFromStream(image.InputStream);
+
+                    club.IconFileName = blob.Uri.ToString();
+                }
+
                 db.Entry(club).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Admin");
@@ -132,38 +157,6 @@ namespace SAC.Web.Controllers
             db.Clubs.Remove(club);
             db.SaveChanges();
             return RedirectToAction("Admin");
-        }
-
-        [Authorize(Roles = "Club Admin,Tech Admin")]
-        public ActionResult UploadImage(Guid id)
-        {
-            var club = User.GetClubs(db).First(c => c.Id == id);
-            return View(club);
-        }
-
-        [Authorize(Roles = "Club Admin,Tech Admin")]
-        [HttpPost, ActionName("UploadImage")]
-        [ValidateAntiForgeryToken]
-        public ActionResult UploadImageConfirmed(Guid id)
-        {
-            var image = Request.Files["image"];
-            var club = User.GetClubs(db).First(c => c.Id == id);
-
-            if (image == null)
-            {
-                ViewBag.UploadMessage = "Failed to upload image";
-            }
-            else
-            {
-
-                ViewBag.UploadMessage = String.Format("Got image {0} of type {1} and size {2}",
-                    image.FileName, image.ContentType, image.ContentLength);
-                // TODO: actually save the image to Azure blob storage
-
-                //return RedirectToAction("Edit", new { id = id });
-            }
-
-            return View(club);
         }
 
         protected override void Dispose(bool disposing)

@@ -6,7 +6,7 @@
     </dt>
 
     <dd>
-        @string.Join(",", Model.Schedules.Select(s => s.ShortDate))
+        @Html.DisplayFor(model => model.Schedules.First().DisplayShortDate)
     </dd>
 
     <dt>

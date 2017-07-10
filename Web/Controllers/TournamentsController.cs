@@ -229,7 +229,7 @@ namespace SAC.Web.Controllers
 
         private void SetupLists()
         {
-            ViewBag.ScheduleList = new MultiSelectList(User.GetSchedules(db).Where(s => null == s.Tournament).OrderBy(s => s.FromDate).ToArray(), "Id", "ShortDate");
+            ViewBag.ScheduleList = new SelectList(User.GetSchedules(db).Where(s => null == s.Tournament).OrderBy(s => s.FromDate).ToArray(), "Id", "DisplayClubWithShortDate");
         }
 
         private async Task SendCompleteBlast(Tournament tournament, string subject)
