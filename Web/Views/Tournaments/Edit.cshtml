@@ -47,7 +47,7 @@
                     <tbody>
                         @foreach (var item in Model.Competitors)
                         {
-                            <tr onclick="location.href = '@(Url.Action("Edit", "Competitors", new { id = item.Id }))'">
+                            <tr id="@item.Id" onclick="location.href = '@(Url.Action("Edit", "Competitors", new { id = item.Id }))'">
                                 <td>
                                     @Html.DisplayFor(model => item.Archer)
                                 </td>
@@ -88,25 +88,22 @@
     @Scripts.Render("~/bundles/datatables")
     <script>
         $(document).ready(function() {
-            $('#tblCompetitors').DataTable();
+            var table = $('#tblCompetitors').DataTable();
 
             $(".dataTables_filter input[type='search']").on("keydown",
                 function (evtObj) {
-                    var table = $('#tblCompetitors');
-
                     if (evtObj.keyCode === 13) {
                         evtObj.stopPropagation();
                         evtObj.preventDefault();
 
-                        alert('before');
-                        
-                        table.row(':eq(0)', { page: 'current' }).select();
-                        alert('after');
+                        var compId = table.row(':eq(0)', { page: 'current' }).id();
+
+                        window.location.href = "/Competitors/Edit/" + compId;
+
                         return false;
                     }
                     return true;
                 });
-            
         });
 
         // Set correct functionality for action
