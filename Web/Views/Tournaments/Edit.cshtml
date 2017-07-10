@@ -87,20 +87,35 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/datatables")
     <script>
-        // Set correct functionality for action
-        $(function () {
-            if (@Model.Completed.ToString().ToLower())
-            {
-                $('#btnCorrection').show();
-            }
-            else
-            {
-                $('#btnComplete').show();
-            }
+        $(document).ready(function() {
+            $('#tblCompetitors').DataTable();
+
+            $(".dataTables_filter input[type='search']").on("keydown",
+                function (evtObj) {
+                    var table = $('#tblCompetitors');
+
+                    if (evtObj.keyCode === 13) {
+                        evtObj.stopPropagation();
+                        evtObj.preventDefault();
+
+                        alert('before');
+                        
+                        table.row(':eq(0)', { page: 'current' }).select();
+                        alert('after');
+                        return false;
+                    }
+                    return true;
+                });
+            
         });
 
-        $(document).ready(function () {
-            $('#tblCompetitors').DataTable();
+        // Set correct functionality for action
+        $(function() {
+            if (@Model.Completed.ToString().ToLower()) {
+                $('#btnCorrection').show();
+            } else {
+                $('#btnComplete').show();
+            }
         });
     </script>
 }
