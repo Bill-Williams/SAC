@@ -438,14 +438,7 @@
     <Content Include="Content\Images\carousel1.jpg" />
     <Content Include="Content\Images\carousel2.jpg" />
     <Content Include="Content\Images\carousel3.jpg" />
-    <Content Include="Content\Images\CRPC.jpg" />
     <Content Include="Content\Images\facebook.png" />
-    <Content Include="Content\Images\FortMill.png" />
-    <Content Include="Content\Images\Greenway.jpg" />
-    <Content Include="Content\Images\IndianTrail.jpg" />
-    <Content Include="Content\Images\Lakeview.jpg" />
-    <Content Include="Content\Images\Mecklenburg.jpg" />
-    <Content Include="Content\Images\RobinHood.jpg" />
     <Content Include="Content\Images\SAC.PNG" />
     <Content Include="Content\Images\SAC2.jpg" />
     <Content Include="Content\timeline.css" />
