@@ -6,6 +6,9 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using SAC.Web.Models;
+using Microsoft.Owin.Security.MicrosoftAccount;
+using Microsoft.Owin.Security.Facebook;
+using System.Net.Http;
 
 namespace SAC.Web
 {
@@ -47,26 +50,40 @@ namespace SAC.Web
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            app.UseMicrosoftAccountAuthentication(
-                clientId: "69997243-9b41-4890-a449-3cdc91c02ac9",
-                clientSecret: System.Environment.GetEnvironmentVariable("sac-MS"));
+            var mo = new MicrosoftAccountAuthenticationOptions()
+            {
+                ClientId = "69997243-9b41-4890-a449-3cdc91c02ac9",
+                ClientSecret = System.Environment.GetEnvironmentVariable("sac-MS"),
+                //Scope = { "User.ReadBasic.All" }
+            };
+
+            app.UseMicrosoftAccountAuthentication(mo);
 
             app.UseTwitterAuthentication(
                consumerKey: "gObyL8ird9nMbTlyEB0vh4mgA",
                consumerSecret: System.Environment.GetEnvironmentVariable("sac-Twitter"));
 
-//There are two keys for Facebook.  One is live and one is test.  They don't allow multi domain access from what I can tell.
+            //There are two keys for Facebook.  One is live and one is test.  They don't allow multi domain access from what I can tell.
 #if DEBUG
             //TEST
-            app.UseFacebookAuthentication(
-               appId: "438970499791540",
-               appSecret: System.Environment.GetEnvironmentVariable("sac-Facebook"));
+            var fb = new FacebookAuthenticationOptions()
+            {
+                AppId = "438970499791540",
+                AppSecret = System.Environment.GetEnvironmentVariable("sac-Facebook"),
+                BackchannelHttpHandler = new HttpClientHandler(),
+                UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,name,email,first_name,last_name"
+            };
 #else
             // LIVE
-            app.UseFacebookAuthentication(
-               appId: "424419464593148",
-               appSecret: System.Environment.GetEnvironmentVariable("sac-Facebook"));
+            var fb = new FacebookAuthenticationOptions()
+            {
+               AppId = "424419464593148",
+               AppSecret = System.Environment.GetEnvironmentVariable("sac-Facebook"),
+               BackchannelHttpHandler = new HttpClientHandler(),
+               UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,name,email,first_name,last_name"
+            };
 #endif
+            app.UseFacebookAuthentication(fb);
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
