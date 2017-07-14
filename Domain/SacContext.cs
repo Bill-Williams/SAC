@@ -52,5 +52,7 @@ namespace SAC.Domain
                 x.MapRightKey("ClubId");
             });
         }
+
+        public System.Data.Entity.DbSet<SAC.Domain.Models.Award> Awards { get; set; }
     }
 }

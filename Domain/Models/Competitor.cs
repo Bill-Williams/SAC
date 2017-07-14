@@ -29,5 +29,9 @@ namespace SAC.Domain.Models
         public virtual Class Class { get; set; }
 
         public DateTime CreatedDate { get; set; }
+
+        public Guid? AwardId { get; set; }
+
+        public virtual Award Award { get; set; }
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="Models\AspNetUser.cs" />
     <Compile Include="Models\AspNetUserClaim.cs" />
     <Compile Include="Models\AspNetUserLogin.cs" />
+    <Compile Include="Models\Award.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\Club.cs" />

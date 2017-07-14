@@ -31,6 +31,7 @@
                 @if (User.IsInRole("Tech Admin"))
                 {
                     <li class="divider"></li>
+                    <li>@Html.ActionLink("Awards", "Admin", "Awards")</li>
                     <li>@Html.ActionLink("Classes", "Admin", "Classes")</li>
                     <li>@Html.ActionLink("Colors", "Admin", "Colors")</li>
                     <li>@Html.ActionLink("Groups", "Admin", "Groups")</li>

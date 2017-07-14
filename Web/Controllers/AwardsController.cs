@@ -8,152 +8,152 @@ using System.Web;
 using System.Web.Mvc;
 using SAC.Domain;
 using SAC.Domain.Models;
-using SAC.Web.Extensions;
-using Microsoft.WindowsAzure.Storage;
 using System.Configuration;
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
-using System.IO;
 
 namespace SAC.Web.Controllers
 {
+    [Authorize(Roles = "Tech Admin")]
     [RequireHttps]
-    public class ClubsController : Controller
+    public class AwardsController : Controller
     {
         private SacContext db = new SacContext();
 
-        // GET: Club
-        [AllowAnonymous]
-        public ActionResult Index()
-        {
-            return View(db.Clubs.OrderBy(c => c.Name).Include(c => c.Contacts).ToList());
-        }
-
-        // GET: Club/Directions/5
-        [AllowAnonymous]
-        public ActionResult Directions(Guid? id)
-        {
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Club club = db.Clubs.Find(id);
-            if (club == null)
-            {
-                return HttpNotFound();
-            }
-            return View(club);
-        }
-
-        // GET: Admin
-        [Authorize(Roles = "Club Admin,Tech Admin")]
+        // GET: Awards
         public ActionResult Admin()
         {
-            return View(User.GetClubs(db));
+            return View(db.Awards.ToList());
         }
-    
-        // GET: Club/Create
-        [Authorize(Roles = "Tech Admin")]
+
+        // GET: Awards/Create
         public ActionResult Create()
         {
-            return View(new Club());
+            return View();
         }
 
-        // POST: Club/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Tech Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,ShortName,Address,CityStateZip,Contact,Phone,Email,Website,Directions,GeoLocation,IconFileName")] Club club)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Clubs.Add(club);
-                db.SaveChanges();
-                return RedirectToAction("Admin");
-            }
-            return View(club);
-        }
-
-        // GET: Club/Edit/5
-        [Authorize(Roles = "Club Admin,Tech Admin")]
-        public ActionResult Edit(Guid? id)
-        {
-            if (id == null || !id.HasValue)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Club club = User.GetClubs(db).Include("Contacts").First(c => c.Id == id);
-            if (club == null)
-            {
-                return HttpNotFound();
-            }
-            return View(club);
-        }
-
-        // POST: Club/Edit/5
+        // POST: Awards/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Club Admin,Tech Admin")]
-        public ActionResult Edit([Bind(Include = "Id,Name,ShortName,Address,CityStateZip,Website,Directions,GeoLocation,IconFileName")] Club club)
+        public ActionResult Create([Bind(Include = "Id,Name,Icon")] Award award)
         {
-            if (ModelState.IsValid 
-                && User.GetClubs(db).Any(c => c.Id == club.Id))
-            {
-                var image = Request.Files["image"];
+            var image = Request.Files["image"];
 
-                if(null != image || image.ContentLength != 0)
+            if (null == image || image.ContentLength == 0)
+            {
+                ModelState.AddModelError("Icon", "The Icon field is reaquired");
+            }
+            else if (ModelState.IsValid)
+            {
+                db.Awards.Add(award);
+                //needed to get the id for the blob
+                db.Database.BeginTransaction();
+                try
                 {
-                    CloudBlockBlob blob = GetClubBlob(club);
+                    db.SaveChanges();
+
+                    CloudBlockBlob blob = GetAwardBlob(award);
 
                     blob.Properties.ContentType = image.ContentType;
 
                     blob.UploadFromStream(image.InputStream);
 
-                    club.IconFileName = blob.Uri.ToString();
+                    award.Icon = blob.Uri.ToString();
+
+                    db.SaveChanges();
+
+                    db.Database.CurrentTransaction.Commit();
+                }
+                catch
+                {
+                    db.Database.CurrentTransaction.Rollback();
+
+                    ModelState.AddModelError("Icon", "Error uploading file");
+
+                    return View(award);
                 }
 
-                db.Entry(club).State = EntityState.Modified;
-                db.SaveChanges();
                 return RedirectToAction("Admin");
             }
-            return View(club);
+
+            return View(award);
         }
 
-        // GET: Club/Delete/5
-        [Authorize(Roles = "Tech Admin")]
-        public ActionResult Delete(Guid? id)
+        // GET: Awards/Edit/5
+        public ActionResult Edit(Guid? id)
         {
-            if (id == null || !id.HasValue)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Club club = db.Clubs.Find(id);
-            if (club == null)
+            Award award = db.Awards.Find(id);
+            if (award == null)
             {
                 return HttpNotFound();
             }
-            return View(club);
+            return View(award);
         }
 
-        // POST: Club/Delete/5
-        [Authorize(Roles = "Tech Admin")]
+        // POST: Awards/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,Name,Icon")] Award award)
+        {
+            if (ModelState.IsValid)
+            {
+                var image = Request.Files["image"];
+
+                if (null != image || image.ContentLength != 0)
+                {
+                    CloudBlockBlob blob = GetAwardBlob(award);
+
+                    blob.Properties.ContentType = image.ContentType;
+
+                    blob.UploadFromStream(image.InputStream);
+
+                    award.Icon = blob.Uri.ToString();
+                }
+
+                db.Entry(award).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Admin");
+            }
+            return View(award);
+        }
+
+        // GET: Awards/Delete/5
+        public ActionResult Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Award award = db.Awards.Find(id);
+            if (award == null)
+            {
+                return HttpNotFound();
+            }
+            return View(award);
+        }
+
+        // POST: Awards/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Club club = db.Clubs.Find(id);
-            CloudBlockBlob blob = GetClubBlob(club);
+            Award award = db.Awards.Find(id);
+            CloudBlockBlob blob = GetAwardBlob(award);
             blob.DeleteIfExistsAsync();
-            db.Clubs.Remove(club);
+            db.Awards.Remove(award);
             db.SaveChanges();
             return RedirectToAction("Admin");
         }
 
-        private CloudBlockBlob GetClubBlob(Club club)
+        private CloudBlockBlob GetAwardBlob(Award award)
         {
             string storageConn = ConfigurationManager.ConnectionStrings["AzureStorageConn"].ConnectionString;
 
@@ -161,7 +161,7 @@ namespace SAC.Web.Controllers
 
             var blobStorage = storageAccount.CreateCloudBlobClient();
 
-            CloudBlobContainer container = blobStorage.GetContainerReference("clubimages");
+            CloudBlobContainer container = blobStorage.GetContainerReference("awardimages");
 
             if (container.CreateIfNotExists())
             {
@@ -170,8 +170,7 @@ namespace SAC.Web.Controllers
                 container.SetPermissions(permissions);
             }
 
-            var blob = container.GetBlockBlobReference(club.Id.ToString());
-            return blob;
+            return container.GetBlockBlobReference(award.Id.ToString());
         }
 
         protected override void Dispose(bool disposing)
