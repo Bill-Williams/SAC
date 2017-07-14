@@ -687,6 +687,7 @@
     <Content Include="Views\Awards\Delete.cshtml" />
     <Content Include="Views\Awards\Edit.cshtml" />
     <Content Include="Views\Awards\Admin.cshtml" />
+    <Content Include="Views\Competitors\Award.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

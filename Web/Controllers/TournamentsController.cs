@@ -24,7 +24,7 @@ namespace SAC.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            var tournaments = db.Tournaments.Include("Schedules.Club").Where(t => t.Completed);
+            var tournaments = db.Tournaments.Include("Schedules.Club").Where(t => t.Completed).OrderByDescending(t => t.Schedules.FirstOrDefault().FromDate);
             return View(tournaments.ToList());
         }
 
@@ -36,22 +36,23 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = db.Tournaments.Include("Schedules.Club").Include("Competitors.Class.Group").Include("Competitors.Class.Color").FirstOrDefault(t => t.Id == id);
+            var tournament = db.Tournaments
+                                .Include("Schedules.Club")
+                                .Include("Competitors.Class.Group")
+                                .Include("Competitors.Class.Color")
+                                .Include("Competitors.Award")
+                                .FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();
             }
 
-            TournamentResultViewModel result = new TournamentResultViewModel()
-            {
-                Tournament = tournament,
-                Groups = tournament.Competitors.Select(c => c.Class.Group).Distinct().OrderBy(o => o.SortOrder).ToList(),
-                Classes = tournament.Competitors.Select(c => c.Class).Distinct().OrderByDescending(c => c.MaximumYardage).ThenBy(c => c.Known.ToString()).ThenBy(c => c.Name).ToList(),
-                Competitors = tournament.Competitors.OrderByDescending(c => c.Score).ThenByDescending(c => c.Bonus).GroupBy(c => c.ClassId).SelectMany(g => g.Select((c, i) => new RankedCompetitor() { Competitor = c, Rank = i + 1 })).ToList()
-        };
+            TournamentResultViewModel result = GetResult(tournament);
 
             return View(result);
         }
+
+        
 
         // GET: Tournaments/Admin
         [Authorize(Roles = "Club Admin,Tech Admin,Club User")]
@@ -163,12 +164,15 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = User.GetTournaments(db).Include("Competitors.Class.Group").FirstOrDefault(t => t.Id == id);
+            var tournament = User.GetTournaments(db).Include("Competitors.Class.Group").Include("Competitors.Class.Color").Include("Competitors.Award").FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();
             }
-            return View(tournament);
+
+            TournamentResultViewModel result = GetResult(tournament);
+
+            return View(result);
         }
 
         // POST: Tournaments/Complete/5
@@ -200,12 +204,15 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = User.GetTournaments(db).Include("Competitors.Class.Group").FirstOrDefault(t => t.Id == id);
+            var tournament = User.GetTournaments(db).Include("Competitors.Class.Group").Include("Competitors.Class.Color").Include("Competitors.Award").FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();
             }
-            return View(tournament);
+
+            TournamentResultViewModel result = GetResult(tournament);
+
+            return View(result);
         }
 
         // POST: Tournaments/Correction/5
@@ -237,6 +244,17 @@ namespace SAC.Web.Controllers
             var body = this.RenderPartialViewToEmailString("~/Views/Mailer/TournamentResults.cshtml", tournament);
             var email = new EmailService();
             await email.SendBlastAsync(subject, body);
+        }
+
+        private TournamentResultViewModel GetResult(Tournament tournament)
+        {
+            return new TournamentResultViewModel()
+            {
+                Tournament = tournament,
+                Groups = tournament.Competitors.Select(c => c.Class.Group).Distinct().OrderBy(o => o.SortOrder).ToList(),
+                Classes = tournament.Competitors.Select(c => c.Class).Distinct().OrderByDescending(c => c.MaximumYardage).ThenBy(c => c.Known.ToString()).ThenBy(c => c.Name).ToList(),
+                Competitors = tournament.Competitors.OrderByDescending(c => c.Score).ThenByDescending(c => c.Bonus).GroupBy(c => c.ClassId).SelectMany(g => g.Select((c, i) => new RankedCompetitor() { Competitor = c, Rank = i + 1 })).ToList()
+            };
         }
 
         protected override void Dispose(bool disposing)

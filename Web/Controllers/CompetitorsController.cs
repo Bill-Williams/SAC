@@ -20,6 +20,40 @@ namespace SAC.Web.Controllers
     {
         private SacContext db = new SacContext();
 
+        // GET: Competitors/Award/5
+        public ActionResult Award(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Competitor competitor = db.Competitors.Include("Tournament").FirstOrDefault(c => c.Id == id);
+            if (competitor == null)
+            {
+                return HttpNotFound();
+            }
+            SetupAwardsList();
+            return View(competitor);
+        }
+
+        // POST: Competitors/Award/5
+        [HttpPost, ActionName("Award")]
+        [ValidateAntiForgeryToken]
+        public ActionResult AwardConfirmed(Guid id, Guid? AwardId)
+        {
+            Competitor competitor = db.Competitors.Include("Tournament").FirstOrDefault(c => c.Id == id);
+            competitor.AwardId = AwardId;
+            db.SaveChanges();
+            if(competitor.Tournament.Completed)
+            {
+                return RedirectToAction("Correction", "Tournaments", new { id = competitor.TournamentId });
+            }
+            else
+            {
+                return RedirectToAction("Complete", "Tournaments", new { id = competitor.TournamentId });
+            }
+        }
+
         // GET: Competitors/Create
         public ActionResult Create(Guid? id)
         {
@@ -175,7 +209,7 @@ namespace SAC.Web.Controllers
                 Value = "0"
             });
 
-            db.Classes.Include(c => c.Group).OrderBy(c => c.Group.SortOrder).ThenBy(c => c.Name).ToList()
+            db.Classes.Include(c => c.Group).OrderBy(c => c.Group.SortOrder).ThenByDescending(c => c.MaximumYardage).ThenBy(c => c.Name).ToList()
                 .ForEach(c => classes.Add(new SelectListItem()
                 {
                     Group = groups[c.Group.Name],
@@ -184,6 +218,26 @@ namespace SAC.Web.Controllers
                 }));
 
             ViewBag.ClassId = classes;
+        }
+
+        private void SetupAwardsList()
+        {
+            var awards = new HashSet<SelectListItem>();
+
+            awards.Add(new SelectListItem()
+            {
+                Text = "None",
+                Value = null
+            });
+
+            db.Awards.OrderBy(a => a.Name).ToList()
+                .ForEach(a => awards.Add(new SelectListItem()
+                {
+                    Value = a.Id.ToString(),
+                    Text = a.Name
+                }));
+
+            ViewBag.AwardList = awards;
         }
 
         protected override void Dispose(bool disposing)

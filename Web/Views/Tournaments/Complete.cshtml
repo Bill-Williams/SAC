@@ -1,12 +1,14 @@
-﻿@model SAC.Domain.Models.Tournament
+﻿@model SAC.Web.Models.TournamentResultViewModel
 
 @{
     ViewBag.Title = "Complete";
 }
 
-<h2>Complete</h2>
+<div class="well">
+    <h2>@ViewBag.Title</h2>
+    <h3>All done?</h3>
+</div>
 
-<h3>All done?</h3>
 <div>
     <h4>Tournament</h4>
     <hr />
@@ -17,7 +19,7 @@
 
         <div class="form-actions no-color">
             <div class="btn-group">
-                <a href="@Url.Action("Edit", new { Id = Model.Id })" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                <a href="@Url.Action("Edit", new { Id = Model.Tournament.Id })" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                 <a href="@Url.Action("Admin")" class="btn btn-default"><i class="glyphicon glyphicon-menu-hamburger"></i> Back to List</a>
                 <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-check"></i> Complete</button>
             </div>

@@ -25,6 +25,7 @@
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>
                                             @Html.Label("Rank")
                                         </th>
@@ -43,8 +44,18 @@
                                     @foreach (var c in Model.Competitors.Where(c => c.Competitor.ClassId == item.Id))
                                     {
                                         <tr>
+                                            <td style="max-width:40px;width:40px;">
+                                                @if (null != c.Competitor.Award)
+                                                {
+                                                    <div class="roundThumbnail" style="background-image:url('@c.Competitor.Award.Icon');padding-top:30px;max-width:30px;width:30px;"></div>
+                                                }
+                                            </td>
                                             <td>
                                                 @Html.DisplayFor(model => c.Rank)
+                                                @if (null != c.Competitor.Award)
+                                                {
+                                                    <span>&nbsp;(@c.Competitor.Award.Name)</span>
+                                                }
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(model => c.Competitor.Archer)

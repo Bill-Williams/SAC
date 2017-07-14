@@ -51,7 +51,9 @@
     @Scripts.Render("~/bundles/datatables")
     <script>
         $(document).ready(function () {
-            $('#tblTournaments').DataTable();
+            $('#tblTournaments').DataTable({
+                "order": [[0, "desc"]]
+            });
         });
     </script>
 }
