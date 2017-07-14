@@ -51,7 +51,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ClubId,FromDate,ToDate")] Schedule schedule)
+        public ActionResult Create([Bind(Include = "Id,ClubId,FromDate,ToDate,Description")] Schedule schedule)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace SAC.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ClubId,FromDate,ToDate")] Schedule schedule)
+        public ActionResult Edit([Bind(Include = "Id,ClubId,FromDate,ToDate,Description")] Schedule schedule)
         {
             if (ModelState.IsValid)
             {

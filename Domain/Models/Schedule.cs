@@ -38,6 +38,7 @@ namespace SAC.Domain.Models
 
         public virtual Tournament Tournament { get; set; }
 
+        [Display(Name = "Dates")]
         public virtual string DisplayShortDate
         {
             get
@@ -62,6 +63,7 @@ namespace SAC.Domain.Models
             }
         }
 
+        [Display(Name = "Description")]
         public virtual string BasicDescription
         {
             get

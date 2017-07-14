@@ -17,10 +17,7 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.FromDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ToDate)
+                        @Html.DisplayNameFor(model => model.DisplayShortDate)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Description)
@@ -32,17 +29,14 @@
             </thead>
             <tbody>
                 @foreach (var item in Model)
-            {
+                {
                     <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                         <td>
-                            @Html.DisplayFor(modelItem => item.FromDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ToDate)
+                            @Html.DisplayFor(modelItem => item.DisplayShortDate)
                         </td>
 
                         <td>
-                            @Html.DisplayFor(modelItem => item.Description)
+                            @Html.DisplayFor(modelItem => item.BasicDescription)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Club.Name)

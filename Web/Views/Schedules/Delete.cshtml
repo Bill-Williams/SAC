@@ -14,28 +14,27 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FromDate)
+            @Html.DisplayNameFor(model => model.DisplayShortDate)
         </dt>
-
+        
         <dd>
-            @Html.DisplayFor(model => model.FromDate)
+            @Html.DisplayFor(model => model.DisplayShortDate)
         </dd>
-        if (model.FromDate != model.ToDate)
-{
-        <dt>
-            @Html.DisplayNameFor(model => model.ToDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ToDate)
-        </dd>
- }
+ 
         <dt>
             @Html.DisplayNameFor(model => model.Club)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Club.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BasicDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BasicDescription)
         </dd>
     </dl>
 
