@@ -12,7 +12,33 @@
 <div>
     <h4>Tournament</h4>
     <hr />
-    @Html.DisplayFor(model => model, "TournamentConfirm")
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Schedules)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Schedules.First().DisplayShortDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Schedules.First().Club)
+        </dt>
+
+        <dd>
+            @string.Join(",", Model.Schedules.Select(s => s.Club.Name).Distinct())
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Competitors)
+        </dt>
+
+        <dd>
+            @Model.Competitors.Count().ToString()
+        </dd>
+
+    </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()

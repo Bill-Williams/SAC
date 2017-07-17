@@ -135,7 +135,13 @@ namespace SAC.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tournament = User.GetTournaments(db).Include("Competitors.Class.Group").FirstOrDefault(t => t.Id == id);
+            var tournament = User.GetTournaments(db)
+                                .Include("Schedules.Club")
+                                .Include("Competitors")
+                                //.Include("Competitors.Class.Group")
+                                //.Include("Competitors.Class.Color")
+                                //.Include("Competitors.Award")
+                                .FirstOrDefault(t => t.Id == id);
             if (tournament == null)
             {
                 return HttpNotFound();

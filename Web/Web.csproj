@@ -438,7 +438,6 @@
     <Content Include="Content\Images\carousel1.jpg" />
     <Content Include="Content\Images\carousel2.jpg" />
     <Content Include="Content\Images\carousel3.jpg" />
-    <Content Include="Content\Images\facebook.png" />
     <Content Include="Content\Images\SAC.PNG" />
     <Content Include="Content\Images\SAC2.jpg" />
     <Content Include="Content\timeline.css" />

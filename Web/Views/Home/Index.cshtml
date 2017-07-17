@@ -17,7 +17,7 @@
             <img class="first-slide" src="@Url.Content("~/Content/Images/carousel1.jpg")" alt="First slide">
             <div class="container">
                 <div class="carousel-caption">
-                    <h2>@Application.OrganizationName</h2>
+                    <h3 class="well well-sm">@Application.OrganizationName</h3>
                     <p>@Html.ActionLink("Join Today", "Login", "Account", null, new { @class = "btn btn-sm btn-info" })</p>
                 </div>
             </div>
@@ -26,7 +26,7 @@
             <img class="second-slide" src="@Url.Content("~/Content/Images/carousel2.jpg")" alt="Second slide">
             <div class="container">
                 <div class="carousel-caption">
-                    <h2>Recent Tournaments</h2>
+                    <h3 class="well well-sm">Recent Tournaments</h3>
                     <p>@Html.ActionLink("View Scores", "Index", "Tournaments", null, new { @class = "btn btn-sm btn-info" })</p>
                 </div>
             </div>
@@ -35,7 +35,7 @@
             <img class="third-slide" src="@Url.Content("~/Content/Images/carousel3.jpg")" alt="Third slide">
             <div class="container">
                 <div class="carousel-caption">
-                    <h2>Local Clubs</h2>
+                    <h3 class="well well-sm">Local Clubs</h3>
                     <p>@Html.ActionLink("More Info", "Index", "Clubs", null, new { @class = "btn btn-sm btn-info" })</p>
                 </div>
             </div>
