@@ -16,4 +16,5 @@
             return true;
         });
     $("div.dataTables_filter input").focus();
+    return table;
 }

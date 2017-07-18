@@ -31,7 +31,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
+                    <tr id="@item.Id" onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                         <td>
                             @string.Join(",", item.Schedules.Select(s => s.DisplayShortDate))
                         </td>
@@ -51,10 +51,8 @@
     @Scripts.Render("~/bundles/datatables")
     <script>
         $(document).ready(function () {
-            $('#tblTournaments').DataTable({
-                "order": [[0, "desc"]]
-            });
-            $("div.dataTables_filter input").focus();
+            var table = buildTable1("#tblTournaments", "/Tournaments/Edit/");
+            table.order([0, "desc"]).draw();
         });
     </script>
 }

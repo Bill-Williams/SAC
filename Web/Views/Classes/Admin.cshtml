@@ -42,7 +42,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
+                    <tr id="@item.Id" onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                         <td>
                             @Html.DisplayFor(modelItem => item.Group.Name)
                         </td>
@@ -74,7 +74,7 @@
     @Scripts.Render("~/bundles/datatables")
     <script>
         $(document).ready(function () {
-            $('#tblClasses').DataTable();
+            buildTable1("#tblClasses", "/Classes/Edit/");
         });
     </script>
 }

@@ -32,7 +32,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
+            <tr id="@item.Id" onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                 <td>
                     @Html.DisplayFor(modelItem => item.Email) @Html.DisplayFor(modelItem => item.EmailConfirmed, "boolConfirmed")
                 </td>
@@ -60,7 +60,7 @@
     @Scripts.Render("~/bundles/datatables")
     <script>
         $(document).ready(function () {
-            $('#tblUsers').DataTable();
+            buildTable1("#tblUsers", "/Users/Edit/");
         });
     </script>
 }

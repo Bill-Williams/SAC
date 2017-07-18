@@ -24,7 +24,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
+            <tr id="@item.Id" onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -40,7 +40,7 @@
     @Scripts.Render("~/bundles/datatables")
     <script>
         $(document).ready(function () {
-            $('#tblColors').DataTable();
+            buildTable1("#tblColors", "/Colors/Edit/");
         });
     </script>
 }

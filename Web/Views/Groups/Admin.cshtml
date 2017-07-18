@@ -23,7 +23,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
+            <tr id="@item.Id" onclick="location.href = '@(Url.Action("Edit", new { id = item.Id }))'">
                 <td>
                     @Html.DisplayFor(modelItem => item.SortOrder)
                 </td>
@@ -39,7 +39,7 @@
     @Scripts.Render("~/bundles/datatables")
     <script>
         $(document).ready(function () {
-            $('#tblGroups').DataTable();
+            buildTable1("#tblGroups", "/Groups/Edit/");
         });
     </script>
 }
