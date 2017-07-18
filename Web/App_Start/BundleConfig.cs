@@ -12,7 +12,8 @@ namespace SAC.Web
 
             bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
                       "~/Scripts/DataTables/jquery.dataTables.js",
-                      "~/Scripts/DataTables/dataTables.bootstrap.js"));
+                      "~/Scripts/DataTables/dataTables.bootstrap.js",
+                      "~/Scripts/sacFunctions.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/typeahead").Include(
                       "~/Scripts/typeahead.jquery.js",

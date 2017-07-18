@@ -87,23 +87,8 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/datatables")
     <script>
-        $(document).ready(function() {
-            var table = $('#tblCompetitors').DataTable();
-
-            $(".dataTables_filter input[type='search']").on("keydown",
-                function (evtObj) {
-                    if (evtObj.keyCode === 13) {
-                        evtObj.stopPropagation();
-                        evtObj.preventDefault();
-
-                        var compId = table.row(':eq(0)', { page: 'current' }).id();
-
-                        window.location.href = "/Competitors/Edit/" + compId;
-
-                        return false;
-                    }
-                    return true;
-                });
+        $(document).ready(function () {
+            buildTable1("#tblCompetitors", "/Competitors/Edit/");
         });
 
         // Set correct functionality for action

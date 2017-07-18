@@ -568,6 +568,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sacFunctions.js" />
     <Content Include="Scripts\typeahead.bundle.js" />
     <Content Include="Scripts\typeahead.bundle.min.js" />
     <Content Include="Scripts\typeahead.jquery.js" />
